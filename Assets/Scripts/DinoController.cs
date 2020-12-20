@@ -1,4 +1,6 @@
-﻿using GameEvents.Game;
+﻿using System;
+using GameEvents.Game;
+using Photon.Pun;
 using UnityEngine;
 
 public class DinoController : MonoBehaviour
@@ -8,21 +10,33 @@ public class DinoController : MonoBehaviour
     [SerializeField] private GameEvent lostGameEvent;
     
     private Rigidbody2D rb;
-
+    private PhotonView photonView;
     private bool grounded = true;
     
-    void Start()
+    private void Awake()
     {
+        photonView = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        if (!photonView.IsMine)
+        {
+            Destroy(rb);
+        }
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Jump") && grounded)
+        if (photonView.IsMine)
         {
-            rb.AddForce(new Vector2(0f, 10f) * jumpPower);
-            grounded = false;
-        }   
+            if (Input.GetButtonDown("Jump") && grounded)
+            {
+                rb.AddForce(new Vector2(0f, 10f) * jumpPower);
+                grounded = false;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)

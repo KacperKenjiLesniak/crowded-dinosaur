@@ -1,17 +1,11 @@
-﻿using System;
-using GameEvents.Game;
-using GameEvents.Generic;
+﻿using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace DefaultNamespace
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private GameEvent lostGameEvent;
-        [SerializeField] private GameEvent restartGameEvent;
         [SerializeField] private TMP_Text lostGameText;
         [SerializeField] private string youLostText = "You lost!";
 
@@ -22,7 +16,11 @@ namespace DefaultNamespace
 
         public void Restart()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            PhotonNetwork.AutomaticallySyncScene = true;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel("EmptyScene");
+            }
         }
     }
 }
