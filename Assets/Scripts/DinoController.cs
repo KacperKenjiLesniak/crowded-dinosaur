@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DefaultNamespace;
 using GameEvents.Game;
 using Photon.Pun;
 using UnityEngine;
@@ -41,16 +41,26 @@ public class DinoController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Collided with: " + other.collider.gameObject.name);
-        if (other.collider.CompareTag("Obstacle"))
+        if (photonView.IsMine)
         {
-            lostGameEvent.RaiseGameEvent();
-            GetComponent<Animator>().enabled = false;
-            enabled = false;
+            if (other.collider.CompareTag("Obstacle"))
+            {
+                Die();
+            }
+
+            if (other.collider.CompareTag("Ground"))
+            {
+                grounded = true;
+            }
         }
-        if (other.collider.CompareTag("Ground"))
-        {
-            grounded = true;
-        }
+    }
+
+    private void Die()
+    {
+        lostGameEvent.RaiseGameEvent();
+        GetComponent<Animator>().enabled = false;
+        Destroy(GetComponent<Rigidbody2D>());
+        GetComponent<DeadDinoMovement>().enabled = true;
+        enabled = false;
     }
 }

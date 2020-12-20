@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8230227472010745188}
   - component: {fileID: 6954133994127008277}
   - component: {fileID: 1126141573517875944}
+  - component: {fileID: 1011872057835097478}
   m_Layer: 6
   m_Name: Dino
   m_TagString: Untagged
@@ -227,3 +228,16 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &1011872057835097478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5109901659581191557}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76313c8292b45e68128aed925ec4a89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 8
