@@ -45,7 +45,8 @@ public class DinoController : MonoBehaviour
         {
             if (other.collider.CompareTag("Obstacle"))
             {
-                Die();
+                lostGameEvent.RaiseGameEvent();
+                photonView.RPC(nameof(Die), RpcTarget.AllViaServer);
             }
 
             if (other.collider.CompareTag("Ground"))
@@ -54,10 +55,11 @@ public class DinoController : MonoBehaviour
             }
         }
     }
-
+    
+    
+    [PunRPC]
     private void Die()
     {
-        lostGameEvent.RaiseGameEvent();
         GetComponent<Animator>().enabled = false;
         Destroy(GetComponent<Rigidbody2D>());
         GetComponent<DeadDinoMovement>().enabled = true;
