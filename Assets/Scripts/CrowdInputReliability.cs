@@ -13,7 +13,7 @@ namespace DefaultNamespace
         }
         
         ~CrowdInputReliability()
-        {
+        { 
             Destroy();
         }
         

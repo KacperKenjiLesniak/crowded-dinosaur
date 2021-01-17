@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class DeadDinoMovement : MonoBehaviour
+    public class DeadDinoMovement : MonoBehaviourPunCallbacks
     {
         public float speed = 5f;
 
         private void Update()
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (photonView.IsMine)
             {
                 transform.Translate(new Vector2(-speed * Time.deltaTime, 0f));
             }

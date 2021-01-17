@@ -3,19 +3,17 @@ using GameEvents.Game;
 using Photon.Pun;
 using UnityEngine;
 
-public class DinoController : MonoBehaviour
+public class DinoController : MonoBehaviourPunCallbacks
 {
 
     [SerializeField] private float jumpPower = 10f;
     [SerializeField] private GameEvent lostGameEvent;
     
     private Rigidbody2D rb;
-    private PhotonView photonView;
     private bool grounded = true;
     
     private void Awake()
     {
-        photonView = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
     }
 
