@@ -1,40 +1,42 @@
-﻿using DefaultNamespace;
+﻿using System;
+using DefaultNamespace;
 using GameEvents.Game;
+using MutableObjects.Vector3;
 using Photon.Pun;
 using UnityEngine;
 
 public class DinoController : MonoBehaviourPunCallbacks
 {
-
     [SerializeField] private float jumpPower = 10f;
+    [SerializeField] private float speed = 10f;
     [SerializeField] private GameEvent lostGameEvent;
+    [SerializeField] private MutableVector3 dinoPosition;
     
     private Rigidbody2D rb;
-    private bool grounded = true;
-    
+    public bool grounded = true;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-
-    private void Start()
-    {
-        if (!photonView.IsMine)
-        {
-            Destroy(rb);
-        }
-    }
-
-    void Update()
+    
+    private void Update()
     {
         if (photonView.IsMine)
         {
             if (Input.GetButtonDown("Jump") && grounded)
             {
+                Debug.Log("Jumping");
                 rb.AddForce(new Vector2(0f, 10f) * jumpPower);
                 grounded = false;
             }
         }
+        dinoPosition.Value = transform.position;
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(speed, rb.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -53,14 +55,12 @@ public class DinoController : MonoBehaviourPunCallbacks
             }
         }
     }
-    
-    
+
+
     [PunRPC]
     private void Die()
     {
         GetComponent<Animator>().enabled = false;
-        Destroy(GetComponent<Rigidbody2D>());
-        GetComponent<DeadDinoMovement>().enabled = true;
         enabled = false;
     }
 }

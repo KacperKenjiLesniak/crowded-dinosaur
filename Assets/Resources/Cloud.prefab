@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8524851570042237025}
   - component: {fileID: 8524851570042237024}
   m_Layer: 0
-  m_Name: CloudLow
+  m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73aa58a1ba9f4c56be3817f3b22f8882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
 --- !u!114 &8524851570042237025
 MonoBehaviour:
   m_ObjectHideFlags: 0
