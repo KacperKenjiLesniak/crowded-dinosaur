@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcac6b29d5414962b03349b9e7736761, type: 3}
   m_Name: DinoPosition
   m_EditorClassIdentifier: 
-  resetType: 0
+  resetType: 3
   value: {x: 0, y: 0, z: 0}

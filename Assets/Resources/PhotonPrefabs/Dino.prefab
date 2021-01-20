@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 5109901659581191567}
   - component: {fileID: 8230227472010745188}
   - component: {fileID: 6954133994127008277}
-  - component: {fileID: -2894939072304466408}
   m_Layer: 6
   m_Name: Dino
   m_TagString: Untagged
@@ -168,10 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpPower: 90
-  speed: 5
+  speed: 6.5
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
   dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
-  grounded: 1
 --- !u!114 &8230227472010745188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,8 +189,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
+  - {fileID: 5109901659581191567}
   - {fileID: 6954133994127008277}
-  - {fileID: -2894939072304466408}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -214,19 +212,3 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
---- !u!114 &-2894939072304466408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5109901659581191557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 1
-  m_TeleportIfDistanceGreaterThan: 3

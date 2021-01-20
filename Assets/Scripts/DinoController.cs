@@ -13,7 +13,7 @@ public class DinoController : MonoBehaviourPunCallbacks
     [SerializeField] private MutableVector3 dinoPosition;
     
     private Rigidbody2D rb;
-    public bool grounded = true;
+    private bool grounded = true;
 
     private void Awake()
     {
@@ -26,11 +26,10 @@ public class DinoController : MonoBehaviourPunCallbacks
         {
             if (Input.GetButtonDown("Jump") && grounded)
             {
-                Debug.Log("Jumping");
-                rb.AddForce(new Vector2(0f, 10f) * jumpPower);
-                grounded = false;
+                photonView.RPC(nameof(Jump), RpcTarget.AllViaServer);
             }
         }
+        
         dinoPosition.Value = transform.position;
     }
 
@@ -56,11 +55,17 @@ public class DinoController : MonoBehaviourPunCallbacks
         }
     }
 
-
     [PunRPC]
     private void Die()
     {
         GetComponent<Animator>().enabled = false;
         enabled = false;
+    }
+    
+    [PunRPC]
+    private void Jump()
+    {
+        rb.AddForce(new Vector2(0f, 10f) * jumpPower);
+        grounded = false;
     }
 }

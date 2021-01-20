@@ -7,9 +7,9 @@ namespace DefaultNamespace
     {
         private IntPtr m_NativeObject = IntPtr.Zero;
         
-        public CrowdInputReliability()
+        public CrowdInputReliability(int numberOfPlayers, int numberOfCommands)
         {
-            m_NativeObject = Internal_CreateCCrowdInputReliability();
+            m_NativeObject = Internal_CreateCCrowdInputReliability(numberOfPlayers, numberOfCommands);
         }
         
         ~CrowdInputReliability()
@@ -26,20 +26,20 @@ namespace DefaultNamespace
             }
         }
         
-        public int GetNumber(int SomeParameter)
+        public int IssueCommands(int[] commands)
         {
             if (m_NativeObject == IntPtr.Zero)
                 throw new Exception("No native object");
-            return Internal_GetNumber(m_NativeObject, SomeParameter);
+            return Internal_IssueCommands(m_NativeObject, commands);
         }
         
         [DllImport("CROWDINPUTRELIABILITY", EntryPoint = "Internal_CreateCCrowdInputReliability")]
-        private static extern IntPtr Internal_CreateCCrowdInputReliability();
+        private static extern IntPtr Internal_CreateCCrowdInputReliability(int numberOfPlayers, int numberOfCommands);
         
-        [DllImport("CROWDINPUTRELIABILITY")]
+        [DllImport("CROWDINPUTRELIABILITY", EntryPoint = "Internal_DestroyCCrowdInputReliability")]
         private static extern void Internal_DestroyCCrowdInputReliability(IntPtr obj);
-        
-        [DllImport("CROWDINPUTRELIABILITY")]
-        private static extern int Internal_GetNumber(IntPtr obj, int SomeParameter);
+
+        [DllImport("CROWDINPUTRELIABILITY",  EntryPoint = "Internal_IssueCommands")]
+        private static extern int Internal_IssueCommands(IntPtr obj, int[] commands);
     }
 }
