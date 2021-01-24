@@ -1,5 +1,6 @@
 ﻿using System;
 using DefaultNamespace;
+using DefaultNamespace.Events;
 using GameEvents.Game;
 using MutableObjects.Vector3;
 using Photon.Pun;
@@ -11,7 +12,8 @@ public class DinoController : MonoBehaviourPunCallbacks
     [SerializeField] private float speed = 10f;
     [SerializeField] private GameEvent lostGameEvent;
     [SerializeField] private MutableVector3 dinoPosition;
-    
+    [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
+
     private Rigidbody2D rb;
     private bool grounded = true;
 
@@ -27,6 +29,8 @@ public class DinoController : MonoBehaviourPunCallbacks
             if (Input.GetButtonDown("Jump") && grounded)
             {
                 photonView.RPC(nameof(Jump), RpcTarget.AllViaServer);
+                photonView.RPC(nameof(JumpInfo), RpcTarget.MasterClient);
+
             }
         }
         
@@ -67,5 +71,12 @@ public class DinoController : MonoBehaviourPunCallbacks
     {
         rb.AddForce(new Vector2(0f, 10f) * jumpPower);
         grounded = false;
+    }
+    
+    [PunRPC]
+    private void JumpInfo(PhotonMessageInfo info)
+    {
+        Debug.Log("Player " + info.Sender.ActorNumber + " has jumped!");
+        playerInputGameEvent.RaiseGameEvent(new PlayerInput(info.Sender.ActorNumber - 1, Constants.INPUT_JUMP_ID));
     }
 }
