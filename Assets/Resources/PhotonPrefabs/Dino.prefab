@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5109901659581191567}
   - component: {fileID: 8230227472010745188}
   - component: {fileID: 6954133994127008277}
+  - component: {fileID: 565155323137339426}
   m_Layer: 6
   m_Name: Dino
   m_TagString: Untagged
@@ -208,3 +209,20 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &565155323137339426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5109901659581191557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148b4e3877a14e86a8b5fb49bf4fd135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpPower: 80
+  speed: 10
+  lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
+  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
+  grounded: 1

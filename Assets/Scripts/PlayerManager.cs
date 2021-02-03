@@ -18,11 +18,17 @@ public class PlayerManager : MonoBehaviour
         if (photonView.IsMine)
         {
             CreateController();
+            CreateCrowdedController();
         }
     }
 
     void CreateController()
     {
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Dino"), startingPosition, Quaternion.identity);
+    }
+    
+    void CreateCrowdedController()
+    {
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CrowdedDino"), startingPosition, Quaternion.identity);
     }
 }

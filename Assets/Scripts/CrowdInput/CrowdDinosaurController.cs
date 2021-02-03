@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace;
 using DefaultNamespace.Events;
 using GameEvents.Generic;
 using GameEvents.Int;
@@ -9,13 +10,20 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
+    [RequireComponent(typeof(DinoMovement))]
     public class CrowdDinosaurController : MonoBehaviourPunCallbacks, IArgumentGameEventListener<PlayerInput>
     {
         [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
 
         private CrowdInputReliability crowdInputReliability;
         private List<int> currentPlayerInputs;
-        private int numberOfPlayers = 3;
+        private int numberOfPlayers = 1;
+        private DinoMovement dinoMovement;
+
+        private void Awake()
+        {
+            dinoMovement = GetComponent<DinoMovement>();
+        }
 
         private void Start()
         {
@@ -25,6 +33,7 @@ namespace DefaultNamespace
             }
 
             playerInputGameEvent.RegisterListener(this);
+            
             crowdInputReliability = new CrowdInputReliability(numberOfPlayers, 2, 0.1f, 0.5f);
             currentPlayerInputs = EmptyInputList();
 
@@ -36,8 +45,10 @@ namespace DefaultNamespace
             var command = crowdInputReliability.IssueCommands(currentPlayerInputs.ToArray());
             if (command == Constants.INPUT_JUMP_ID)
             {
-                //jump
+                dinoMovement.IssueJump();
             }
+            
+            Debug.Log("Applying inputs: " + currentPlayerInputs.ToArray()[0] + " input:" + command);
 
             currentPlayerInputs = EmptyInputList();
         }
