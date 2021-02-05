@@ -5,6 +5,7 @@ using DefaultNamespace;
 using DefaultNamespace.Events;
 using GameEvents.Generic;
 using GameEvents.Int;
+using MutableObjects.Int;
 using Photon.Pun;
 using UnityEngine;
 
@@ -14,29 +15,33 @@ namespace DefaultNamespace
     public class CrowdDinosaurController : MonoBehaviourPunCallbacks, IArgumentGameEventListener<PlayerInput>
     {
         [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
+        [SerializeField] private MutableInt numberOfAIs;
 
         private CrowdInputReliability crowdInputReliability;
         private List<int> currentPlayerInputs;
-        private int numberOfPlayers = 1;
+        private int numberOfPlayers;
         private DinoMovement dinoMovement;
 
         private void Awake()
-        {
-            dinoMovement = GetComponent<DinoMovement>();
-        }
-
-        private void Start()
         {
             if (!PhotonNetwork.IsMasterClient)
             {
                 Destroy(this);
             }
 
+            dinoMovement = GetComponent<DinoMovement>();
+        }
+
+        private void Start()
+        {
             playerInputGameEvent.RegisterListener(this);
-            
+        }
+
+        public void StartGame()
+        {
+            numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + numberOfAIs.Value;
             crowdInputReliability = new CrowdInputReliability(numberOfPlayers, 2, 0.1f, 0.5f);
             currentPlayerInputs = EmptyInputList();
-
             InvokeRepeating(nameof(ApplyInputs), Constants.INPUT_PERIOD, Constants.INPUT_PERIOD);
         }
 
@@ -47,8 +52,11 @@ namespace DefaultNamespace
             {
                 dinoMovement.IssueJump();
             }
-            
+
             Debug.Log("Applying inputs: " + currentPlayerInputs.ToArray()[0] + " input:" + command);
+            Debug.Log("Current reliabilities: " + crowdInputReliability.GetPlayerReliabilities()
+                .Select(f => f + "")
+                .Aggregate((i, j) => i + ", " + j));
 
             currentPlayerInputs = EmptyInputList();
         }
@@ -62,8 +70,8 @@ namespace DefaultNamespace
         {
             playerInputGameEvent.UnregisterListener(this);
         }
-        
-        
+
+
         private List<int> EmptyInputList()
         {
             return Enumerable.Range(0, numberOfPlayers).Select(i => 0).ToList();

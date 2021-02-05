@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8230227472010745188}
   - component: {fileID: 6954133994127008277}
   - component: {fileID: 565155323137339426}
+  - component: {fileID: 1109813096293330214}
   m_Layer: 6
   m_Name: Dino
   m_TagString: Untagged
@@ -167,7 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae5c4e0927870f49a13465c9882d2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInputGameEvent: {fileID: 11400000, guid: 1bd433c37697e234894416c7bbd0b0cb, type: 2}
 --- !u!114 &8230227472010745188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,3 +226,16 @@ MonoBehaviour:
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
   dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
   grounded: 1
+--- !u!114 &1109813096293330214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5109901659581191557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e328c99339b44fe804f818c46bbfe04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInputGameEvent: {fileID: 11400000, guid: 1bd433c37697e234894416c7bbd0b0cb, type: 2}

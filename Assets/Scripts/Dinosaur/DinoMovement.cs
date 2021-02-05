@@ -20,6 +20,7 @@ namespace DefaultNamespace
 
         public void IssueJump()
         {
+            grounded = false;
             photonView.RPC(nameof(Jump), RpcTarget.AllViaServer);
         }
 

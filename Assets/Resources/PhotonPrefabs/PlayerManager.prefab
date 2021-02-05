@@ -67,3 +67,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingPosition: {x: 0, y: -3, z: 0}
+  numberOfAIs: {fileID: 11400000, guid: e04a5d4722872b34991df9340296c685, type: 2}
