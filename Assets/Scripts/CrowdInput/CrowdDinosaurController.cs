@@ -40,7 +40,7 @@ namespace DefaultNamespace
         public void StartGame()
         {
             numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + numberOfAIs.Value;
-            crowdInputReliability = new CrowdInputReliability(numberOfPlayers, 2, 0.1f, 0.5f);
+            crowdInputReliability = new CrowdInputReliability(numberOfPlayers, 2, 0.1f, 0.7f);
             currentPlayerInputs = EmptyInputList();
             InvokeRepeating(nameof(ApplyInputs), Constants.INPUT_PERIOD, Constants.INPUT_PERIOD);
         }
