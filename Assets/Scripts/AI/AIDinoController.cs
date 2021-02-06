@@ -4,6 +4,7 @@ using System.Linq;
 using DefaultNamespace.Events;
 using Photon.Pun;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DefaultNamespace.AI
 {
@@ -12,10 +13,12 @@ namespace DefaultNamespace.AI
     {
         [SerializeField] private float obstacleDistanceToJump;
 
-        public int aiIndex { get; set; }
+        private int aiIndex;
+        private float maxJumpNoise;
         private DinoMovement dinoMovement;
         private DinoInputSender dinoInputSender;
         private List<Transform> obstacles;
+        private float currentObstacleDistanceToJump;
 
         private void Awake()
         {
@@ -31,6 +34,7 @@ namespace DefaultNamespace.AI
         private void Start()
         {
             obstacles = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.transform).ToList();
+            currentObstacleDistanceToJump = obstacleDistanceToJump + Random.Range(-maxJumpNoise, maxJumpNoise);
         }
 
         private void Update()
@@ -41,15 +45,22 @@ namespace DefaultNamespace.AI
                 {
                     dinoMovement.IssueJump();
                     dinoInputSender.SendJumpInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount);
+                    currentObstacleDistanceToJump = obstacleDistanceToJump + Random.Range(-maxJumpNoise, maxJumpNoise);
                 }
             }
+        }
+
+        public void Configure(int index, float jumpNoise)
+        {
+            aiIndex = index;
+            maxJumpNoise = jumpNoise;
         }
 
         private bool ShouldJump()
         {
             return obstacles
                 .Any(obstacle => 
-                    Vector3.Distance(obstacle.position, transform.position) <= obstacleDistanceToJump &&
+                    Vector3.Distance(obstacle.position, transform.position) <= currentObstacleDistanceToJump &&
                     obstacle.position.x > transform.position.x
                     );
         }

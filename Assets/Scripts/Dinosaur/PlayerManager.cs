@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using DefaultNamespace.AI;
 using MutableObjects.Int;
@@ -8,7 +9,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
-    [SerializeField] private MutableInt numberOfAIs;
+    [SerializeField] private MutableInt numberOfAis;
 
     private PhotonView photonView;
 
@@ -24,11 +25,6 @@ public class PlayerManager : MonoBehaviour
             CreateController();
             CreateCrowdedController();
         }
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            CreateAIControllers();
-        }
     }
 
     void CreateController()
@@ -36,12 +32,12 @@ public class PlayerManager : MonoBehaviour
         PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Dino"), startingPosition, Quaternion.identity);
     }
 
-    void CreateAIControllers()
+    public void CreateAIControllers(List<AiConfig> aiConfigs)
     {
-        for (var i = 0; i < numberOfAIs.Value; i++)
+        for (var i = 0; i < numberOfAis.Value; i++)
         {
             var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition, Quaternion.identity);
-            dinoAI.GetComponent<AIDinoController>().aiIndex = i;
+            dinoAI.GetComponent<AIDinoController>().Configure(i, aiConfigs[i].jumpNoise);
         }
     }
 
