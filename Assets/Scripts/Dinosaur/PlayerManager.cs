@@ -10,7 +10,8 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
     [SerializeField] private MutableInt numberOfAis;
-
+    [SerializeField] private List<Color> playerColors;
+    
     private PhotonView photonView;
 
     private void Awake()
@@ -29,7 +30,8 @@ public class PlayerManager : MonoBehaviour
 
     void CreateController()
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Dino"), startingPosition, Quaternion.identity);
+        var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Dino"), startingPosition, Quaternion.identity);
+        dino.GetComponent<SpriteRenderer>().color = playerColors[photonView.CreatorActorNr];
     }
 
     public void CreateAIControllers(List<AiConfig> aiConfigs)
@@ -38,6 +40,7 @@ public class PlayerManager : MonoBehaviour
         {
             var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition, Quaternion.identity);
             dinoAI.GetComponent<AIDinoController>().Configure(i, aiConfigs[i].jumpNoise);
+            dinoAI.GetComponent<SpriteRenderer>().color = playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i];
         }
     }
 
