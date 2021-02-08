@@ -69,8 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9136d80664961ac3a0cc6d9e3a0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingPosition: {x: 0, y: -3, z: 0}
-  numberOfAis: {fileID: 11400000, guid: e04a5d4722872b34991df9340296c685, type: 2}
   playerColors:
   - {r: 1, g: 0.9190924, b: 0, a: 0.39215687}
   - {r: 1, g: 0, b: 0, a: 0.39215687}
@@ -82,6 +80,8 @@ MonoBehaviour:
   - {r: 0.7924528, g: 0.47988147, b: 0, a: 0.39215687}
   - {r: 0.41509432, g: 0.15240501, b: 0, a: 0.39215687}
   - {r: 0.3232175, g: 0.33962262, b: 0, a: 0.39215687}
+  startingPosition: {x: 0, y: -3, z: 0}
+  numberOfAis: {fileID: 11400000, guid: e04a5d4722872b34991df9340296c685, type: 2}
 --- !u!114 &7219012708036685035
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f9a0757cf9d4a17a8eaa8f3b4cfac9f, type: 3}
-  m_Name: DebugEvent
+  m_Name: AppendLineEvent
   m_EditorClassIdentifier: 
   debug: 0

@@ -8,10 +8,11 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public List<Color> playerColors;
+
     [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
     [SerializeField] private MutableInt numberOfAis;
-    [SerializeField] private List<Color> playerColors;
-    
+
     private PhotonView photonView;
 
     private void Awake()
@@ -25,20 +26,28 @@ public class PlayerManager : MonoBehaviour
         {
             CreateController();
             CreateCrowdedController();
+            var arrowSpawner = PhotonNetwork.Instantiate(
+                Path.Combine("PhotonPrefabs", "ArrowSpawner"),
+                new Vector3(0, 2f, 0),
+                Quaternion.identity
+            );
+            arrowSpawner.transform.parent = Camera.main.transform;
         }
     }
 
     void CreateController()
     {
-        var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerDino"), startingPosition, Quaternion.identity);
-        dino.GetComponent<SpriteRenderer>().color = playerColors[photonView.CreatorActorNr];
+        var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerDino"), startingPosition,
+            Quaternion.identity);
+        dino.GetComponent<SpriteRenderer>().color = playerColors[photonView.CreatorActorNr - 1];
     }
 
     public void CreateAIControllers(List<AiConfig> aiConfigs)
     {
         for (var i = 0; i < numberOfAis.Value; i++)
         {
-            var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition, Quaternion.identity);
+            var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition,
+                Quaternion.identity);
             dinoAI.GetComponent<AIDinoController>().Configure(i, aiConfigs[i].jumpNoise);
             dinoAI.GetComponent<SpriteRenderer>().color = playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i];
         }
