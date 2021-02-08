@@ -37,7 +37,9 @@ namespace DefaultNamespace.Visualization
         public void SpawnArrowInClients(int playerId)
         {
             var arrowObject = Instantiate(arrow, transform.position, Quaternion.identity);
-            arrowObject.GetComponent<SpriteRenderer>().color = playerColors[playerId];
+            var playerColor = playerColors[playerId];
+            playerColor.a = 1f;
+            arrowObject.GetComponent<SpriteRenderer>().color = playerColor;
         }
 
     }
