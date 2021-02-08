@@ -10,8 +10,6 @@ namespace DefaultNamespace
     {
         [SerializeField] private float jumpPower = 10f;
         [SerializeField] private float speed = 10f;
-        [SerializeField] private GameEvent lostGameEvent;
-        [SerializeField] private MutableVector3 dinoPosition;
 
         private Rigidbody2D rb;
         public bool grounded = true;
@@ -33,11 +31,6 @@ namespace DefaultNamespace
             rb = GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
-        {
-            dinoPosition.Value = transform.position;
-        }
-
         private void FixedUpdate()
         {
             rb.velocity = new Vector2(speed, rb.velocity.y);
@@ -47,12 +40,6 @@ namespace DefaultNamespace
         {
             if (photonView.IsMine)
             {
-                if (other.collider.CompareTag("Obstacle"))
-                {
-                    lostGameEvent.RaiseGameEvent();
-                    photonView.RPC(nameof(Die), RpcTarget.AllViaServer);
-                }
-
                 if (other.collider.CompareTag("Ground"))
                 {
                     grounded = true;
@@ -60,12 +47,6 @@ namespace DefaultNamespace
             }
         }
 
-        [PunRPC]
-        private void Die()
-        {
-            GetComponent<Animator>().enabled = false;
-            enabled = false;
-        }
 
         [PunRPC]
         private void Jump()

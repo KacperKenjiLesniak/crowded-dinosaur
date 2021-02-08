@@ -18,7 +18,7 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
     private void JumpInfo(int actorNumberOffset, PhotonMessageInfo info)
     {
         var playerNumber = info.Sender.ActorNumber - 1 + actorNumberOffset;
-        Debug.Log("Player " + playerNumber + " has jumped!");
+        // Debug.Log("Player " + playerNumber + " has jumped!");
         playerInputGameEvent.RaiseGameEvent(
             new PlayerInput(
                 playerNumber,

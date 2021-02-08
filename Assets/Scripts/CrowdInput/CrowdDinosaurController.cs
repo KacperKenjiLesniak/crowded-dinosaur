@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
 using DefaultNamespace.Events;
+using GameEvents.Game;
 using GameEvents.Generic;
 using GameEvents.Int;
 using MutableObjects.Int;
+using MutableObjects.Vector3;
 using Photon.Pun;
 using UnityEngine;
 
@@ -16,6 +18,8 @@ namespace DefaultNamespace
     {
         [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
         [SerializeField] private MutableInt numberOfAIs;
+        [SerializeField] private MutableVector3 dinoPosition;
+        [SerializeField] private GameEvent lostGameEvent;
 
         private CrowdInputReliability crowdInputReliability;
         private List<int> currentPlayerInputs;
@@ -30,11 +34,17 @@ namespace DefaultNamespace
             }
 
             dinoMovement = GetComponent<DinoMovement>();
+            dinoPosition.Value = transform.position;
         }
 
         private void Start()
         {
             playerInputGameEvent.RegisterListener(this);
+        }
+
+        private void Update()
+        {
+            dinoPosition.Value = transform.position;
         }
 
         public void StartGame()
@@ -65,6 +75,25 @@ namespace DefaultNamespace
         public void RaiseGameEvent(PlayerInput input)
         {
             currentPlayerInputs[input.playerId] = input.inputId;
+        }
+        
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (photonView.IsMine)
+            {
+                if (other.collider.CompareTag("Obstacle"))
+                {
+                    photonView.RPC(nameof(Die), RpcTarget.AllViaServer);
+                }
+            }
+        }
+
+        [PunRPC]
+        private void Die()
+        {
+            lostGameEvent.RaiseGameEvent();
+            GetComponent<Animator>().enabled = false;
+            dinoMovement.enabled = false;
         }
 
         private void OnDestroy()

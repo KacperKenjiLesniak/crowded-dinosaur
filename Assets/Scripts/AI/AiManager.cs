@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MutableObjects.Int;
 using UnityEngine;
 
@@ -10,6 +11,11 @@ namespace DefaultNamespace.AI
         [SerializeField] private MutableInt numberOfAis;
 
         private List<AiConfig> aiConfigs = new List<AiConfig>();
+
+        private void Awake()
+        {
+            numberOfAis.Value = 0;
+        }
 
         public void AddAi(float noise)
         {

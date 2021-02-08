@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
 
     void CreateController()
     {
-        var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Dino"), startingPosition, Quaternion.identity);
+        var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerDino"), startingPosition, Quaternion.identity);
         dino.GetComponent<SpriteRenderer>().color = playerColors[photonView.CreatorActorNr];
     }
 

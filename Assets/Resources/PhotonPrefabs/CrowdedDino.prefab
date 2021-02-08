@@ -42,6 +42,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInputGameEvent: {fileID: 11400000, guid: 1bd433c37697e234894416c7bbd0b0cb, type: 2}
   numberOfAIs: {fileID: 11400000, guid: e04a5d4722872b34991df9340296c685, type: 2}
+  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
+  lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
 --- !u!1001 &1241170938606525402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57,6 +59,10 @@ PrefabInstance:
       propertyPath: lostGameEvent
       value: 
       objectReference: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
+    - target: {fileID: 1109813096293330214, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5109901659581191555, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -135,6 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5109901659581191567, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
+    - {fileID: 1109813096293330214, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
 --- !u!1 &6328544944963849823 stripped
 GameObject:
