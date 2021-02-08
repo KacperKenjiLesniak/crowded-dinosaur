@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
+using DefaultNamespace.Evaluator;
 using DefaultNamespace.Events;
 using GameEvents.Game;
 using GameEvents.Generic;
 using GameEvents.Int;
+using GameEvents.String;
 using MutableObjects.Int;
 using MutableObjects.Vector3;
 using Photon.Pun;
@@ -25,7 +27,8 @@ namespace DefaultNamespace
         private List<int> currentPlayerInputs;
         private int numberOfPlayers;
         private DinoMovement dinoMovement;
-
+        private EvaluatorData evaluatorData = new EvaluatorData();
+        
         private void Awake()
         {
             if (!PhotonNetwork.IsMasterClient)
@@ -65,10 +68,10 @@ namespace DefaultNamespace
             }
 
             Debug.Log("Applying inputs: " + currentPlayerInputs.ToArray()[0] + " input:" + command);
-            Debug.Log("Current reliabilities: " + crowdInputReliability.GetPlayerReliabilities()
-                .Select(f => f + "")
-                .Aggregate((i, j) => i + ", " + j));
-
+            
+            evaluatorData.AppendReliabilities(crowdInputReliability.GetPlayerReliabilities());
+            evaluatorData.AppendInput(currentPlayerInputs);
+            
             currentPlayerInputs = EmptyInputList();
         }
 
@@ -76,7 +79,7 @@ namespace DefaultNamespace
         {
             currentPlayerInputs[input.playerId] = input.inputId;
         }
-        
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (photonView.IsMine)
@@ -101,6 +104,10 @@ namespace DefaultNamespace
             playerInputGameEvent.UnregisterListener(this);
         }
 
+        private void OnApplicationQuit()
+        {
+            evaluatorData.SaveData();
+        }
 
         private List<int> EmptyInputList()
         {
