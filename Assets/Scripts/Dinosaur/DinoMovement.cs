@@ -1,5 +1,7 @@
-﻿using DefaultNamespace.Events;
+﻿using System;
+using DefaultNamespace.Events;
 using GameEvents.Game;
+using MutableObjects.Int;
 using MutableObjects.Vector3;
 using Photon.Pun;
 using UnityEngine;
@@ -10,7 +12,10 @@ namespace DefaultNamespace
     {
         [SerializeField] private float jumpPower = 10f;
         [SerializeField] private float speed = 10f;
+        [SerializeField] private float speedModifier = 1.5f;
+        [SerializeField] private MutableInt score;
 
+        private int lastCheckpoint;
         private Rigidbody2D rb;
         public bool grounded = true;
 
@@ -29,6 +34,15 @@ namespace DefaultNamespace
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Update()
+        {
+            if (score.Value > lastCheckpoint + Constants.CHECKPOINT_LENGHT)
+            {
+                speed *= speedModifier;
+                lastCheckpoint = score.Value;
+            }
         }
 
         private void FixedUpdate()

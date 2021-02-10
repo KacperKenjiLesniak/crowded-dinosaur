@@ -19,6 +19,7 @@ namespace DefaultNamespace.AI
         private DinoInputSender dinoInputSender;
         private List<Transform> obstacles;
         private float currentObstacleDistanceToJump;
+        private Rigidbody2D rb;
 
         private void Awake()
         {
@@ -29,6 +30,7 @@ namespace DefaultNamespace.AI
 
             dinoMovement = GetComponent<DinoMovement>();
             dinoInputSender = GetComponent<DinoInputSender>();
+            rb = GetComponent<Rigidbody2D>();
         }
 
         private void Start()
@@ -45,7 +47,7 @@ namespace DefaultNamespace.AI
                 {
                     dinoMovement.IssueJump();
                     dinoInputSender.SendJumpInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount);
-                    currentObstacleDistanceToJump = obstacleDistanceToJump + Random.Range(-maxJumpNoise, maxJumpNoise);
+                    currentObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10 + Random.Range(-maxJumpNoise, maxJumpNoise);
                 }
             }
         }
