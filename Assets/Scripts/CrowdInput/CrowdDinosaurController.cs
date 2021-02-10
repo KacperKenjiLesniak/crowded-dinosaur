@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace;
+using DefaultNamespace.AI;
 using DefaultNamespace.Evaluator;
 using DefaultNamespace.Events;
 using GameEvents.Game;
 using GameEvents.Generic;
-using GameEvents.Int;
-using GameEvents.String;
 using MutableObjects.Int;
 using MutableObjects.Vector3;
 using Photon.Pun;
@@ -19,7 +16,7 @@ namespace DefaultNamespace
     public class CrowdDinosaurController : MonoBehaviourPunCallbacks, IArgumentGameEventListener<PlayerInput>
     {
         [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
-        [SerializeField] private MutableInt numberOfAIs;
+        [SerializeField] private AiList aiList;
         [SerializeField] private MutableVector3 dinoPosition;
         [SerializeField] private GameEvent lostGameEvent;
 
@@ -52,9 +49,9 @@ namespace DefaultNamespace
 
         public void StartGame()
         {
-            numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + numberOfAIs.Value;
+            numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + aiList.aiConfigs.Count;
             Debug.Log("Starting game with " + numberOfPlayers + " players.f");
-            crowdInputReliability = new CrowdInputReliability(numberOfPlayers, 2, 0.01f, 0.7f);
+            crowdInputReliability = CrowdInputManager.instance.GetCrowdInputReliability(numberOfPlayers);
             currentPlayerInputs = EmptyInputList();
             InvokeRepeating(nameof(ApplyInputs), Constants.INPUT_PERIOD, Constants.INPUT_PERIOD);
         }

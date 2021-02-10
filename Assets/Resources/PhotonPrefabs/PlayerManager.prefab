@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7219012708036685035}
   - component: {fileID: 1739217404761419279}
   - component: {fileID: -4734404522099546080}
+  - component: {fileID: -417028064891171755}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -81,7 +82,6 @@ MonoBehaviour:
   - {r: 0.41509432, g: 0.15240501, b: 0, a: 0.39215687}
   - {r: 0.3232175, g: 0.33962262, b: 0, a: 0.39215687}
   startingPosition: {x: 0, y: -3, z: 0}
-  numberOfAis: {fileID: 11400000, guid: e04a5d4722872b34991df9340296c685, type: 2}
 --- !u!114 &7219012708036685035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862ee7d4f6074d229c0e30bcc8956cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfAis: {fileID: 11400000, guid: e04a5d4722872b34991df9340296c685, type: 2}
+  aiList: {fileID: 11400000, guid: d5fd655aea7cc8b4ebafb73d753decea, type: 2}
 --- !u!114 &1739217404761419279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +142,34 @@ MonoBehaviour:
       - m_Target: {fileID: 7219012708036685035}
         m_TargetAssemblyTypeName: DefaultNamespace.AI.AiManager, Assembly-CSharp
         m_MethodName: CreateAis
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-417028064891171755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825434957161913121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b2f85583a54b21922069d1d0951342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8cf82eb9656495d419339d1593dc1118, type: 2}
+  onGameEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7219012708036685035}
+        m_TargetAssemblyTypeName: DefaultNamespace.AI.AiManager, Assembly-CSharp
+        m_MethodName: ClearAis
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

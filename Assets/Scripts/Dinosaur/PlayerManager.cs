@@ -11,7 +11,6 @@ public class PlayerManager : MonoBehaviour
     public List<Color> playerColors;
 
     [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
-    [SerializeField] private MutableInt numberOfAis;
 
     private PhotonView photonView;
 
@@ -44,7 +43,7 @@ public class PlayerManager : MonoBehaviour
 
     public void CreateAIControllers(List<AiConfig> aiConfigs)
     {
-        for (var i = 0; i < numberOfAis.Value; i++)
+        for (var i = 0; i < aiConfigs.Count; i++)
         {
             var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition,
                 Quaternion.identity);

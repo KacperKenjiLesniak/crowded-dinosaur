@@ -1,5 +1,8 @@
-﻿namespace DefaultNamespace.AI
+﻿using System;
+
+namespace DefaultNamespace.AI
 {
+    [Serializable]
     public class AiConfig
     {
         public AiConfig(float jumpNoise)

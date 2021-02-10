@@ -8,29 +8,21 @@ namespace DefaultNamespace.AI
     [RequireComponent(typeof(PlayerManager))]
     public class AiManager : MonoBehaviour
     {
-        [SerializeField] private MutableInt numberOfAis;
-
-        private List<AiConfig> aiConfigs = new List<AiConfig>();
-
-        private void Awake()
-        {
-            numberOfAis.Value = 0;
-        }
+        [SerializeField] private AiList aiList;
 
         public void AddAi(float noise)
         {
-            aiConfigs.Add(new AiConfig(noise));
-            numberOfAis.Value += 1;
+            aiList.aiConfigs.Add(new AiConfig(noise));
         }
 
         public void ClearAis()
         {
-            aiConfigs.Clear();
+            aiList.aiConfigs.Clear();
         }
 
         public void CreateAis()
         {
-            GetComponent<PlayerManager>().CreateAIControllers(aiConfigs);
+            GetComponent<PlayerManager>().CreateAIControllers(aiList.aiConfigs);
         }
     }
 }

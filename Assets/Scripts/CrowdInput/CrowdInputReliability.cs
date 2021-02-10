@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using UnityEngine;
 
 namespace DefaultNamespace
 {
     public class CrowdInputReliability
     {
         private IntPtr m_NativeObject = IntPtr.Zero;
-        private int numberOfPlayers;
+        public int numberOfPlayers { get; }
 
         public CrowdInputReliability(
             int numberOfPlayers,
