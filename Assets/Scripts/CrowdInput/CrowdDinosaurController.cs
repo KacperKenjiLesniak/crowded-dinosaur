@@ -16,7 +16,6 @@ namespace DefaultNamespace
     {
         [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
         [SerializeField] private AiList aiList;
-        [SerializeField] private MutableVector3 dinoPosition;
         [SerializeField] private GameEvent lostGameEvent;
 
         private CrowdInputReliability crowdInputReliability;
@@ -33,7 +32,6 @@ namespace DefaultNamespace
             }
 
             dinoMovement = GetComponent<DinoMovement>();
-            dinoPosition.Value = transform.position;
         }
 
         private void Start()
@@ -41,10 +39,6 @@ namespace DefaultNamespace
             playerInputGameEvent.RegisterListener(this);
         }
 
-        private void Update()
-        {
-            dinoPosition.Value = transform.position;
-        }
 
         public void StartGame()
         {
@@ -109,5 +103,6 @@ namespace DefaultNamespace
         {
             return Enumerable.Range(0, numberOfPlayers).Select(i => 0).ToList();
         }
+
     }
 }

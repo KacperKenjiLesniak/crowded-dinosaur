@@ -28,6 +28,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-4129870872682695188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328544944963849823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30281a457b3d4a85b5253e7fd4221ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
 --- !u!114 &4153981978706217939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,7 +55,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInputGameEvent: {fileID: 11400000, guid: 1bd433c37697e234894416c7bbd0b0cb, type: 2}
   aiList: {fileID: 11400000, guid: d5fd655aea7cc8b4ebafb73d753decea, type: 2}
-  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
 --- !u!1001 &1241170938606525402
 PrefabInstance:

@@ -54,6 +54,10 @@ public class PlayerManager : MonoBehaviour
 
     void CreateCrowdedController()
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CrowdedDino"), startingPosition, Quaternion.identity);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CrowdedDino"), startingPosition,
+                Quaternion.identity);
+        }
     }
 }
