@@ -52,12 +52,12 @@ namespace DefaultNamespace
         private void ApplyInputs()
         {
             var command = crowdInputReliability.IssueCommands(currentPlayerInputs.ToArray());
-            if (command == Constants.INPUT_JUMP_ID)
+            if (command == Constants.INPUT_JUMP_ID && dinoMovement.grounded)
             {
                 dinoMovement.IssueJump();
             }
 
-            Debug.Log("Applying inputs: " + currentPlayerInputs.ToArray()[0] + " input:" + command);
+            Debug.Log("Applying inputs: " + string.Join(", ", currentPlayerInputs) + " input:" + command);
             
             evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
             evaluatorData.AppendInput(currentPlayerInputs);

@@ -7,7 +7,8 @@ namespace DefaultNamespace
     public class DinoPosition : MonoBehaviourPunCallbacks
     {
         [SerializeField] private MutableVector3 dinoPosition;
-        
+        [SerializeField] private float maxPositionDifference;
+
         private void Awake()
         {
             dinoPosition.Value = transform.position;
@@ -15,13 +16,22 @@ namespace DefaultNamespace
         
         private void Update()
         {
-            photonView.RPC(nameof(UpdateDinosaurPosition), RpcTarget.All);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                dinoPosition.Value = transform.position;
+                photonView.RPC(nameof(UpdateDinosaurPosition), RpcTarget.Others, transform.position);
+            }
         }
         
         [PunRPC]
-        private void UpdateDinosaurPosition()
+        private void UpdateDinosaurPosition(Vector3 position)
         {
-            dinoPosition.Value = transform.position;
+            dinoPosition.Value = position;
+            maxPositionDifference = 0.2f;
+            if (Vector3.Distance(position, transform.position) > maxPositionDifference)
+            {
+                transform.position = position;
+            }
         }
     }
 }
