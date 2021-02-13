@@ -7,6 +7,13 @@
       "dependencies": {},
       "hash": "4b24be2209550bd7cca3b5bc75cff5112d6bbc3f"
     },
+    "com.kenjik.crowd-input-reliability": {
+      "version": "https://github.com/KacperKenjiLesniak/crowd-input-reliability.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "194e86a63d7b7dd8a333022d3e137769d70f0431"
+    },
     "com.unity.2d.animation": {
       "version": "5.0.3",
       "depth": 0,

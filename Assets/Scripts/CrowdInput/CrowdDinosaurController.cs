@@ -5,7 +5,6 @@ using DefaultNamespace.Evaluator;
 using DefaultNamespace.Events;
 using GameEvents.Game;
 using GameEvents.Generic;
-using MutableObjects.Int;
 using MutableObjects.Vector3;
 using Photon.Pun;
 using UnityEngine;
@@ -66,7 +65,7 @@ namespace DefaultNamespace
 
             Debug.Log("Applying inputs: " + currentPlayerInputs.ToArray()[0] + " input:" + command);
             
-            evaluatorData.AppendReliabilities(crowdInputReliability.GetPlayerReliabilities());
+            evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
             evaluatorData.AppendInput(currentPlayerInputs);
             
             currentPlayerInputs = EmptyInputList();

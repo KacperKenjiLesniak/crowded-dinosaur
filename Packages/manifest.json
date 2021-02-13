@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.chark.unity-scriptable-objects": "https://github.com/chark/unity-scriptable-objects.git#upm",
+    "com.kenjik.crowd-input-reliability": "https://github.com/KacperKenjiLesniak/crowd-input-reliability.git#upm",
     "com.unity.2d.animation": "5.0.3",
     "com.unity.2d.pixel-perfect": "4.0.1",
     "com.unity.2d.psdimporter": "4.0.2",

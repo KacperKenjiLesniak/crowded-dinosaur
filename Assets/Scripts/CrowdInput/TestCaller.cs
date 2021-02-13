@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using System.Runtime.InteropServices;
-using DefaultNamespace;
+﻿using UnityEngine;
 
 public class TestCaller : MonoBehaviour
 {
@@ -14,17 +8,17 @@ public class TestCaller : MonoBehaviour
         var crowd2 = new CrowdInputReliability(10, 3, 0.1f, 0.5f);
 
         // Display output of functions
-        print(crowd.IssueCommands(new []{0, 0, 1}));
-        print(crowd.IssueCommands(new []{1, 1, 0}));
+        print(crowd.IssueCommands(new[] {0, 0, 1}));
+        print(crowd.IssueCommands(new[] {1, 1, 0}));
 
-        foreach (var reliability in crowd.GetPlayerReliabilities())
+        foreach (var reliability in crowd.playerReliabilities)
         {
             print(reliability);
         }
-        
+
         print("crowd2");
-        print(crowd2.IssueCommands(new []{0, 0, 0, 0 , 0, 1, 1, 1, 1, 2}));
-        foreach (var reliability in crowd2.GetPlayerReliabilities())
+        print(crowd2.IssueCommands(new[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 2}));
+        foreach (var reliability in crowd2.playerReliabilities)
         {
             print(reliability);
         }
