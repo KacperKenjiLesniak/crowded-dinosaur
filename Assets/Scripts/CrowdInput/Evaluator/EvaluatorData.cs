@@ -27,9 +27,9 @@ namespace DefaultNamespace.Evaluator
             playerReliabilitiesData.Add(playerReliabilities);
         }
         
-        public void AppendInput(List<int> playerInput)
+        public void AppendInput(IEnumerable<int> playerInput)
         {
-            playerInputData.Add(playerInput);
+            playerInputData.Add(playerInput.ToList());
         }
 
         public void SaveData()

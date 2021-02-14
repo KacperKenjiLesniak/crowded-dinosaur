@@ -23,6 +23,7 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
             new PlayerInput(
                 playerNumber,
                 PhotonNetwork.NickName,
-                Constants.INPUT_JUMP_ID));
+                Constants.INPUT_JUMP_ID,
+                Time.time));
     }
 }

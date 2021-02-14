@@ -11,7 +11,7 @@ namespace DefaultNamespace.Editor
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
             if(GUILayout.Button("Spawn"))
-                ((ArrowSpawner)target).SpawnArrow(new PlayerInput(1, "name", Constants.INPUT_JUMP_ID));
+                ((ArrowSpawner)target).SpawnArrow(new PlayerInput(1, "name", Constants.INPUT_JUMP_ID, Time.time));
         }
     }
 }

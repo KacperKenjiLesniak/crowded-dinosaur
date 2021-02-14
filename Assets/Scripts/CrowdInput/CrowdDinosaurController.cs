@@ -1,29 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DefaultNamespace.AI;
-using DefaultNamespace.Evaluator;
-using DefaultNamespace.Events;
+﻿using DefaultNamespace.AI;
 using GameEvents.Game;
-using GameEvents.Generic;
-using MutableObjects.Vector3;
 using Photon.Pun;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
     [RequireComponent(typeof(DinoMovement))]
-    public class CrowdDinosaurController : MonoBehaviourPunCallbacks, IArgumentGameEventListener<PlayerInput>
+    public class CrowdDinosaurController : MonoBehaviourPunCallbacks, InputReceiver
     {
-        [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
         [SerializeField] private AiList aiList;
         [SerializeField] private GameEvent lostGameEvent;
+        [SerializeField] private InputBroker inputBroker;
 
-        private CrowdInputReliability crowdInputReliability;
-        private List<int> currentPlayerInputs;
         private int numberOfPlayers;
         private DinoMovement dinoMovement;
-        private EvaluatorData evaluatorData = new EvaluatorData();
-        
+
         private void Awake()
         {
             if (!PhotonNetwork.IsMasterClient)
@@ -31,43 +22,22 @@ namespace DefaultNamespace
                 Destroy(this);
             }
 
+            inputBroker = FindObjectOfType<InputBroker>();
             dinoMovement = GetComponent<DinoMovement>();
         }
-
-        private void Start()
-        {
-            playerInputGameEvent.RegisterListener(this);
-        }
-
 
         public void StartGame()
         {
             numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + aiList.aiConfigs.Count;
+            inputBroker.SetUp(new InputBrokerConfig(
+                    numberOfPlayers,
+                    2,
+                    0.01f,
+                    0.7f,
+                    0.4f
+                ),
+                this);
             Debug.Log("Starting game with " + numberOfPlayers + " players.f");
-            crowdInputReliability = CrowdInputManager.instance.GetCrowdInputReliability(numberOfPlayers);
-            currentPlayerInputs = EmptyInputList();
-            InvokeRepeating(nameof(ApplyInputs), Constants.INPUT_PERIOD, Constants.INPUT_PERIOD);
-        }
-
-        private void ApplyInputs()
-        {
-            var command = crowdInputReliability.IssueCommands(currentPlayerInputs.ToArray());
-            if (command == Constants.INPUT_JUMP_ID && dinoMovement.grounded)
-            {
-                dinoMovement.IssueJump();
-            }
-
-            Debug.Log("Applying inputs: " + string.Join(", ", currentPlayerInputs) + " input:" + command);
-            
-            evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
-            evaluatorData.AppendInput(currentPlayerInputs);
-            
-            currentPlayerInputs = EmptyInputList();
-        }
-
-        public void RaiseGameEvent(PlayerInput input)
-        {
-            currentPlayerInputs[input.playerId] = input.inputId;
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -89,20 +59,12 @@ namespace DefaultNamespace
             dinoMovement.enabled = false;
         }
 
-        private void OnDestroy()
+        public void ApplyInput(int input)
         {
-            playerInputGameEvent.UnregisterListener(this);
+            if (input == Constants.INPUT_JUMP_ID && dinoMovement.grounded)
+            {
+                dinoMovement.IssueJump();
+            }
         }
-
-        private void OnApplicationQuit()
-        {
-            evaluatorData.SaveData();
-        }
-
-        private List<int> EmptyInputList()
-        {
-            return Enumerable.Range(0, numberOfPlayers).Select(i => 0).ToList();
-        }
-
     }
 }
