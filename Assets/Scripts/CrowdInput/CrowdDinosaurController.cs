@@ -10,8 +10,9 @@ namespace DefaultNamespace
     {
         [SerializeField] private AiList aiList;
         [SerializeField] private GameEvent lostGameEvent;
-        [SerializeField] private InputBroker inputBroker;
-
+        [SerializeField] private CrowdConfig crowdConfig;
+        
+        private InputBroker inputBroker;
         private int numberOfPlayers;
         private DinoMovement dinoMovement;
 
@@ -22,22 +23,15 @@ namespace DefaultNamespace
                 Destroy(this);
             }
 
-            inputBroker = FindObjectOfType<InputBroker>();
             dinoMovement = GetComponent<DinoMovement>();
         }
 
         public void StartGame()
         {
+            inputBroker = FindObjectOfType<InputBroker>();
             numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + aiList.aiConfigs.Count;
-            inputBroker.SetUp(new InputBrokerConfig(
-                    numberOfPlayers,
-                    2,
-                    0.01f,
-                    0.7f,
-                    0.4f
-                ),
-                this);
-            Debug.Log("Starting game with " + numberOfPlayers + " players.f");
+            inputBroker.SetUp(crowdConfig, numberOfPlayers, this);
+            Debug.Log("Starting game with " + numberOfPlayers + " players.");
         }
 
         private void OnCollisionEnter2D(Collision2D other)

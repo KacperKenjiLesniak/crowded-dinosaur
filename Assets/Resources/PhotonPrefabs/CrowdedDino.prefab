@@ -54,9 +54,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31fc430606d145fba60635d94d37d86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInputGameEvent: {fileID: 11400000, guid: 1bd433c37697e234894416c7bbd0b0cb, type: 2}
   aiList: {fileID: 11400000, guid: d5fd655aea7cc8b4ebafb73d753decea, type: 2}
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
+  crowdConfig: {fileID: 11400000, guid: 7b35b42d6a8164045b38d836275a4c51, type: 2}
 --- !u!1001 &1241170938606525402
 PrefabInstance:
   m_ObjectHideFlags: 0

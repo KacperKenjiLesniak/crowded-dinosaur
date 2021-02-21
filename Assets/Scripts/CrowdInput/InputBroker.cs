@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace.Evaluator;
 using DefaultNamespace.Events;
@@ -17,17 +16,24 @@ namespace DefaultNamespace
         private Queue<PlayerInput> inputsQueue;
         private EvaluatorData evaluatorData;
 
-        public void SetUp(InputBrokerConfig config, InputReceiver receiver)
+        private void Start()
         {
-            crowdInputReliability = new CrowdInputReliability(
-                config.numberOfPlayers,
-                config.numberOfCommands,
-                config.reliabilityCoefficient,
-                config.agreementThreshold
-            );
+            inputsQueue = new Queue<PlayerInput>();
+        }
+
+        public void SetUp(CrowdConfig config, int numberOfPlayers, InputReceiver receiver)
+        {
+            if (crowdInputReliability == null || crowdInputReliability.numberOfPlayers != numberOfPlayers)
+            {
+                crowdInputReliability = new CrowdInputReliability(
+                    numberOfPlayers,
+                    config.numberOfCommands,
+                    config.reliabilityCoefficient,
+                    config.agreementThreshold
+                );
+            }
             inputTimeToLive = config.inputTimeToLive;
             inputReceiver = receiver;
-            inputsQueue = new Queue<PlayerInput>();
             evaluatorData = debug ? new EvaluatorData() : null;
         }
 

@@ -1,8 +1,4 @@
-﻿using System;
-using DefaultNamespace.Events;
-using GameEvents.Game;
-using MutableObjects.Int;
-using MutableObjects.Vector3;
+﻿using MutableObjects.Int;
 using Photon.Pun;
 using UnityEngine;
 
@@ -18,6 +14,7 @@ namespace DefaultNamespace
         private int lastCheckpoint;
         private Rigidbody2D rb;
         public bool grounded = true;
+        private static readonly int Crouching = Animator.StringToHash("crouching");
 
         #region Public
 
@@ -25,6 +22,11 @@ namespace DefaultNamespace
         {
             grounded = false;
             photonView.RPC(nameof(Jump), RpcTarget.AllViaServer);
+        }
+        
+        public void IssueCrouch()
+        {
+            photonView.RPC(nameof(Crouch), RpcTarget.AllViaServer);
         }
 
         #endregion
@@ -67,6 +69,13 @@ namespace DefaultNamespace
         {
             rb.AddForce(new Vector2(0f, 10f) * jumpPower);
             grounded = false;
+        }
+
+
+        [PunRPC]
+        private void Crouch()
+        {
+            GetComponent<Animator>().SetBool(Crouching, true); 
         }
 
         #endregion

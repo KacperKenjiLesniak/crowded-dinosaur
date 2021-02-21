@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace.Events;
 using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -46,7 +44,7 @@ namespace DefaultNamespace.AI
                 if (ShouldJump() && dinoMovement.grounded)
                 {
                     dinoMovement.IssueJump();
-                    dinoInputSender.SendJumpInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount);
+                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
                     currentObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10 + Random.Range(-maxJumpNoise, maxJumpNoise);
                 }
             }

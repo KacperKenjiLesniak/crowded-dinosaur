@@ -9,21 +9,20 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
 {
     [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
 
-    public void SendJumpInput(int actorNumberOffset)
+    public void SendInput(int actorNumberOffset, int inputId)
     {
-        photonView.RPC(nameof(JumpInfo), RpcTarget.MasterClient, actorNumberOffset);
+        photonView.RPC(nameof(InputInfo), RpcTarget.MasterClient, actorNumberOffset, inputId);
     }
     
     [PunRPC]
-    private void JumpInfo(int actorNumberOffset, PhotonMessageInfo info)
+    private void InputInfo(int actorNumberOffset, int inputId, PhotonMessageInfo info)
     {
         var playerNumber = info.Sender.ActorNumber - 1 + actorNumberOffset;
-        // Debug.Log("Player " + playerNumber + " has jumped!");
         playerInputGameEvent.RaiseGameEvent(
             new PlayerInput(
                 playerNumber,
                 PhotonNetwork.NickName,
-                Constants.INPUT_JUMP_ID,
+                inputId,
                 Time.time));
     }
 }

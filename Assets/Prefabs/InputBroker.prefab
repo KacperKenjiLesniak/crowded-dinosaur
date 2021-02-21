@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3795070790182762697}
   - component: {fileID: 3558059342832653149}
   - component: {fileID: 4880909068150305235}
+  - component: {fileID: -2425599437762856104}
   m_Layer: 0
   m_Name: InputBroker
   m_TagString: Untagged
@@ -73,3 +74,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-2425599437762856104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713530076509662976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb50e855491d42169e6e9f739a90cb53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
