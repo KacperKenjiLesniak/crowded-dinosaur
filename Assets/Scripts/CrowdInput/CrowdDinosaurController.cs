@@ -55,9 +55,14 @@ namespace DefaultNamespace
 
         public void ApplyInput(int input)
         {
-            if (input == Constants.INPUT_JUMP_ID && dinoMovement.grounded)
+            switch (input)
             {
-                dinoMovement.IssueJump();
+                case Constants.INPUT_JUMP_ID when dinoMovement.grounded:
+                    dinoMovement.IssueJump();
+                    break;
+                case Constants.INPUT_CROUCH_ID when dinoMovement.grounded:
+                    dinoMovement.IssueCrouch();
+                    break;
             }
         }
     }

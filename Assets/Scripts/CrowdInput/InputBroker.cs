@@ -46,7 +46,7 @@ namespace DefaultNamespace
         {
             if (crowdInputReliability != null)
             {
-                if (inputsQueue.Count >= crowdInputReliability.numberOfPlayers / 2)
+                if (inputsQueue.Count >= crowdInputReliability.numberOfPlayers / 2 + 1)
                 {
                     var currentPlayerInputs = DequeueCurrentPlayerInputs();
                     inputReceiver.ApplyInput(

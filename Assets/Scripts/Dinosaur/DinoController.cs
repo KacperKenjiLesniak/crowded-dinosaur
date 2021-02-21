@@ -1,6 +1,4 @@
-﻿using System;
-using DefaultNamespace;
-using DefaultNamespace.Events;
+﻿using DefaultNamespace;
 using Photon.Pun;
 using UnityEngine;
 
@@ -29,8 +27,7 @@ public class DinoController : MonoBehaviourPunCallbacks
             if (Input.GetButtonDown("Down") && dinoMovement.grounded)
             {
                 dinoMovement.IssueCrouch();
-                dinoInputSender.SendInput(0, Constants.INPUT_JUMP_ID);
-
+                dinoInputSender.SendInput(0, Constants.INPUT_CROUCH_ID);
             }
         }
     }

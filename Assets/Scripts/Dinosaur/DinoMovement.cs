@@ -13,6 +13,7 @@ namespace DefaultNamespace
 
         private int lastCheckpoint;
         private Rigidbody2D rb;
+        private Animator animator;
         public bool grounded = true;
         private static readonly int Crouching = Animator.StringToHash("crouching");
 
@@ -36,6 +37,7 @@ namespace DefaultNamespace
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
         }
 
         private void Update()
@@ -67,6 +69,7 @@ namespace DefaultNamespace
         [PunRPC]
         private void Jump()
         {
+            EndCrouch();
             rb.AddForce(new Vector2(0f, 10f) * jumpPower);
             grounded = false;
         }
@@ -75,9 +78,14 @@ namespace DefaultNamespace
         [PunRPC]
         private void Crouch()
         {
-            GetComponent<Animator>().SetBool(Crouching, true); 
+            animator.SetBool(Crouching, true); 
+            Invoke(nameof(EndCrouch), 1f);
         }
 
+        private void EndCrouch()
+        {
+            animator.SetBool(Crouching, false);
+        }
         #endregion
     }
 }
