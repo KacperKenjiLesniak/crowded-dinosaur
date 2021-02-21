@@ -24,7 +24,7 @@ public class DinoController : MonoBehaviourPunCallbacks
                 dinoInputSender.SendInput(0, Constants.INPUT_JUMP_ID);
             }
 
-            if (Input.GetButtonDown("Down") && dinoMovement.grounded)
+            if (Input.GetButtonDown("Down"))
             {
                 dinoMovement.IssueCrouch();
                 dinoInputSender.SendInput(0, Constants.INPUT_CROUCH_ID);
