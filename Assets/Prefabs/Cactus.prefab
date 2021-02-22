@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8726454523702688547}
   - component: {fileID: 8726454523702688548}
   - component: {fileID: 8726454523702688546}
-  - component: {fileID: 5398339255107144826}
   - component: {fileID: 8726454523425199610}
   - component: {fileID: 3722741820961982962}
   m_Layer: 8
@@ -112,19 +111,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 6}
   m_EdgeRadius: 0
---- !u!114 &5398339255107144826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8726454523702688549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73aa58a1ba9f4c56be3817f3b22f8882, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
 --- !u!114 &8726454523425199610
 MonoBehaviour:
   m_ObjectHideFlags: 0

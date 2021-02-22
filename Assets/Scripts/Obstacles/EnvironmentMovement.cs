@@ -13,9 +13,9 @@ namespace DefaultNamespace
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                if (transform.position.x  - dinoPosition.Value.x <= -10f)
+                if (transform.position.x  - dinoPosition.Value.x <= -20f)
                 {
-                    transform.position = new Vector3(dinoPosition.Value.x + 10f, transform.position.y);
+                    transform.position = new Vector3(dinoPosition.Value.x + 20f, transform.position.y);
                 }
             }
         }
