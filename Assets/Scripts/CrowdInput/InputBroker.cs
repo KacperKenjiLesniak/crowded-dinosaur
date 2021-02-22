@@ -6,15 +6,21 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
+    [RequireComponent(typeof(EvaluatorData))]
     public class InputBroker : MonoBehaviour
     {
-        [SerializeField] private bool debug = false;
+        [SerializeField] private bool debug;
 
         private InputReceiver inputReceiver;
         private CrowdInputReliability crowdInputReliability;
         private float inputTimeToLive;
         private Queue<PlayerInput> inputsQueue;
         private EvaluatorData evaluatorData;
+
+        private void Awake()
+        {
+            evaluatorData = GetComponent<EvaluatorData>();
+        }
 
         private void Start()
         {
@@ -31,10 +37,11 @@ namespace DefaultNamespace
                     config.reliabilityCoefficient,
                     config.agreementThreshold
                 );
+                
+                evaluatorData.ResetReliabilities();
             }
             inputTimeToLive = config.inputTimeToLive;
             inputReceiver = receiver;
-            evaluatorData = debug ? new EvaluatorData() : null;
         }
 
         public void PostInput(PlayerInput input)
@@ -76,14 +83,6 @@ namespace DefaultNamespace
             }
 
             return inputsList.ToArray();
-        }
-
-        private void OnApplicationQuit()
-        {
-            if (debug)
-            {
-                evaluatorData.SaveData();
-            }
         }
     }
 }

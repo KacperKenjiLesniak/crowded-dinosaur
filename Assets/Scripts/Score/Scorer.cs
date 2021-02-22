@@ -15,7 +15,8 @@ namespace DefaultNamespace.Score
 
         private void Start()
         {
-            initialPosition = dinoPosition.Value.x;
+            score.Value = 0;
+            initialPosition = 0;
         }
 
         private void Update()

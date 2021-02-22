@@ -1,16 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
 
 namespace DefaultNamespace.Evaluator
 {
-    public class EvaluatorData
+    public class EvaluatorData : MonoBehaviour
     {
-        private List<List<float>> playerReliabilitiesData;
-        private List<List<int>> playerInputData;
+        public List<List<float>> playerReliabilitiesData { get; private set; }
+        public List<List<int>> playerInputData { get; private set; }
 
-        public EvaluatorData()
+        private void Start()
+        {
+            ResetReliabilities();
+        }
+
+        public void ResetReliabilities()
         {
             playerReliabilitiesData = new List<List<float>>();
             playerInputData = new List<List<int>>();
@@ -24,7 +32,7 @@ namespace DefaultNamespace.Evaluator
 
             Debug.Log("Current reliabilities: " + reliabilitiesString);
 
-            playerReliabilitiesData.Add(playerReliabilities);
+            playerReliabilitiesData.Add(new List<float>(playerReliabilities));
         }
         
         public void AppendInput(IEnumerable<int> playerInput)
@@ -32,20 +40,5 @@ namespace DefaultNamespace.Evaluator
             playerInputData.Add(playerInput.ToList());
         }
 
-        public void SaveData()
-        {
-            Debug.Log("Saving data in: " + Application.dataPath + "/Evaluator");
-            using var file1 = File.CreateText(Application.dataPath + "/Evaluator.txt");
-            foreach (var row in playerReliabilitiesData)
-            {
-                file1.WriteLine(row.Select(f => f + "").Aggregate((i, j) => i + "," + j) + ";");
-            }     
-            
-            using var file2 = File.CreateText(Application.dataPath + "/EvaluatorInput.txt");
-            foreach (var row in playerInputData)
-            {
-                file2.WriteLine(row.Select(f => f + "").Aggregate((i, j) => i + "," + j) + ";");
-            }
-        }
     }
 }
