@@ -38,7 +38,7 @@ namespace DefaultNamespace
         {
             if (photonView.IsMine)
             {
-                if (other.collider.CompareTag("Obstacle"))
+                if (other.collider.CompareTag("Obstacle") || other.collider.CompareTag("Bird"))
                 {
                     photonView.RPC(nameof(Die), RpcTarget.AllViaServer);
                 }

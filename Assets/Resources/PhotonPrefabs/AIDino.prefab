@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleDistanceToJump: 4.5
+  birdDistanceToCrouch: 3
 --- !u!114 &5317362980864252382
 MonoBehaviour:
   m_ObjectHideFlags: 0
