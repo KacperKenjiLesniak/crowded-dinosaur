@@ -57,7 +57,7 @@ namespace DefaultNamespace
                 case Constants.INPUT_SHORT_JUMP_ID when dinoMovement.grounded:
                     dinoMovement.IssueJump(true);
                     break;
-                case Constants.INPUT_CROUCH_ID:
+                case Constants.INPUT_CROUCH_ID when !dinoMovement.isCrouching:
                     dinoMovement.IssueCrouch();
                     break;
             }

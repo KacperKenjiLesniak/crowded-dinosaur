@@ -1,24 +1,29 @@
-﻿using GameEvents.Game;
+﻿using System;
+using GameEvents.Game;
 using MutableObjects.Int;
+using MutableObjects.Vector3;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class DinoMovement : MonoBehaviourPunCallbacks
+    public class DinoMovement : MonoBehaviourPunCallbacks, IPunObservable
     {
+        public bool grounded { get; private set; } = true;
+        public bool isCrouching { get; private set; }
+        
         [SerializeField] private float jumpPower = 10f;
         [SerializeField] private float shortJumpPower = 7f;
         [SerializeField] private float speed = 10f;
         [SerializeField] private float speedModifier = 1.5f;
         [SerializeField] private MutableInt score;
         [SerializeField] private GameEvent lostGameEvent;
+        [SerializeField] private MutableVector3 dinoPosition;
 
         private int lastCheckpoint;
         private Rigidbody2D rb;
         private Animator animator;
-        public bool grounded = true;
         private static readonly int Crouching = Animator.StringToHash("crouching");
 
         #region Public
@@ -41,6 +46,7 @@ namespace DefaultNamespace
 
         public void IssueCrouch()
         {
+            isCrouching = true;
             photonView.RPC(nameof(Crouch), RpcTarget.AllViaServer);
         }
 
@@ -60,6 +66,11 @@ namespace DefaultNamespace
             {
                 speed *= speedModifier;
                 lastCheckpoint = score.Value;
+            }
+
+            if (Math.Abs(dinoPosition.Value.x - transform.position.x) > 0.5f)
+            {
+                transform.position = new Vector3(dinoPosition.Value.x, transform.position.y);
             }
         }
 
@@ -82,6 +93,22 @@ namespace DefaultNamespace
         #endregion
 
         #region PUN
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(transform.position);
+            }
+            else
+            {
+                var networkPosition = (Vector3)stream.ReceiveNext();
+                if (Math.Abs(networkPosition.x - transform.position.x) >= 0.5f)
+                {
+                    transform.position = networkPosition;
+                }
+            }
+        }
 
         [PunRPC]
         private void SetColorRpc(float r, float g, float b, float a)
@@ -109,12 +136,14 @@ namespace DefaultNamespace
         [PunRPC]
         private void Crouch()
         {
+            isCrouching = true;
             animator.SetBool(Crouching, true);
             Invoke(nameof(EndCrouch), 1f);
         }
 
         private void EndCrouch()
         {
+            isCrouching = false;
             animator.SetBool(Crouching, false);
         }
 

@@ -54,7 +54,7 @@ namespace DefaultNamespace.AI
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
                     currentObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10 + Random.Range(-maxJumpNoise, maxJumpNoise);
                 }
-                if (ShouldCrouch())
+                if (ShouldCrouch() && !dinoMovement.isCrouching)
                 {
                     dinoMovement.IssueCrouch();
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_CROUCH_ID);

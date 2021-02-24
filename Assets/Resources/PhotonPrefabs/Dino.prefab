@@ -148,6 +148,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 6954133994127008277}
+  - {fileID: 565155323137339426}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -190,6 +191,7 @@ MonoBehaviour:
   speedModifier: 1.15
   score: {fileID: 11400000, guid: a93dd96313151d2488696d39e1333636, type: 2}
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
+  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
   grounded: 1
 --- !u!61 &1726484870117226312
 BoxCollider2D:
