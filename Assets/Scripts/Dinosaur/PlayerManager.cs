@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using DefaultNamespace;
 using DefaultNamespace.AI;
 using MutableObjects.Int;
 using Photon.Pun;
@@ -38,7 +39,7 @@ public class PlayerManager : MonoBehaviour
     {
         var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerDino"), startingPosition,
             Quaternion.identity);
-        dino.GetComponent<SpriteRenderer>().color = playerColors[photonView.CreatorActorNr - 1];
+        dino.GetComponent<DinoMovement>().SetColor(playerColors[photonView.CreatorActorNr - 1]);
     }
 
     public void CreateAIControllers(List<AiConfig> aiConfigs)
@@ -48,7 +49,7 @@ public class PlayerManager : MonoBehaviour
             var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition,
                 Quaternion.identity);
             dinoAI.GetComponent<AIDinoController>().Configure(i, aiConfigs[i].jumpNoise);
-            dinoAI.GetComponent<SpriteRenderer>().color = playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i];
+            dinoAI.GetComponent<DinoMovement>().SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
         }
     }
 

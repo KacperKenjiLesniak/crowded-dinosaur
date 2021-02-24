@@ -165,7 +165,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: crouching
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -186,6 +189,7 @@ MonoBehaviour:
   speed: 10
   speedModifier: 1.15
   score: {fileID: 11400000, guid: a93dd96313151d2488696d39e1333636, type: 2}
+  lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
   grounded: 1
 --- !u!61 &1726484870117226312
 BoxCollider2D:

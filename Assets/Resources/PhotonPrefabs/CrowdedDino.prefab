@@ -55,7 +55,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiList: {fileID: 11400000, guid: d5fd655aea7cc8b4ebafb73d753decea, type: 2}
-  lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
   crowdConfig: {fileID: 11400000, guid: 7b35b42d6a8164045b38d836275a4c51, type: 2}
 --- !u!1001 &1241170938606525402
 PrefabInstance:
@@ -147,6 +146,18 @@ PrefabInstance:
     - target: {fileID: 5109901659581191557, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
       propertyPath: m_Name
       value: CrowdedDino
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954133994127008277, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954133994127008277, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].Name
+      value: crouching
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954133994127008277, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].Type
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8230227472010745188, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
       propertyPath: viewIdField

@@ -9,7 +9,6 @@ namespace DefaultNamespace
     public class CrowdDinosaurController : MonoBehaviourPunCallbacks, InputReceiver
     {
         [SerializeField] private AiList aiList;
-        [SerializeField] private GameEvent lostGameEvent;
         [SerializeField] private CrowdConfig crowdConfig;
         
         private InputBroker inputBroker;
@@ -40,17 +39,12 @@ namespace DefaultNamespace
             {
                 if (other.collider.CompareTag("Obstacle") || other.collider.CompareTag("Bird"))
                 {
-                    photonView.RPC(nameof(Die), RpcTarget.AllViaServer);
+                    foreach (var movement in FindObjectsOfType<DinoMovement>())
+                    {
+                        movement.Die();
+                    }
                 }
             }
-        }
-
-        [PunRPC]
-        private void Die()
-        {
-            lostGameEvent.RaiseGameEvent();
-            GetComponent<Animator>().enabled = false;
-            dinoMovement.enabled = false;
         }
 
         public void ApplyInput(int input)

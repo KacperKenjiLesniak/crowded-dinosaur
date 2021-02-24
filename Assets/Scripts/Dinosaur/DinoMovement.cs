@@ -1,5 +1,7 @@
-﻿using MutableObjects.Int;
+﻿using GameEvents.Game;
+using MutableObjects.Int;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -11,6 +13,7 @@ namespace DefaultNamespace
         [SerializeField] private float speed = 10f;
         [SerializeField] private float speedModifier = 1.5f;
         [SerializeField] private MutableInt score;
+        [SerializeField] private GameEvent lostGameEvent;
 
         private int lastCheckpoint;
         private Rigidbody2D rb;
@@ -20,12 +23,22 @@ namespace DefaultNamespace
 
         #region Public
 
+        public void SetColor(Color color)
+        {
+            photonView.RPC(nameof(SetColorRpc), RpcTarget.All, color.r, color.g, color.b, color.a);
+        }
+
+        public void Die()
+        {
+            photonView.RPC(nameof(DieRpc), RpcTarget.All);
+        }
+
         public void IssueJump(bool isShort)
         {
             grounded = false;
             photonView.RPC(nameof(Jump), RpcTarget.AllViaServer, isShort);
         }
-        
+
         public void IssueCrouch()
         {
             photonView.RPC(nameof(Crouch), RpcTarget.AllViaServer);
@@ -66,6 +79,23 @@ namespace DefaultNamespace
             }
         }
 
+        #endregion
+
+        #region PUN
+
+        [PunRPC]
+        private void SetColorRpc(float r, float g, float b, float a)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(r, g, b, a);
+        }
+
+        [PunRPC]
+        private void DieRpc()
+        {
+            lostGameEvent.RaiseGameEvent();
+            GetComponent<Animator>().enabled = false;
+            enabled = false;
+        }
 
         [PunRPC]
         private void Jump(bool isShort)
@@ -79,7 +109,7 @@ namespace DefaultNamespace
         [PunRPC]
         private void Crouch()
         {
-            animator.SetBool(Crouching, true); 
+            animator.SetBool(Crouching, true);
             Invoke(nameof(EndCrouch), 1f);
         }
 
@@ -87,6 +117,16 @@ namespace DefaultNamespace
         {
             animator.SetBool(Crouching, false);
         }
+
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            if (!Equals(newPlayer, photonView.Owner))
+            {
+                var color = GetComponent<SpriteRenderer>().color;
+                photonView.RPC(nameof(SetColorRpc), RpcTarget.All, color.r, color.g, color.b, color.a);
+            }
+        }
+
         #endregion
     }
 }
