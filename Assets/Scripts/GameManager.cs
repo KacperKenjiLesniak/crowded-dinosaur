@@ -31,13 +31,7 @@ namespace DefaultNamespace
             }
         }
 
-        public void StartGameMaster()
-        {
-            photonView.RPC(nameof(StartGame), RpcTarget.AllViaServer);
-        }
-
-        [PunRPC]
-        void StartGame()
+        public void StartGame()
         {
             Time.timeScale = 1f;
         }

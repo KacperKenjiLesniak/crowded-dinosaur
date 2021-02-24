@@ -27,7 +27,6 @@ namespace DefaultNamespace
         private void UpdateDinosaurPosition(Vector3 position)
         {
             dinoPosition.Value = position;
-            maxPositionDifference = 0.2f;
             if (Vector3.Distance(position, transform.position) > maxPositionDifference)
             {
                 transform.position = position;

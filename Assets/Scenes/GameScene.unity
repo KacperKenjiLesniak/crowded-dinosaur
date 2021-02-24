@@ -792,6 +792,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -807,6 +808,34 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b2f85583a54b21922069d1d0951342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 492b1d3915d390e41b90d180c3028db2, type: 2}
+  onGameEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 519420033}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -871,12 +900,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e6702fe22d2465a94085a9d18ec479d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
 --- !u!1 &592061874
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,6 +1095,7 @@ GameObject:
   - component: {fileID: 788235025}
   - component: {fileID: 788235027}
   - component: {fileID: 788235028}
+  - component: {fileID: 788235029}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1176,7 +1205,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 788235024}
         m_TargetAssemblyTypeName: DefaultNamespace.GameManager, Assembly-CSharp
-        m_MethodName: StartGameMaster
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1208,6 +1237,19 @@ MonoBehaviour:
   viewIdField: 5
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &788235029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788235022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107ee4080867413ea687091e07966d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 492b1d3915d390e41b90d180c3028db2, type: 2}
 --- !u!1 &883330281
 GameObject:
   m_ObjectHideFlags: 0
