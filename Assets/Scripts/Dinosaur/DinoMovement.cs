@@ -7,6 +7,7 @@ namespace DefaultNamespace
     public class DinoMovement : MonoBehaviourPunCallbacks
     {
         [SerializeField] private float jumpPower = 10f;
+        [SerializeField] private float shortJumpPower = 7f;
         [SerializeField] private float speed = 10f;
         [SerializeField] private float speedModifier = 1.5f;
         [SerializeField] private MutableInt score;
@@ -19,10 +20,10 @@ namespace DefaultNamespace
 
         #region Public
 
-        public void IssueJump()
+        public void IssueJump(bool isShort)
         {
             grounded = false;
-            photonView.RPC(nameof(Jump), RpcTarget.AllViaServer);
+            photonView.RPC(nameof(Jump), RpcTarget.AllViaServer, isShort);
         }
         
         public void IssueCrouch()
@@ -67,10 +68,10 @@ namespace DefaultNamespace
 
 
         [PunRPC]
-        private void Jump()
+        private void Jump(bool isShort)
         {
             EndCrouch();
-            rb.AddForce(new Vector2(0f, 10f) * jumpPower);
+            rb.AddForce(new Vector2(0f, 10f) * (isShort ? shortJumpPower : jumpPower));
             grounded = false;
         }
 

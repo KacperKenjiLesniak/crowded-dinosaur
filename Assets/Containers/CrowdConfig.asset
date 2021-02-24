@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d494e00b4e4d539c528e403737f9cd, type: 3}
   m_Name: CrowdConfig
   m_EditorClassIdentifier: 
-  numberOfCommands: 3
+  numberOfCommands: 4
   reliabilityCoefficient: 0.03
   agreementThreshold: 0.7
   inputTimeToLive: 0.4

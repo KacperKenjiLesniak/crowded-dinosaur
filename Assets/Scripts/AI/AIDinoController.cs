@@ -50,7 +50,7 @@ namespace DefaultNamespace.AI
             {
                 if (ShouldJump() && dinoMovement.grounded)
                 {
-                    dinoMovement.IssueJump();
+                    dinoMovement.IssueJump(false);
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
                     currentObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10 + Random.Range(-maxJumpNoise, maxJumpNoise);
                 }

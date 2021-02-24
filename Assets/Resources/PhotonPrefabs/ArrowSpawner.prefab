@@ -45,7 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd544be262748cabeca7d29d373508d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrow: {fileID: 7952143750225968331, guid: a331104ba0d627c44b7c3ae775ec7778, type: 3}
+  arrows:
+  - {fileID: 7952143750225968331, guid: a331104ba0d627c44b7c3ae775ec7778, type: 3}
+  - {fileID: 7952143750225968331, guid: 8894e0adb25263742bc48bedad0cd955, type: 3}
+  - {fileID: 7952143750225968331, guid: 00205de2db6ef524498cfc4974486025, type: 3}
   playerManager: {fileID: 1825434957161913121, guid: 3e5dbaa04d074b04aa6c242c406a87a5, type: 3}
 --- !u!114 &7700659066706420708
 MonoBehaviour:

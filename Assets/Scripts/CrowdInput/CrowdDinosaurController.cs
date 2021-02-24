@@ -58,7 +58,10 @@ namespace DefaultNamespace
             switch (input)
             {
                 case Constants.INPUT_JUMP_ID when dinoMovement.grounded:
-                    dinoMovement.IssueJump();
+                    dinoMovement.IssueJump(false);
+                    break;
+                case Constants.INPUT_SHORT_JUMP_ID when dinoMovement.grounded:
+                    dinoMovement.IssueJump(true);
                     break;
                 case Constants.INPUT_CROUCH_ID:
                     dinoMovement.IssueCrouch();

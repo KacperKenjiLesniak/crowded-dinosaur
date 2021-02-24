@@ -181,7 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148b4e3877a14e86a8b5fb49bf4fd135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 100
+  jumpPower: 105
+  shortJumpPower: 95
   speed: 10
   speedModifier: 1.15
   score: {fileID: 11400000, guid: a93dd96313151d2488696d39e1333636, type: 2}

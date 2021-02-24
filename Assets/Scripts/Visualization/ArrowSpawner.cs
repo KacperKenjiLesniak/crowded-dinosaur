@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using DefaultNamespace.Events;
 using Photon.Pun;
 using UnityEngine;
@@ -9,7 +7,7 @@ namespace DefaultNamespace.Visualization
 {
     public class ArrowSpawner : MonoBehaviourPunCallbacks
     {
-        [SerializeField] private GameObject arrow;
+        [SerializeField] private List<GameObject> arrows;
         [SerializeField] private GameObject playerManager;
 
         private List<Color> playerColors;
@@ -26,7 +24,13 @@ namespace DefaultNamespace.Visualization
                 switch (playerInput.inputId)
                 {
                     case Constants.INPUT_JUMP_ID:
-                        photonView.RPC(nameof(SpawnArrowInClients), RpcTarget.All, playerInput.playerId);
+                        photonView.RPC(nameof(SpawnArrowInClients), RpcTarget.All, playerInput.playerId, 0);
+                        break;
+                    case Constants.INPUT_SHORT_JUMP_ID:
+                        photonView.RPC(nameof(SpawnArrowInClients), RpcTarget.All, playerInput.playerId, 1);
+                        break;
+                    case Constants.INPUT_CROUCH_ID:
+                        photonView.RPC(nameof(SpawnArrowInClients), RpcTarget.All, playerInput.playerId, 2);
                         break;
                 }
             }
@@ -34,9 +38,9 @@ namespace DefaultNamespace.Visualization
 
 
         [PunRPC]
-        public void SpawnArrowInClients(int playerId)
+        public void SpawnArrowInClients(int playerId, int arrowIndex)
         {
-            var arrowObject = Instantiate(arrow, transform.position, Quaternion.identity);
+            var arrowObject = Instantiate(arrows[arrowIndex], transform.position, arrows[arrowIndex].transform.rotation);
             var playerColor = playerColors[playerId];
             playerColor.a = 1f;
             arrowObject.GetComponent<SpriteRenderer>().color = playerColor;
