@@ -26,12 +26,15 @@ public class PlayerManager : MonoBehaviour
         {
             CreateController();
             CreateCrowdedController();
-            var arrowSpawner = PhotonNetwork.Instantiate(
-                Path.Combine("PhotonPrefabs", "ArrowSpawner"),
-                new Vector3(0, 2f, 0),
-                Quaternion.identity
-            );
-            arrowSpawner.transform.parent = Camera.main.transform;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                var arrowSpawner = PhotonNetwork.Instantiate(
+                    Path.Combine("PhotonPrefabs", "ArrowSpawner"),
+                    new Vector3(0, 2f, 0),
+                    Quaternion.identity
+                );
+                arrowSpawner.transform.parent = Camera.main.transform;
+            }
         }
     }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MutableObjects.Int;
+﻿using Photon.Pun;
 using UnityEngine;
 
 namespace DefaultNamespace.AI
@@ -13,16 +11,22 @@ namespace DefaultNamespace.AI
         public void AddAi(float noise)
         {
             aiList.aiConfigs.Add(new AiConfig(noise));
+            Debug.Log("Ai list size: " + aiList.aiConfigs.Count);
         }
 
         public void ClearAis()
         {
             aiList.aiConfigs.Clear();
+            Debug.Log("Ai list size: " + aiList.aiConfigs.Count);
         }
 
         public void CreateAis()
         {
-            GetComponent<PlayerManager>().CreateAIControllers(aiList.aiConfigs);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("Ai list size: " + aiList.aiConfigs.Count);
+                GetComponent<PlayerManager>().CreateAIControllers(aiList.aiConfigs);
+            }
         }
     }
 }
