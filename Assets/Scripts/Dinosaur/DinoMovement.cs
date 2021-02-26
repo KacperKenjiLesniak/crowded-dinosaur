@@ -70,7 +70,7 @@ namespace DefaultNamespace
 
             if (Math.Abs(dinoPosition.Value.x - transform.position.x) > 0.5f)
             {
-                transform.position = new Vector3(dinoPosition.Value.x, transform.position.y);
+                //transform.position = new Vector3(dinoPosition.Value.x, transform.position.y);
             }
         }
 
