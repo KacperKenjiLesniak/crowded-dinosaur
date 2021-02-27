@@ -16,7 +16,8 @@ namespace DefaultNamespace
         private float inputTimeToLive;
         private Queue<PlayerInput> inputsQueue;
         private EvaluatorData evaluatorData;
-
+        private bool scheduledInputIssue;
+        
         private void Awake()
         {
             evaluatorData = GetComponent<EvaluatorData>();
@@ -51,19 +52,12 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            if (crowdInputReliability != null)
+            if (crowdInputReliability != null && !scheduledInputIssue)
             {
                 if (inputsQueue.Count >= crowdInputReliability.numberOfPlayers / 2 + 1)
                 {
-                    var currentPlayerInputs = DequeueCurrentPlayerInputs();
-                    inputReceiver.ApplyInput(
-                        crowdInputReliability.IssueCommands(currentPlayerInputs) // TODO handle duplicated player inputs
-                    );
-                    if (debug)
-                    {
-                        evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
-                        evaluatorData.AppendInput(currentPlayerInputs);
-                    }
+                    scheduledInputIssue = true;
+                    Invoke(nameof(IssueInput), inputTimeToLive/2);
                 }
 
                 if (inputsQueue.Count > 0 && Time.time - inputsQueue.Peek().timestamp > inputTimeToLive)
@@ -73,6 +67,20 @@ namespace DefaultNamespace
             }
         }
 
+        private void IssueInput()
+        {
+            var currentPlayerInputs = DequeueCurrentPlayerInputs();
+            inputReceiver.ApplyInput(
+                crowdInputReliability.IssueCommands(currentPlayerInputs) // TODO handle duplicated player inputs
+            );
+            scheduledInputIssue = false;
+            if (debug)
+            {
+                evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
+                evaluatorData.AppendInput(currentPlayerInputs);
+            }
+        }
+        
         private int[] DequeueCurrentPlayerInputs()
         {
             var inputsList = Enumerable.Range(0, crowdInputReliability.numberOfPlayers).Select(i => 0).ToList();

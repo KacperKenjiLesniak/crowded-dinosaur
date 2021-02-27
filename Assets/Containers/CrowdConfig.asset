@@ -15,4 +15,4 @@ MonoBehaviour:
   numberOfCommands: 4
   reliabilityCoefficient: 0.03
   agreementThreshold: 0.7
-  inputTimeToLive: 0.4
+  inputTimeToLive: 0.2
