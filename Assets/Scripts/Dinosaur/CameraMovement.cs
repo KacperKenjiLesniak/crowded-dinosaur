@@ -4,6 +4,8 @@ namespace DefaultNamespace
 {
     public class CameraMovement : MonoBehaviour
     {
+        [SerializeField] private float cameraForwardPosition = 5f;
+
         private Transform crowdDino;
 
         private void OnEnable()
@@ -13,7 +15,7 @@ namespace DefaultNamespace
 
         private void FixedUpdate()
         {
-            transform.position = new Vector3(crowdDino.position.x, transform.position.y, transform.position.z);
+            transform.position = new Vector3(crowdDino.position.x + cameraForwardPosition, transform.position.y, transform.position.z);
         }
     }
 }

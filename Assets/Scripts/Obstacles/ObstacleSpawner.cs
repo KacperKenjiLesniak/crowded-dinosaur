@@ -19,10 +19,18 @@ namespace DefaultNamespace
         [SerializeField] private MutableVector3 dinoPosition;
         [SerializeField] private MutableInt score;
 
+        private Transform currentObstacle;
         private int currentStage = -1;
         private float obstacleTimer;
         private float nextObstacleTime;
         private float birdInitialHeight;
+        private Camera camera;
+
+        void Awake()
+        {
+            camera = Camera.main;
+        }
+
         
         private void Start()
         {
@@ -31,6 +39,7 @@ namespace DefaultNamespace
                 Destroy(this);
             }
 
+            currentObstacle = obstacles[0];
             birdInitialHeight = obstacles[birdIndex].position.y;
         }
 
@@ -56,18 +65,27 @@ namespace DefaultNamespace
                 SpawnObstacle();
             }
 
-            obstacleTimer += Time.deltaTime;
+            if (TransformBehindCameraView(currentObstacle))
+            {
+                obstacleTimer += Time.deltaTime;
+            }
         }
 
         private void SpawnObstacle()
         {
-            var obstacleIndex = Random.Range(0, stages[currentStage].maxObstacleIndex);
-            var obstacle = obstacles[obstacleIndex];
-            obstacle.position = new Vector3(dinoPosition.Value.x + 20f, obstacle.position.y);
+            int obstacleIndex = Random.Range(0, stages[currentStage].maxObstacleIndex);
+            currentObstacle = obstacles[obstacleIndex];
+            currentObstacle.position = new Vector3(dinoPosition.Value.x + 30f, currentObstacle.position.y);
             if (obstacleIndex == birdIndex)
             {
-                obstacle.position = new Vector3(obstacle.position.x, birdInitialHeight + Random.Range(-1.5f, 1.5f));
+                currentObstacle.position = new Vector3(currentObstacle.position.x, birdInitialHeight + Random.Range(-1.5f, 1.5f));
             }
+        }
+
+        private bool TransformBehindCameraView(Transform t)
+        {
+            var viewPos = camera.WorldToViewportPoint(t.position);
+            return viewPos.x < 0;
         }
     }
 }
