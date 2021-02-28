@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6280bd50566f4463a9e435073478f00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleDistanceToJump: 5
+  obstacleDistanceToJump: 4.5
   birdDistanceToCrouch: 3.5
 --- !u!114 &5317362980864252382
 MonoBehaviour:

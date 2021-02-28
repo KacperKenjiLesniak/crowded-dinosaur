@@ -1,4 +1,5 @@
-﻿using DefaultNamespace.AI;
+﻿using System.Linq;
+using DefaultNamespace.AI;
 using Photon.Pun;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace DefaultNamespace
         [SerializeField] private CrowdConfig crowdConfig;
         
         private DinoMovement dinoMovement;
-        private InputBroker inputBroker;
+        private AbstractInputBroker inputBroker;
         private int numberOfPlayers;
 
         private void Awake()
@@ -56,7 +57,7 @@ namespace DefaultNamespace
 
         public void StartGame()
         {
-            inputBroker = FindObjectOfType<InputBroker>();
+            inputBroker = FindObjectsOfType<AbstractInputBroker>().First(broker => broker.enabled);
             numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + aiList.aiConfigs.Count;
             inputBroker.SetUp(crowdConfig, numberOfPlayers, this);
             Debug.Log("Starting game with " + numberOfPlayers + " players.");

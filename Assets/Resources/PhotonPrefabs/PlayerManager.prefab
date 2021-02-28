@@ -82,6 +82,7 @@ MonoBehaviour:
   - {r: 0.41509432, g: 0.15240501, b: 0, a: 0.39215687}
   - {r: 0.3232175, g: 0.33962262, b: 0, a: 0.39215687}
   startingPosition: {x: 0, y: -3, z: 0}
+  crowdedStartingPosition: {x: -1, y: -3, z: 0}
 --- !u!114 &7219012708036685035
 MonoBehaviour:
   m_ObjectHideFlags: 0
