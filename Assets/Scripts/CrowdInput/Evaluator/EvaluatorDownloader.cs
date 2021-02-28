@@ -2,14 +2,18 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using DefaultNamespace.AI;
+using Photon.Pun;
 using UnityEngine;
 
 namespace DefaultNamespace.Evaluator
 {
     public class EvaluatorDownloader : MonoBehaviour
     {
-        private EvaluatorData evaluatorData;
+        [SerializeField] private AiList aiList;
 
+        private EvaluatorData evaluatorData;
+        
         private void Start()
         {
             evaluatorData = GetComponent<EvaluatorData>();
@@ -36,6 +40,10 @@ namespace DefaultNamespace.Evaluator
 
         public void DownloadData()
         {
+            string names = PhotonNetwork.PlayerList.Select(p => p.NickName)
+                               .Union(aiList.aiConfigs.Select((_, index) => "AI" + index))
+                               .Aggregate((i, j) => i + "," + j) + ";\n";
+
             string file = evaluatorData.playerReliabilitiesData
                 .Aggregate("", (current, row)
                     => current + row.Select(f => f + "")
@@ -46,8 +54,8 @@ namespace DefaultNamespace.Evaluator
                     => current + row.Select(f => f + "")
                         .Aggregate((i, j) => i + "," + j) + ";\n");
 
-            Debug.Log(file + "\n<SEPARATOR>\n" + file2);
-            byte[] fileBytes = Encoding.UTF8.GetBytes(file + "\n<SEPARATOR>\n" + file2);
+            Debug.Log(names + file + "\n<SEPARATOR>\n" + file2);
+            byte[] fileBytes = Encoding.UTF8.GetBytes(names + file + "\n<SEPARATOR>\n" + file2);
             DownloadFile(fileBytes, fileBytes.Length, "evaluator.txt");
         }
     }
