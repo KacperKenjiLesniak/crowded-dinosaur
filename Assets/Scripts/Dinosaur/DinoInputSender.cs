@@ -1,5 +1,4 @@
-﻿using System;
-using DefaultNamespace;
+﻿using DefaultNamespace;
 using DefaultNamespace.Events;
 using Photon.Pun;
 using UnityEngine;
@@ -13,11 +12,11 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
     {
         photonView.RPC(nameof(InputInfo), RpcTarget.MasterClient, actorNumberOffset, inputId);
     }
-    
+
     [PunRPC]
     private void InputInfo(int actorNumberOffset, int inputId, PhotonMessageInfo info)
     {
-        var playerNumber = info.Sender.ActorNumber - 1 + actorNumberOffset;
+        int playerNumber = info.Sender.ActorNumber - 1 + actorNumberOffset;
         playerInputGameEvent.RaiseGameEvent(
             new PlayerInput(
                 playerNumber,

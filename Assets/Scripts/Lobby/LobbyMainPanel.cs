@@ -1,7 +1,7 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Realtime;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,8 +31,8 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
     public GameObject PlayerListEntryPrefab;
 
     private Dictionary<string, RoomInfo> cachedRoomList;
-    private Dictionary<string, GameObject> roomListEntries;
     private Dictionary<int, GameObject> playerListEntries;
+    private Dictionary<string, GameObject> roomListEntries;
 
     #region UNITY
 
@@ -48,11 +48,104 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
 
     #endregion
 
+    private bool CheckPlayersReady()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return false;
+        }
+
+        foreach (var p in PhotonNetwork.PlayerList)
+        {
+            object isPlayerReady;
+            if (p.CustomProperties.TryGetValue(CrowdDinosaurGame.PLAYER_READY, out isPlayerReady))
+            {
+                if (!(bool) isPlayerReady)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void ClearRoomListView()
+    {
+        foreach (var entry in roomListEntries.Values)
+        {
+            Destroy(entry.gameObject);
+        }
+
+        roomListEntries.Clear();
+    }
+
+    public void LocalPlayerPropertiesUpdated()
+    {
+        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+    }
+
+    private void SetActivePanel(string activePanel)
+    {
+        LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
+        SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
+        CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
+        JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
+        RoomListPanel.SetActive(
+            activePanel.Equals(RoomListPanel.name)); // UI should call OnRoomListButtonClicked() to activate this
+        InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
+    }
+
+    private void UpdateCachedRoomList(List<RoomInfo> roomList)
+    {
+        foreach (var info in roomList)
+        {
+            // Remove room from cached room list if it got closed, became invisible or was marked as removed
+            if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
+            {
+                if (cachedRoomList.ContainsKey(info.Name))
+                {
+                    cachedRoomList.Remove(info.Name);
+                }
+
+                continue;
+            }
+
+            // Update cached room info
+            if (cachedRoomList.ContainsKey(info.Name))
+            {
+                cachedRoomList[info.Name] = info;
+            }
+            // Add new room info to cache
+            else
+            {
+                cachedRoomList.Add(info.Name, info);
+            }
+        }
+    }
+
+    private void UpdateRoomListView()
+    {
+        foreach (var info in cachedRoomList.Values)
+        {
+            var entry = Instantiate(RoomListEntryPrefab);
+            entry.transform.SetParent(RoomListContent.transform);
+            entry.transform.localScale = Vector3.one;
+            entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
+
+            roomListEntries.Add(info.Name, entry);
+        }
+    }
+
     #region PUN CALLBACKS
 
     public override void OnConnectedToMaster()
     {
-        this.SetActivePanel(SelectionPanel.name);
+        SetActivePanel(SelectionPanel.name);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -91,9 +184,9 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
         string roomName = "Room " + Random.Range(1000, 10000);
 
-        RoomOptions options = new RoomOptions {MaxPlayers = 8};
+        var options = new RoomOptions {MaxPlayers = 8};
 
-        PhotonNetwork.CreateRoom(roomName, options, null);
+        PhotonNetwork.CreateRoom(roomName, options);
     }
 
     public override void OnJoinedRoom()
@@ -109,9 +202,9 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
             playerListEntries = new Dictionary<int, GameObject>();
         }
 
-        foreach (Player p in PhotonNetwork.PlayerList)
+        foreach (var p in PhotonNetwork.PlayerList)
         {
-            GameObject entry = Instantiate(PlayerListEntryPrefab);
+            var entry = Instantiate(PlayerListEntryPrefab);
             entry.transform.SetParent(InsideRoomPanel.transform);
             entry.transform.localScale = Vector3.one;
             entry.GetComponent<PlayerListEntry>().Initialize(p.ActorNumber, p.NickName);
@@ -127,7 +220,7 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
 
         StartGameButton.gameObject.SetActive(CheckPlayersReady());
 
-        Hashtable props = new Hashtable
+        var props = new Hashtable
         {
             {CrowdDinosaurGame.PLAYER_LOADED_LEVEL, false}
         };
@@ -138,7 +231,7 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
         SetActivePanel(SelectionPanel.name);
 
-        foreach (GameObject entry in playerListEntries.Values)
+        foreach (var entry in playerListEntries.Values)
         {
             Destroy(entry.gameObject);
         }
@@ -149,7 +242,7 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        GameObject entry = Instantiate(PlayerListEntryPrefab);
+        var entry = Instantiate(PlayerListEntryPrefab);
         entry.transform.SetParent(InsideRoomPanel.transform);
         entry.transform.localScale = Vector3.one;
         entry.GetComponent<PlayerListEntry>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
@@ -212,15 +305,15 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
     public void OnCreateRoomButtonClicked()
     {
         string roomName = RoomNameInputField.text;
-        roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
+        roomName = roomName.Equals(string.Empty) ? "Room " + Random.Range(1000, 10000) : roomName;
 
         byte maxPlayers;
         byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
         maxPlayers = (byte) Mathf.Clamp(maxPlayers, 2, 8);
 
-        RoomOptions options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000};
+        var options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000};
 
-        PhotonNetwork.CreateRoom(roomName, options, null);
+        PhotonNetwork.CreateRoom(roomName, options);
     }
 
     public void OnJoinRandomRoomButtonClicked()
@@ -269,97 +362,4 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
-    private bool CheckPlayersReady()
-    {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return false;
-        }
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            object isPlayerReady;
-            if (p.CustomProperties.TryGetValue(CrowdDinosaurGame.PLAYER_READY, out isPlayerReady))
-            {
-                if (!(bool) isPlayerReady)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private void ClearRoomListView()
-    {
-        foreach (GameObject entry in roomListEntries.Values)
-        {
-            Destroy(entry.gameObject);
-        }
-
-        roomListEntries.Clear();
-    }
-
-    public void LocalPlayerPropertiesUpdated()
-    {
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
-    }
-
-    private void SetActivePanel(string activePanel)
-    {
-        LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
-        SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
-        CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
-        JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
-        RoomListPanel.SetActive(
-            activePanel.Equals(RoomListPanel.name)); // UI should call OnRoomListButtonClicked() to activate this
-        InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
-    }
-
-    private void UpdateCachedRoomList(List<RoomInfo> roomList)
-    {
-        foreach (RoomInfo info in roomList)
-        {
-            // Remove room from cached room list if it got closed, became invisible or was marked as removed
-            if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
-            {
-                if (cachedRoomList.ContainsKey(info.Name))
-                {
-                    cachedRoomList.Remove(info.Name);
-                }
-
-                continue;
-            }
-
-            // Update cached room info
-            if (cachedRoomList.ContainsKey(info.Name))
-            {
-                cachedRoomList[info.Name] = info;
-            }
-            // Add new room info to cache
-            else
-            {
-                cachedRoomList.Add(info.Name, info);
-            }
-        }
-    }
-
-    private void UpdateRoomListView()
-    {
-        foreach (RoomInfo info in cachedRoomList.Values)
-        {
-            GameObject entry = Instantiate(RoomListEntryPrefab);
-            entry.transform.SetParent(RoomListContent.transform);
-            entry.transform.localScale = Vector3.one;
-            entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte) info.PlayerCount, info.MaxPlayers);
-
-            roomListEntries.Add(info.Name, entry);
-        }
-    }
 }

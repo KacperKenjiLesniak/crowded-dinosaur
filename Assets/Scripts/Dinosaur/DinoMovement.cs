@@ -10,9 +10,8 @@ namespace DefaultNamespace
 {
     public class DinoMovement : MonoBehaviourPunCallbacks, IPunObservable
     {
-        public bool grounded { get; private set; } = true;
-        public bool isCrouching { get; private set; }
-        
+        private static readonly int Crouching = Animator.StringToHash("crouching");
+
         [SerializeField] private float jumpPower = 10f;
         [SerializeField] private float shortJumpPower = 7f;
         [SerializeField] private float speed = 10f;
@@ -20,11 +19,12 @@ namespace DefaultNamespace
         [SerializeField] private MutableInt score;
         [SerializeField] private GameEvent lostGameEvent;
         [SerializeField] private MutableVector3 dinoPosition;
+        private Animator animator;
 
         private int lastCheckpoint;
         private Rigidbody2D rb;
-        private Animator animator;
-        private static readonly int Crouching = Animator.StringToHash("crouching");
+        public bool grounded { get; private set; } = true;
+        public bool isCrouching { get; private set; }
 
         #region Public
 
@@ -97,7 +97,7 @@ namespace DefaultNamespace
             }
             else
             {
-                var networkPosition = (Vector3)stream.ReceiveNext();
+                var networkPosition = (Vector3) stream.ReceiveNext();
                 if (Math.Abs(networkPosition.x - transform.position.x) >= 0.5f)
                 {
                     transform.position = networkPosition;

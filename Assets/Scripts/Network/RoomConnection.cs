@@ -1,11 +1,31 @@
-﻿using Photon.Pun;
+﻿using System;
+using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Realtime;
 
-public class RoomConnection  : MonoBehaviourPunCallbacks
+public class RoomConnection : MonoBehaviourPunCallbacks
 {
+    #region MonoBehaviour CallBacks
+
+    /// <summary>
+    ///     MonoBehaviour method called on GameObject by Unity during early initialization phase.
+    /// </summary>
+    private void Awake()
+    {
+        if (loaderAnime == null)
+        {
+            Debug.LogError("<Color=Red><b>Missing</b></Color> loaderAnime Reference.", this);
+        }
+
+        // #Critical
+        // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
+    #endregion
+
     #region Private Serializable Fields
 
     [Tooltip("The Ui Panel to let the user enter name, connect and play")] [SerializeField]
@@ -25,35 +45,17 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
     #region Private Fields
 
     /// <summary>
-    /// Keep track of the current process. Since connection is asynchronous and is based on several callbacks from Photon, 
-    /// we need to keep track of this to properly adjust the behavior when we receive call back by Photon.
-    /// Typically this is used for the OnConnectedToMaster() callback.
+    ///     Keep track of the current process. Since connection is asynchronous and is based on several callbacks from Photon,
+    ///     we need to keep track of this to properly adjust the behavior when we receive call back by Photon.
+    ///     Typically this is used for the OnConnectedToMaster() callback.
     /// </summary>
-    bool isConnecting;
+    private bool isConnecting;
 
     /// <summary>
-    /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
+    ///     This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking
+    ///     changes).
     /// </summary>
-    string gameVersion = "1";
-
-    #endregion
-
-    #region MonoBehaviour CallBacks
-
-    /// <summary>
-    /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
-    /// </summary>
-    void Awake()
-    {
-        if (loaderAnime == null)
-        {
-            Debug.LogError("<Color=Red><b>Missing</b></Color> loaderAnime Reference.", this);
-        }
-
-        // #Critical
-        // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
+    private string gameVersion = "1";
 
     #endregion
 
@@ -61,9 +63,9 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
     #region Public Methods
 
     /// <summary>
-    /// Start the connection process. 
-    /// - If already connected, we attempt joining a random room
-    /// - if not yet connected, Connect this application instance to Photon Cloud Network
+    ///     Start the connection process.
+    ///     - If already connected, we attempt joining a random room
+    ///     - if not yet connected, Connect this application instance to Photon Cloud Network
     /// </summary>
     public void Connect()
     {
@@ -95,15 +97,15 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
 
             // #Critical, we must first and foremost connect to Photon Online Server.
             PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.GameVersion = this.gameVersion;
+            PhotonNetwork.GameVersion = gameVersion;
         }
     }
 
     /// <summary>
-    /// Logs the feedback in the UI view for the player, as opposed to inside the Unity Editor for the developer.
+    ///     Logs the feedback in the UI view for the player, as opposed to inside the Unity Editor for the developer.
     /// </summary>
     /// <param name="message">Message.</param>
-    void LogFeedback(string message)
+    private void LogFeedback(string message)
     {
         // we do not assume there is a feedbackText defined.
         if (feedbackText == null)
@@ -112,7 +114,7 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
         }
 
         // add new messages as a new line and at the bottom of the log.
-        feedbackText.text += System.Environment.NewLine + message;
+        feedbackText.text += Environment.NewLine + message;
     }
 
     #endregion
@@ -125,7 +127,7 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
 
 
     /// <summary>
-    /// Called after the connection to the master is established and authenticated
+    ///     Called after the connection to the master is established and authenticated
     /// </summary>
     public override void OnConnectedToMaster()
     {
@@ -144,10 +146,10 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Called when a JoinRandom() call failed. The parameter provides ErrorCode and message.
+    ///     Called when a JoinRandom() call failed. The parameter provides ErrorCode and message.
     /// </summary>
     /// <remarks>
-    /// Most likely all rooms are full or no rooms are available. <br/>
+    ///     Most likely all rooms are full or no rooms are available. <br />
     /// </remarks>
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
@@ -156,12 +158,12 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
             "PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
         // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-        PhotonNetwork.CreateRoom(null, new RoomOptions {MaxPlayers = this.maxPlayersPerRoom});
+        PhotonNetwork.CreateRoom(null, new RoomOptions {MaxPlayers = maxPlayersPerRoom});
     }
 
 
     /// <summary>
-    /// Called after disconnecting from the Photon server.
+    ///     Called after disconnecting from the Photon server.
     /// </summary>
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -176,15 +178,16 @@ public class RoomConnection  : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Called when entering a room (by creating or joining it). Called on all clients (including the Master Client).
+    ///     Called when entering a room (by creating or joining it). Called on all clients (including the Master Client).
     /// </summary>
     /// <remarks>
-    /// This method is commonly used to instantiate player characters.
-    /// If a match has to be started "actively", you can call an [PunRPC](@ref PhotonView.RPC) triggered by a user's button-press or a timer.
-    ///
-    /// When this is called, you can usually already access the existing players in the room via PhotonNetwork.PlayerList.
-    /// Also, all custom properties should be already available as Room.customProperties. Check Room..PlayerCount to find out if
-    /// enough players are in the room to start playing.
+    ///     This method is commonly used to instantiate player characters.
+    ///     If a match has to be started "actively", you can call an [PunRPC](@ref PhotonView.RPC) triggered by a user's
+    ///     button-press or a timer.
+    ///     When this is called, you can usually already access the existing players in the room via PhotonNetwork.PlayerList.
+    ///     Also, all custom properties should be already available as Room.customProperties. Check Room..PlayerCount to find
+    ///     out if
+    ///     enough players are in the room to start playing.
     /// </remarks>
     public override void OnJoinedRoom()
     {

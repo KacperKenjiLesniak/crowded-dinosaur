@@ -10,6 +10,6 @@ namespace DefaultNamespace.AI
             this.jumpNoise = jumpNoise;
         }
 
-        public float jumpNoise { get;}
+        public float jumpNoise { get; }
     }
 }

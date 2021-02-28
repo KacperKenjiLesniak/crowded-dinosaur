@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MutableObjects.Int;
 using MutableObjects.Vector3;
 using Photon.Pun;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace DefaultNamespace
 {
@@ -14,24 +12,25 @@ namespace DefaultNamespace
 
         [Header("Restricted")] [SerializeField]
         private List<Transform> obstacles;
+
         [SerializeField] private int birdIndex;
 
         [SerializeField] private MutableVector3 dinoPosition;
         [SerializeField] private MutableInt score;
-
-        private Transform currentObstacle;
-        private int currentStage = -1;
-        private float obstacleTimer;
-        private float nextObstacleTime;
         private float birdInitialHeight;
         private Camera camera;
 
-        void Awake()
+        private Transform currentObstacle;
+        private int currentStage = -1;
+        private float nextObstacleTime;
+        private float obstacleTimer;
+
+        private void Awake()
         {
             camera = Camera.main;
         }
 
-        
+
         private void Start()
         {
             if (!PhotonNetwork.IsMasterClient)
@@ -78,7 +77,8 @@ namespace DefaultNamespace
             currentObstacle.position = new Vector3(dinoPosition.Value.x + 30f, currentObstacle.position.y);
             if (obstacleIndex == birdIndex)
             {
-                currentObstacle.position = new Vector3(currentObstacle.position.x, birdInitialHeight + Random.Range(-1.5f, 1.5f));
+                currentObstacle.position = new Vector3(currentObstacle.position.x,
+                    birdInitialHeight + Random.Range(-1.5f, 1.5f));
             }
         }
 

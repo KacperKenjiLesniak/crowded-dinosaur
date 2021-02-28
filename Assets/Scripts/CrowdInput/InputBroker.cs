@@ -10,14 +10,14 @@ namespace DefaultNamespace
     public class InputBroker : MonoBehaviour
     {
         [SerializeField] private bool debug;
+        private CrowdInputReliability crowdInputReliability;
+        private EvaluatorData evaluatorData;
 
         private InputReceiver inputReceiver;
-        private CrowdInputReliability crowdInputReliability;
-        private float inputTimeToLive;
         private Queue<PlayerInput> inputsQueue;
-        private EvaluatorData evaluatorData;
+        private float inputTimeToLive;
         private bool scheduledInputIssue;
-        
+
         private void Awake()
         {
             evaluatorData = GetComponent<EvaluatorData>();
@@ -26,6 +26,23 @@ namespace DefaultNamespace
         private void Start()
         {
             inputsQueue = new Queue<PlayerInput>();
+        }
+
+        private void Update()
+        {
+            if (crowdInputReliability != null && !scheduledInputIssue)
+            {
+                if (inputsQueue.Count >= crowdInputReliability.numberOfPlayers / 2 + 1)
+                {
+                    scheduledInputIssue = true;
+                    Invoke(nameof(IssueInput), inputTimeToLive / 2);
+                }
+
+                if (inputsQueue.Count > 0 && Time.time - inputsQueue.Peek().timestamp > inputTimeToLive)
+                {
+                    inputsQueue.Dequeue();
+                }
+            }
         }
 
         public void SetUp(CrowdConfig config, int numberOfPlayers, InputReceiver receiver)
@@ -38,9 +55,10 @@ namespace DefaultNamespace
                     config.reliabilityCoefficient,
                     config.agreementThreshold
                 );
-                
+
                 evaluatorData.ResetReliabilities();
             }
+
             inputTimeToLive = config.inputTimeToLive;
             inputReceiver = receiver;
         }
@@ -50,26 +68,9 @@ namespace DefaultNamespace
             inputsQueue.Enqueue(input);
         }
 
-        private void Update()
-        {
-            if (crowdInputReliability != null && !scheduledInputIssue)
-            {
-                if (inputsQueue.Count >= crowdInputReliability.numberOfPlayers / 2 + 1)
-                {
-                    scheduledInputIssue = true;
-                    Invoke(nameof(IssueInput), inputTimeToLive/2);
-                }
-
-                if (inputsQueue.Count > 0 && Time.time - inputsQueue.Peek().timestamp > inputTimeToLive)
-                {
-                    inputsQueue.Dequeue();
-                }
-            }
-        }
-
         private void IssueInput()
         {
-            var currentPlayerInputs = DequeueCurrentPlayerInputs();
+            int[] currentPlayerInputs = DequeueCurrentPlayerInputs();
             inputReceiver.ApplyInput(
                 crowdInputReliability.IssueCommands(currentPlayerInputs) // TODO handle duplicated player inputs
             );
@@ -80,7 +81,7 @@ namespace DefaultNamespace
                 evaluatorData.AppendInput(currentPlayerInputs);
             }
         }
-        
+
         private int[] DequeueCurrentPlayerInputs()
         {
             var inputsList = Enumerable.Range(0, crowdInputReliability.numberOfPlayers).Select(i => 0).ToList();

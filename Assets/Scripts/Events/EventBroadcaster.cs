@@ -1,5 +1,4 @@
-﻿using System;
-using GameEvents.Game;
+﻿using GameEvents.Game;
 using GameEvents.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -15,6 +14,11 @@ namespace DefaultNamespace.Events
             gameEvent.RegisterListener(this);
         }
 
+        private void OnDestroy()
+        {
+            gameEvent.UnregisterListener(this);
+        }
+
         public void RaiseGameEvent()
         {
             photonView.RPC(nameof(RaiseGameEventRpc), RpcTarget.Others);
@@ -26,11 +30,6 @@ namespace DefaultNamespace.Events
             gameEvent.UnregisterListener(this);
             gameEvent.RaiseGameEvent();
             gameEvent.RegisterListener(this);
-        }
-
-        private void OnDestroy()
-        {
-            gameEvent.UnregisterListener(this);
         }
     }
 }

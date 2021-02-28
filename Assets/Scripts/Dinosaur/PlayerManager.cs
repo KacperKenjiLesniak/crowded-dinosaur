@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using DefaultNamespace;
 using DefaultNamespace.AI;
-using MutableObjects.Int;
 using Photon.Pun;
 using UnityEngine;
 
@@ -44,7 +42,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    void CreateController()
+    private void CreateController()
     {
         var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerDino"), startingPosition,
             Quaternion.identity);
@@ -65,7 +63,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    void CreateCrowdedController()
+    private void CreateCrowdedController()
     {
         if (PhotonNetwork.IsMasterClient)
         {

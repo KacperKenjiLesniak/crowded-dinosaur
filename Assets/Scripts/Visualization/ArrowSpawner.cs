@@ -40,11 +40,11 @@ namespace DefaultNamespace.Visualization
         [PunRPC]
         public void SpawnArrowInClients(int playerId, int arrowIndex)
         {
-            var arrowObject = Instantiate(arrows[arrowIndex], transform.position, arrows[arrowIndex].transform.rotation);
+            var arrowObject =
+                Instantiate(arrows[arrowIndex], transform.position, arrows[arrowIndex].transform.rotation);
             var playerColor = playerColors[playerId];
             playerColor.a = 1f;
             arrowObject.GetComponent<SpriteRenderer>().color = playerColor;
         }
-
     }
 }

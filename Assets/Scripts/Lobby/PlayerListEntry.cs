@@ -8,12 +8,11 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
-using UnityEngine;
-using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using Photon.Pun;
-using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerListEntry : MonoBehaviour
 {
@@ -22,9 +21,32 @@ public class PlayerListEntry : MonoBehaviour
     public Image PlayerColorImage;
     public Button PlayerReadyButton;
     public Image PlayerReadyImage;
+    private bool isPlayerReady;
 
     private int ownerId;
-    private bool isPlayerReady;
+
+    public void Initialize(int playerId, string playerName)
+    {
+        ownerId = playerId;
+        PlayerNameText.text = playerName;
+    }
+
+    private void OnPlayerNumberingChanged()
+    {
+        foreach (var p in PhotonNetwork.PlayerList)
+        {
+            if (p.ActorNumber == ownerId)
+            {
+                PlayerColorImage.color = CrowdDinosaurGame.GetColor(p.GetPlayerNumber());
+            }
+        }
+    }
+
+    public void SetPlayerReady(bool playerReady)
+    {
+        PlayerReadyButton.GetComponentInChildren<Text>().text = playerReady ? "Ready!" : "Ready?";
+        PlayerReadyImage.enabled = playerReady;
+    }
 
     #region UNITY
 
@@ -46,7 +68,7 @@ public class PlayerListEntry : MonoBehaviour
                 isPlayerReady = !isPlayerReady;
                 SetPlayerReady(isPlayerReady);
 
-                Hashtable props = new Hashtable() {{CrowdDinosaurGame.PLAYER_READY, isPlayerReady}};
+                var props = new Hashtable {{CrowdDinosaurGame.PLAYER_READY, isPlayerReady}};
                 PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
                 if (PhotonNetwork.IsMasterClient)
@@ -63,27 +85,4 @@ public class PlayerListEntry : MonoBehaviour
     }
 
     #endregion
-
-    public void Initialize(int playerId, string playerName)
-    {
-        ownerId = playerId;
-        PlayerNameText.text = playerName;
-    }
-
-    private void OnPlayerNumberingChanged()
-    {
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            if (p.ActorNumber == ownerId)
-            {
-                PlayerColorImage.color = CrowdDinosaurGame.GetColor(p.GetPlayerNumber());
-            }
-        }
-    }
-
-    public void SetPlayerReady(bool playerReady)
-    {
-        PlayerReadyButton.GetComponentInChildren<Text>().text = playerReady ? "Ready!" : "Ready?";
-        PlayerReadyImage.enabled = playerReady;
-    }
 }

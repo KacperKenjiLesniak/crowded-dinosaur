@@ -1,5 +1,4 @@
 ﻿using DefaultNamespace.AI;
-using GameEvents.Game;
 using Photon.Pun;
 using UnityEngine;
 
@@ -11,9 +10,9 @@ namespace DefaultNamespace
         [SerializeField] private AiList aiList;
         [SerializeField] private CrowdConfig crowdConfig;
         
+        private DinoMovement dinoMovement;
         private InputBroker inputBroker;
         private int numberOfPlayers;
-        private DinoMovement dinoMovement;
 
         private void Awake()
         {
@@ -23,14 +22,6 @@ namespace DefaultNamespace
             }
 
             dinoMovement = GetComponent<DinoMovement>();
-        }
-
-        public void StartGame()
-        {
-            inputBroker = FindObjectOfType<InputBroker>();
-            numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + aiList.aiConfigs.Count;
-            inputBroker.SetUp(crowdConfig, numberOfPlayers, this);
-            Debug.Log("Starting game with " + numberOfPlayers + " players.");
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -61,6 +52,14 @@ namespace DefaultNamespace
                     dinoMovement.IssueCrouch();
                     break;
             }
+        }
+
+        public void StartGame()
+        {
+            inputBroker = FindObjectOfType<InputBroker>();
+            numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + aiList.aiConfigs.Count;
+            inputBroker.SetUp(crowdConfig, numberOfPlayers, this);
+            Debug.Log("Starting game with " + numberOfPlayers + " players.");
         }
     }
 }

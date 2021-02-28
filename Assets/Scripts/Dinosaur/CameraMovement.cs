@@ -8,14 +8,15 @@ namespace DefaultNamespace
 
         private Transform crowdDino;
 
+        private void FixedUpdate()
+        {
+            transform.position = new Vector3(crowdDino.position.x + cameraForwardPosition, transform.position.y,
+                transform.position.z);
+        }
+
         private void OnEnable()
         {
             crowdDino = FindObjectOfType<DinoPosition>().transform;
-        }
-
-        private void FixedUpdate()
-        {
-            transform.position = new Vector3(crowdDino.position.x + cameraForwardPosition, transform.position.y, transform.position.z);
         }
     }
 }

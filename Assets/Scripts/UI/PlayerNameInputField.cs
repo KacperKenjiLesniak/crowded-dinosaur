@@ -8,19 +8,19 @@ public class PlayerNameInputField : MonoBehaviour
     #region Private Constants
 
     // Store the PlayerPref Key to avoid typos
-    const string playerNamePrefKey = "PlayerName";
+    private const string playerNamePrefKey = "PlayerName";
 
     #endregion
 
     #region MonoBehaviour CallBacks
 
     /// <summary>
-    /// MonoBehaviour method called on GameObject by Unity during initialization phase.
+    ///     MonoBehaviour method called on GameObject by Unity during initialization phase.
     /// </summary>
-    void Start()
+    private void Start()
     {
-        string defaultName = string.Empty;
-        InputField _inputField = this.GetComponent<InputField>();
+        var defaultName = string.Empty;
+        var _inputField = GetComponent<InputField>();
 
         if (_inputField != null)
         {
@@ -39,7 +39,7 @@ public class PlayerNameInputField : MonoBehaviour
     #region Public Methods
 
     /// <summary>
-    /// Sets the name of the player, and save it in the PlayerPrefs for future sessions.
+    ///     Sets the name of the player, and save it in the PlayerPrefs for future sessions.
     /// </summary>
     /// <param name="value">The name of the Player</param>
     public void SetPlayerName(string value)

@@ -1,6 +1,4 @@
-﻿using System;
-using GameEvents.Game;
-using Photon.Pun;
+﻿using Photon.Pun;
 using TMPro;
 using UnityEngine;
 

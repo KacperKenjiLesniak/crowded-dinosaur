@@ -6,7 +6,7 @@ namespace DefaultNamespace
     {
         public static CrowdInputManager instance;
 
-        void Awake()
+        private void Awake()
         {
             DontDestroyOnLoad(this);
 

@@ -4,9 +4,8 @@ using UnityEngine.UI;
 
 public class LobbyTopPanel : MonoBehaviour
 {
-    private readonly string connectionStatusMessage = "    Connection Status: ";
-
     [Header("UI References")] public Text ConnectionStatusText;
+    private readonly string connectionStatusMessage = "    Connection Status: ";
 
     #region UNITY
 

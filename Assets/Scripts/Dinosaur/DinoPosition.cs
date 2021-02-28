@@ -13,7 +13,7 @@ namespace DefaultNamespace
         {
             dinoPosition.Value = transform.position;
         }
-        
+
         private void Update()
         {
             if (PhotonNetwork.IsMasterClient)
@@ -22,7 +22,7 @@ namespace DefaultNamespace
                 photonView.RPC(nameof(UpdateDinosaurPosition), RpcTarget.Others, transform.position);
             }
         }
-        
+
         [PunRPC]
         private void UpdateDinosaurPosition(Vector3 position)
         {

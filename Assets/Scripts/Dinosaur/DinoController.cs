@@ -5,11 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(DinoMovement), typeof(DinoInputSender))]
 public class DinoController : MonoBehaviourPunCallbacks
 {
-    private DinoMovement dinoMovement;
-    private DinoInputSender dinoInputSender;
-
     public float timeToLongJump = 0.06f;
     public float jumpTimer = -1f;
+    private DinoInputSender dinoInputSender;
+    private DinoMovement dinoMovement;
 
     private void Awake()
     {
@@ -25,6 +24,7 @@ public class DinoController : MonoBehaviourPunCallbacks
             {
                 jumpTimer = 0f;
             }
+
             if (Input.GetButtonDown("Down"))
             {
                 dinoMovement.IssueCrouch();

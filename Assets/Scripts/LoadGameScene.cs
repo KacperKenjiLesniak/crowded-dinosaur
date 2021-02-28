@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
 public class LoadGameScene : MonoBehaviour
 {
-    void Start()
+    private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         if (PhotonNetwork.IsMasterClient)
