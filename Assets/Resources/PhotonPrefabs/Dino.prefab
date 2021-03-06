@@ -124,7 +124,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 7
   m_Material: {fileID: 6200000, guid: 8736cf90f0371c9499ada2c116a3cff3, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -191,7 +191,6 @@ MonoBehaviour:
   speedModifier: 1.07
   score: {fileID: 11400000, guid: a93dd96313151d2488696d39e1333636, type: 2}
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
-  dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}
 --- !u!61 &1726484870117226312
 BoxCollider2D:
   m_ObjectHideFlags: 0

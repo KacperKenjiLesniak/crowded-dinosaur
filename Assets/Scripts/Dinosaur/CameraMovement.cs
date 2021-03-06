@@ -8,7 +8,7 @@ namespace DefaultNamespace
 
         private Transform crowdDino;
 
-        private void FixedUpdate()
+        private void Update()
         {
             transform.position = new Vector3(crowdDino.position.x + cameraForwardPosition, transform.position.y,
                 transform.position.z);

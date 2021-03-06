@@ -72,7 +72,10 @@ namespace DefaultNamespace
 
         private void FixedUpdate()
         {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+            if (Math.Abs(rb.velocity.x - speed) > 0.1f)
+            {
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
