@@ -1,12 +1,21 @@
-﻿using Photon.Pun;
+﻿using System.Collections.Generic;
+using System.IO;
+using Photon.Pun;
 using UnityEngine;
 
 namespace DefaultNamespace.AI
 {
-    [RequireComponent(typeof(PlayerManager))]
-    public class AiManager : MonoBehaviour
+    public class AiManager : MonoBehaviourPunCallbacks
     {
         [SerializeField] private AiList aiList;
+        [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
+
+        private List<Color> playerColors;
+
+        private void Start()
+        {
+            playerColors = FindObjectOfType<PlayerManager>().playerColors;
+        }
 
         public void AddAi(float noise)
         {
@@ -22,10 +31,16 @@ namespace DefaultNamespace.AI
 
         public void CreateAis()
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && photonView.IsMine)
             {
-                Debug.Log("Ai list size: " + aiList.aiConfigs.Count);
-                GetComponent<PlayerManager>().CreateAIControllers(aiList.aiConfigs);
+                Debug.Log("Creating AI");
+                for (var i = 0; i < aiList.aiConfigs.Count; i++)
+                {
+                    var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition,
+                        Quaternion.identity);
+                    dinoAI.GetComponent<AIDinoController>().Configure(i, aiList.aiConfigs[i].jumpNoise);
+                    dinoAI.GetComponent<DinoMovement>().SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
+                }
             }
         }
     }
