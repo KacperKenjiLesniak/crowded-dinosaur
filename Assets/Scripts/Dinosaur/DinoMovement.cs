@@ -2,7 +2,6 @@
 using DefaultNamespace.Utils;
 using GameEvents.Game;
 using MutableObjects.Int;
-using MutableObjects.Vector3;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -15,15 +14,15 @@ namespace DefaultNamespace
 
         [SerializeField] private float jumpPower = 10f;
         [SerializeField] private float shortJumpPower = 7f;
-        [SerializeField] private float speed = 10f;
+        [SerializeField] private float initialSpeed = 10f;
         [SerializeField] private float speedModifier = 1.5f;
         [SerializeField] private MutableInt score;
         [SerializeField] private GameEvent lostGameEvent;
 
         private Animator animator;
-
-        private int lastCheckpoint;
+        private float speed = 10f;
         private Rigidbody2D rb;
+
         public bool grounded { get; private set; } = true;
         public bool isCrouching { get; private set; }
 
@@ -63,19 +62,13 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            if (score.Value > lastCheckpoint + Constants.CHECKPOINT_LENGHT)
-            {
-                speed *= speedModifier;
-                lastCheckpoint = score.Value;
-            }
+            speed = initialSpeed * (float) Math.Pow(speedModifier,
+                Mathf.Floor((float) score.Value / Constants.CHECKPOINT_LENGHT));
         }
 
         private void FixedUpdate()
         {
-            if (Math.Abs(rb.velocity.x - speed) > 0.1f)
-            {
-                rb.velocity = new Vector2(speed, rb.velocity.y);
-            }
+            rb.velocity = new Vector2(speed, rb.velocity.y);
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -102,7 +95,7 @@ namespace DefaultNamespace
             else
             {
                 var networkPosition = (Vector3) stream.ReceiveNext();
-                if (Math.Abs(networkPosition.x - transform.position.x) >= 0.5f)
+                if (Math.Abs(networkPosition.x - transform.position.x) >= 1f)
                 {
                     transform.position = networkPosition;
                 }

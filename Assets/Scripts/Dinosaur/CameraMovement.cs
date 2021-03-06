@@ -5,13 +5,15 @@ namespace DefaultNamespace
     public class CameraMovement : MonoBehaviour
     {
         [SerializeField] private float cameraForwardPosition = 5f;
+        [SerializeField] private float moveSpeed = 5f;
 
         private Transform crowdDino;
 
-        private void Update()
+        private void LateUpdate()
         {
-            transform.position = new Vector3(crowdDino.position.x + cameraForwardPosition, transform.position.y,
+            var newPosition = new Vector3(crowdDino.position.x + cameraForwardPosition, transform.position.y,
                 transform.position.z);
+            transform.position =  Vector3.Lerp(transform.position, newPosition, Time.deltaTime * moveSpeed);
         }
 
         private void OnEnable()

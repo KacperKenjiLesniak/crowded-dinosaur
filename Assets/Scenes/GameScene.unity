@@ -1047,7 +1047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6702fe22d2465a94085a9d18ec479d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraForwardPosition: 9
+  cameraForwardPosition: 10
+  moveSpeed: 6
 --- !u!1 &592061874
 GameObject:
   m_ObjectHideFlags: 0

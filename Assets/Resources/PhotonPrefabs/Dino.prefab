@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpPower: 115
   shortJumpPower: 95
-  speed: 10
+  initialSpeed: 10
   speedModifier: 1.07
   score: {fileID: 11400000, guid: a93dd96313151d2488696d39e1333636, type: 2}
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}

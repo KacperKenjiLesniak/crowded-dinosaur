@@ -13,13 +13,13 @@ namespace DefaultNamespace.Score
 
         private float initialPosition;
 
-        private void Start()
+        private void Awake()
         {
             score.Value = 0;
-            initialPosition = 0;
+            initialPosition = 0f;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             score.Value = (int) Mathf.Floor(dinoPosition.Value.x - initialPosition);
             scoreText.Value = score.Value.ToString();
