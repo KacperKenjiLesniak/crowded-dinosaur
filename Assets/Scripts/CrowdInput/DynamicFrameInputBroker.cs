@@ -63,6 +63,7 @@ namespace DefaultNamespace
             {
                 if ( !scheduledInputIssue && inputsQueue.Count >= crowdInputReliability.numberOfPlayers / 2 + 1)
                 {
+                    Debug.Log("Invoking issuing input");
                     scheduledInputIssue = true;
                     Invoke(nameof(IssueInput), inputTimeToLive / 2);
                 }
@@ -76,6 +77,7 @@ namespace DefaultNamespace
 
         private void IssueInput()
         {
+            Debug.Log("Issuing input");
             int[] currentPlayerInputs = DequeueCurrentPlayerInputs();
             int crowdedInput = crowdInputReliability.IssueCommands(currentPlayerInputs);
             

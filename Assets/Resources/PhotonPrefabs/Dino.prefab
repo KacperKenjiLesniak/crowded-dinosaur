@@ -185,10 +185,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148b4e3877a14e86a8b5fb49bf4fd135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 105
+  jumpPower: 115
   shortJumpPower: 95
   speed: 10
-  speedModifier: 1.15
+  speedModifier: 1.07
   score: {fileID: 11400000, guid: a93dd96313151d2488696d39e1333636, type: 2}
   lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
   dinoPosition: {fileID: 11400000, guid: b13355b54bb9297458cfee79a24ba4eb, type: 2}

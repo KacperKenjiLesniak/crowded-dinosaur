@@ -1,4 +1,5 @@
 ﻿using System;
+using DefaultNamespace.Utils;
 using GameEvents.Game;
 using MutableObjects.Int;
 using MutableObjects.Vector3;
@@ -18,7 +19,7 @@ namespace DefaultNamespace
         [SerializeField] private float speedModifier = 1.5f;
         [SerializeField] private MutableInt score;
         [SerializeField] private GameEvent lostGameEvent;
-        [SerializeField] private MutableVector3 dinoPosition;
+
         private Animator animator;
 
         private int lastCheckpoint;
@@ -35,7 +36,7 @@ namespace DefaultNamespace
 
         public void Die()
         {
-            photonView.RPC(nameof(DieRpc), RpcTarget.All);
+            this.Invoke(() => photonView.RPC(nameof(DieRpc), RpcTarget.All), 0.05f);
         }
 
         public void IssueJump(bool isShort)
@@ -114,9 +115,10 @@ namespace DefaultNamespace
         [PunRPC]
         private void DieRpc()
         {
-            lostGameEvent.RaiseGameEvent();
             GetComponent<Animator>().enabled = false;
+            rb.velocity = Vector2.zero;
             enabled = false;
+            lostGameEvent.RaiseGameEvent();
         }
 
         [PunRPC]

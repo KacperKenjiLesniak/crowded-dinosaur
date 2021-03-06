@@ -29,7 +29,7 @@ namespace DefaultNamespace
         {
             if (photonView.IsMine)
             {
-                if (other.collider.CompareTag("Obstacle") || other.collider.CompareTag("Bird"))
+                if (other.collider.CompareTag("Obstacle") || other.collider.CompareTag("SmallObstacle") || other.collider.CompareTag("Bird"))
                 {
                     foreach (var movement in FindObjectsOfType<DinoMovement>())
                     {

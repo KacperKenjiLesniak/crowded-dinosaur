@@ -54,13 +54,14 @@ MonoBehaviour:
     maxObstacleIndex: 2
   - score: 200
     meanTimeBetweenObstacles: 1
-    timeVariance: 0.5
-    maxObstacleIndex: 2
+    timeVariance: 1
+    maxObstacleIndex: 3
   - score: 300
     meanTimeBetweenObstacles: 1
-    timeVariance: 0.5
-    maxObstacleIndex: 2
+    timeVariance: 1
+    maxObstacleIndex: 3
   obstacles:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   birdIndex: 1

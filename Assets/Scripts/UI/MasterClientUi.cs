@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class StartButton : MonoBehaviour
+public class MasterClientUi : MonoBehaviour
 {
     private void Start()
     {
