@@ -13,7 +13,7 @@ namespace DefaultNamespace.Evaluator
         [SerializeField] private AiList aiList;
 
         private EvaluatorData evaluatorData;
-        
+
         private void Start()
         {
             evaluatorData = GetComponent<EvaluatorData>();
@@ -41,8 +41,8 @@ namespace DefaultNamespace.Evaluator
         public void DownloadData()
         {
             string names = PhotonNetwork.PlayerList.Select(p => p.NickName)
-                               .Union(aiList.aiConfigs.Select((_, index) => "AI" + index))
-                               .Aggregate((i, j) => i + "," + j) + ";\n";
+                .Union(aiList.aiConfigs.Select((_, index) => "AI" + index))
+                .Aggregate((i, j) => i + "," + j) + ";\n";
 
             string file = evaluatorData.playerReliabilitiesData
                 .Aggregate("", (current, row)
@@ -54,8 +54,13 @@ namespace DefaultNamespace.Evaluator
                     => current + row.Select(f => f + "")
                         .Aggregate((i, j) => i + "," + j) + ";\n");
 
-            Debug.Log(names + file + "\n<SEPARATOR>\n" + file2);
-            byte[] fileBytes = Encoding.UTF8.GetBytes(names + file + "\n<SEPARATOR>\n" + file2);
+
+            string file3 = evaluatorData.issuedInputData
+                .Select(i => i.ToString())
+                .Aggregate((i, j) => i + ";\n" + j);
+
+            Debug.Log(names + file + "\n<SEPARATOR>\n" + file2 + "\n<SEPARATOR>\n" + file3);
+            byte[] fileBytes = Encoding.UTF8.GetBytes(names + file + "\n<SEPARATOR>\n" + file2 + "\n<SEPARATOR>\n" + file3);
             DownloadFile(fileBytes, fileBytes.Length, "evaluator.txt");
         }
     }

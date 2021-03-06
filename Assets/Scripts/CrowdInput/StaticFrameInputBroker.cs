@@ -10,7 +10,7 @@ namespace DefaultNamespace
     public class StaticFrameInputBroker : AbstractInputBroker
     {
         [SerializeField] private bool debug;
-        
+
         private CrowdInputReliability crowdInputReliability;
         private EvaluatorData evaluatorData;
         private InputReceiver inputReceiver;
@@ -56,7 +56,7 @@ namespace DefaultNamespace
         private void Update()
         {
             frameTimer += Time.deltaTime;
-            
+
             if (crowdInputReliability != null)
             {
                 if (frameTimer >= inputTimeToLive)
@@ -70,17 +70,16 @@ namespace DefaultNamespace
         private void IssueInput()
         {
             int[] currentPlayerInputs = inputList.ToArray();
-            
-            inputReceiver.ApplyInput(
-                crowdInputReliability.IssueCommands(currentPlayerInputs)
-            );
-            
+            int crowdedInput = crowdInputReliability.IssueCommands(currentPlayerInputs);
+
+            inputReceiver.ApplyInput(crowdedInput);
+
             inputList = Enumerable.Range(0, crowdInputReliability.numberOfPlayers).Select(i => 0).ToList();
 
             if (debug)
             {
                 evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
-                evaluatorData.AppendInput(currentPlayerInputs);
+                evaluatorData.AppendInput(currentPlayerInputs, crowdedInput);
             }
         }
 

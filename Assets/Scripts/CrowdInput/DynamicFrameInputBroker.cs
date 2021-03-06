@@ -77,14 +77,16 @@ namespace DefaultNamespace
         private void IssueInput()
         {
             int[] currentPlayerInputs = DequeueCurrentPlayerInputs();
+            int crowdedInput = crowdInputReliability.IssueCommands(currentPlayerInputs);
+            
             inputReceiver.ApplyInput(
-                crowdInputReliability.IssueCommands(currentPlayerInputs) // TODO handle duplicated player inputs
+                crowdedInput // TODO handle duplicated player inputs
             );
             scheduledInputIssue = false;
             if (debug)
             {
                 evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
-                evaluatorData.AppendInput(currentPlayerInputs);
+                evaluatorData.AppendInput(currentPlayerInputs, crowdedInput);
             }
         }
 
