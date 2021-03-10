@@ -95,7 +95,7 @@ namespace DefaultNamespace
             else
             {
                 var networkPosition = (Vector3) stream.ReceiveNext();
-                if (Math.Abs(networkPosition.x - transform.position.x) >= 1f)
+                if (Math.Abs(networkPosition.x - transform.position.x) >= 2f)
                 {
                     transform.position = networkPosition;
                 }

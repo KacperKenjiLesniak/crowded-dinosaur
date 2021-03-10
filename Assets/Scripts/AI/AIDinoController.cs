@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Random = System.Random;
 
 namespace DefaultNamespace.AI
 {
@@ -26,6 +26,7 @@ namespace DefaultNamespace.AI
         private List<Transform> obstacles;
         private List<Transform> smallObstacles;
         private Rigidbody2D rb;
+        private Random random = new Random();
 
         private void Awake()
         {
@@ -44,9 +45,9 @@ namespace DefaultNamespace.AI
             obstacles = GameObject.FindGameObjectsWithTag("Obstacle").Select(o => o.transform).ToList();
             smallObstacles = GameObject.FindGameObjectsWithTag("SmallObstacle").Select(o => o.transform).ToList();
             birds = GameObject.FindGameObjectsWithTag("Bird").Select(o => o.transform).ToList();
-            currentObstacleDistanceToJump = obstacleDistanceToJump + Random.Range(-maxJumpNoise, maxJumpNoise);
-            currentSmallObstacleDistanceToJump = smallObstacleDistanceToJump + Random.Range(-maxJumpNoise, maxJumpNoise);
-            currentBirdDistanceToCrouch = birdDistanceToCrouch + Random.Range(-maxJumpNoise, maxJumpNoise);
+            currentObstacleDistanceToJump = obstacleDistanceToJump + NextFloat(maxJumpNoise);
+            currentSmallObstacleDistanceToJump = smallObstacleDistanceToJump + NextFloat(maxJumpNoise);
+            currentBirdDistanceToCrouch = birdDistanceToCrouch + NextFloat(maxJumpNoise);
         }
 
         private void Update()
@@ -57,25 +58,24 @@ namespace DefaultNamespace.AI
                 {
                     dinoMovement.IssueJump(false);
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
-                    currentObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10 +
-                                                    Random.Range(-maxJumpNoise, maxJumpNoise);
+                    currentObstacleDistanceToJump =
+                        obstacleDistanceToJump * rb.velocity.x / 10 + NextFloat(maxJumpNoise);
                 }
 
                 if (ShouldShortJump() && dinoMovement.grounded)
                 {
                     dinoMovement.IssueJump(true);
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_SHORT_JUMP_ID);
-                    smallObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10 +
-                                                    Random.Range(-maxJumpNoise, maxJumpNoise);
+                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
+                        Constants.INPUT_SHORT_JUMP_ID);
+                    smallObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10 + NextFloat(maxJumpNoise);
                 }
-                
+
                 if (ShouldCrouch() && !dinoMovement.isCrouching)
                 {
                     dinoMovement.IssueCrouch();
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
                         Constants.INPUT_CROUCH_ID);
-                    currentBirdDistanceToCrouch = obstacleDistanceToJump * rb.velocity.x / 10 +
-                                                  Random.Range(-maxJumpNoise, maxJumpNoise);
+                    currentBirdDistanceToCrouch = obstacleDistanceToJump * rb.velocity.x / 10 + NextFloat(maxJumpNoise);
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace DefaultNamespace.AI
                            bird.position.x > transform.position.x &&
                            bird.position.y <= minBirdHeightToCrouch);
         }
-        
+
         private bool ShouldShortJump()
         {
             return smallObstacles
@@ -114,6 +114,17 @@ namespace DefaultNamespace.AI
                     Math.Abs(bird.position.x - transform.position.x) <= currentBirdDistanceToCrouch &&
                     bird.position.x > transform.position.x &&
                     bird.position.y > minBirdHeightToCrouch);
+        }
+
+        float NextFloat(float scale)
+        {
+            double f = random.NextDouble() * 2.0 - 1.0;
+            return (float) f * scale;
+        }
+
+        public void SetSeed(int seed)
+        {
+            random = new Random(seed);
         }
     }
 }
