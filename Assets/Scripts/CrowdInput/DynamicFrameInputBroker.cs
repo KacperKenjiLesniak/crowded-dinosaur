@@ -10,7 +10,7 @@ namespace DefaultNamespace
     public class DynamicFrameInputBroker : AbstractInputBroker
     {
         [SerializeField] private bool debug;
-        
+
         private CrowdInputReliability crowdInputReliability;
         private EvaluatorData evaluatorData;
         private InputReceiver inputReceiver;
@@ -61,7 +61,9 @@ namespace DefaultNamespace
         {
             if (crowdInputReliability != null)
             {
-                if ( !scheduledInputIssue && inputsQueue.Count >= crowdInputReliability.numberOfPlayers / 2 + 1)
+                var reliabilities = crowdInputReliability.playerReliabilities;
+                if (!scheduledInputIssue
+                    && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() > reliabilities.Sum() / 2)
                 {
                     Debug.Log("Invoking issuing input");
                     scheduledInputIssue = true;
@@ -80,7 +82,7 @@ namespace DefaultNamespace
             Debug.Log("Issuing input");
             int[] currentPlayerInputs = DequeueCurrentPlayerInputs();
             int crowdedInput = crowdInputReliability.IssueCommands(currentPlayerInputs);
-            
+
             inputReceiver.ApplyInput(
                 crowdedInput // TODO handle duplicated player inputs
             );
