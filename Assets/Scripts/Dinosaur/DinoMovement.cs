@@ -95,7 +95,9 @@ namespace DefaultNamespace
             else
             {
                 var networkPosition = (Vector3) stream.ReceiveNext();
-                if (Math.Abs(networkPosition.x - transform.position.x) >= 2f)
+                float lag = Mathf.Abs((float) (PhotonNetwork.Time - info.SentServerTime));
+                
+                if (Math.Abs(networkPosition.x + rb.velocity.x * lag - transform.position.x) >= 3f)
                 {
                     transform.position = networkPosition;
                 }
