@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: AiList
   m_EditorClassIdentifier: 
   aiConfigs: []
-  referenceAiConfigs: []
+  referenceAiConfigs:
+  - name: ReferenceAIDino
+  - name: ReferenceAIDino

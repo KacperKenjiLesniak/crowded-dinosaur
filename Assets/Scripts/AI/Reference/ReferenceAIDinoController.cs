@@ -10,17 +10,17 @@ namespace DefaultNamespace.AI
     [RequireComponent(typeof(DinoMovement), typeof(DinoInputSender))]
     public class ReferenceAIDinoController : MonoBehaviourPunCallbacks
     {
-        [SerializeField] private float obstacleDistanceToJump;
-        [SerializeField] private float smallObstacleDistanceToJump;
-        [SerializeField] private float birdDistanceToCrouch;
+        [SerializeField] protected float obstacleDistanceToJump;
+        [SerializeField] protected float smallObstacleDistanceToJump;
+        [SerializeField] protected float birdDistanceToCrouch;
 
         private int aiIndex;
-        private List<Transform> birds;
+        protected List<Transform> birds;
         private DinoInputSender dinoInputSender;
         private DinoMovement dinoMovement;
-        private float minBirdHeightToCrouch = -2.7f;
-        private List<Transform> obstacles;
-        private List<Transform> smallObstacles;
+        protected float minBirdHeightToCrouch = -2.7f;
+        protected List<Transform> obstacles;
+        protected List<Transform> smallObstacles;
         private Rigidbody2D rb;
 
         private void Awake()
@@ -75,7 +75,7 @@ namespace DefaultNamespace.AI
             aiIndex = index;
         }
 
-        private bool ShouldLongJump()
+        protected virtual bool ShouldLongJump()
         {
             return obstacles
                        .Any(obstacle =>
@@ -88,7 +88,7 @@ namespace DefaultNamespace.AI
                            bird.position.y <= minBirdHeightToCrouch);
         }
 
-        private bool ShouldShortJump()
+        protected virtual bool ShouldShortJump()
         {
             return smallObstacles
                 .Any(obstacle =>
@@ -96,7 +96,7 @@ namespace DefaultNamespace.AI
                     obstacle.position.x > transform.position.x);
         }
 
-        private bool ShouldCrouch()
+        protected virtual bool ShouldCrouch()
         {
             return birds
                 .Any(bird =>

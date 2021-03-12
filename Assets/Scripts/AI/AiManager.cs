@@ -45,7 +45,7 @@ namespace DefaultNamespace.AI
                 
                 for (var i = 0; i < aiList.referenceAiConfigs.Count; i++)
                 {
-                    var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "ReferenceAIDino"), startingPosition,
+                    var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", aiList.referenceAiConfigs[i].name), startingPosition,
                         Quaternion.identity);
                     dinoAI.GetComponent<ReferenceAIDinoController>().Configure(i);
                     dinoAI.GetComponent<DinoMovement>().SetColor(new Color(0.5f, 0.5f ,0.5f, 0.0f));
