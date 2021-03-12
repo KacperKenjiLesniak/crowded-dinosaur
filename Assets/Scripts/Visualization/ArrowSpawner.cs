@@ -19,7 +19,7 @@ namespace DefaultNamespace.Visualization
 
         public void SpawnArrow(PlayerInput playerInput)
         {
-            if (photonView.IsMine)
+            if (photonView.IsMine && !playerInput.reference)
             {
                 switch (playerInput.inputId)
                 {

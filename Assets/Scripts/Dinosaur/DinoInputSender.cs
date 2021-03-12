@@ -8,13 +8,13 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
 {
     [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
 
-    public void SendInput(int actorNumberOffset, int inputId)
+    public void SendInput(int actorNumberOffset, int inputId, bool reference = false)
     {
-        photonView.RPC(nameof(InputInfo), RpcTarget.MasterClient, actorNumberOffset, inputId);
+        photonView.RPC(nameof(InputInfo), RpcTarget.MasterClient, actorNumberOffset, inputId, reference);
     }
 
     [PunRPC]
-    private void InputInfo(int actorNumberOffset, int inputId, PhotonMessageInfo info)
+    private void InputInfo(int actorNumberOffset, int inputId, bool reference, PhotonMessageInfo info)
     {
         int playerNumber = info.Sender.ActorNumber - 1 + actorNumberOffset;
         playerInputGameEvent.RaiseGameEvent(
@@ -22,6 +22,7 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
                 playerNumber,
                 PhotonNetwork.NickName,
                 inputId,
-                Time.time));
+                Time.time,
+                reference));
     }
 }

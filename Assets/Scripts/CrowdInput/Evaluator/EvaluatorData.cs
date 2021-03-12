@@ -11,6 +11,8 @@ namespace DefaultNamespace.Evaluator
 
         public List<int> issuedInputData { get; private set; }
 
+        public List<List<int>> referenceAiData { get; private set; }
+        
         private void Start()
         {
             ResetReliabilities();
@@ -21,6 +23,7 @@ namespace DefaultNamespace.Evaluator
             playerReliabilitiesData = new List<List<float>>();
             playerInputData = new List<List<int>>();
             issuedInputData = new List<int>();
+            referenceAiData = new List<List<int>>();
         }
 
         public void AppendReliabilities(List<float> playerReliabilities)
@@ -34,9 +37,10 @@ namespace DefaultNamespace.Evaluator
             playerReliabilitiesData.Add(new List<float>(playerReliabilities));
         }
 
-        public void AppendInput(IEnumerable<int> playerInput, int issuedInput)
+        public void AppendInput(IEnumerable<int> playerInput, IEnumerable<int> referenceAiInput, int issuedInput)
         {
             playerInputData.Add(playerInput.ToList());
+            referenceAiData.Add(referenceAiInput.ToList());
             issuedInputData.Add(issuedInput);
         }
     }

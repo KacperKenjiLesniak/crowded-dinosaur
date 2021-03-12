@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88337b180054774a2237ac6d4d3333f, type: 3}
   m_Name: AiList
   m_EditorClassIdentifier: 
+  aiConfigs: []
+  referenceAiConfigs: []

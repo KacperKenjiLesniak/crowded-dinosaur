@@ -59,7 +59,7 @@ namespace DefaultNamespace
         {
             inputBroker = FindObjectsOfType<AbstractInputBroker>().First(broker => broker.enabled);
             numberOfPlayers = PhotonNetwork.CurrentRoom.PlayerCount + aiList.aiConfigs.Count;
-            inputBroker.SetUp(crowdConfig, numberOfPlayers, this);
+            inputBroker.SetUp(crowdConfig, numberOfPlayers, aiList.referenceAiConfigs.Count, this);
             Debug.Log("Starting game with " + numberOfPlayers + " players.");
         }
     }
