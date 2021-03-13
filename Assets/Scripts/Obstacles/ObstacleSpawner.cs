@@ -11,7 +11,7 @@ namespace DefaultNamespace
         [Header("Open")] [SerializeField] private List<ScoreThreshold> stages;
 
         [Header("Restricted")] [SerializeField]
-        private List<Transform> obstacles;
+        private List<Obstacle> obstacles;
 
         [SerializeField] private int birdIndex;
 
@@ -20,7 +20,7 @@ namespace DefaultNamespace
         private float birdInitialHeight;
         private Camera camera;
 
-        private Transform currentObstacle;
+        private Obstacle currentObstacle;
         private int currentStage = -1;
         private float nextObstacleTime;
         private float obstacleTimer;
@@ -39,7 +39,7 @@ namespace DefaultNamespace
             }
 
             currentObstacle = obstacles[0];
-            birdInitialHeight = obstacles[birdIndex].position.y;
+            birdInitialHeight = obstacles[birdIndex].transform.position.y;
         }
 
         private void Update()
@@ -64,7 +64,7 @@ namespace DefaultNamespace
                 SpawnObstacle();
             }
 
-            if (TransformBehindCameraView(currentObstacle))
+            if (TransformBehindCameraView(currentObstacle.transform))
             {
                 obstacleTimer += Time.deltaTime;
             }
@@ -74,10 +74,10 @@ namespace DefaultNamespace
         {
             int obstacleIndex = Random.Range(0, stages[currentStage].maxObstacleIndex);
             currentObstacle = obstacles[obstacleIndex];
-            currentObstacle.position = new Vector3(dinoPosition.Value.x + 30f, currentObstacle.position.y);
+            currentObstacle.transform.position = new Vector3(dinoPosition.Value.x + 30f + currentObstacle.spawnOffset, currentObstacle.transform.position.y);
             if (obstacleIndex == birdIndex)
             {
-                currentObstacle.position = new Vector3(currentObstacle.position.x,
+                currentObstacle.transform.position = new Vector3(currentObstacle.transform.position.x + currentObstacle.spawnOffset,
                     birdInitialHeight + Random.Range(-1.5f, 1.5f));
             }
         }
