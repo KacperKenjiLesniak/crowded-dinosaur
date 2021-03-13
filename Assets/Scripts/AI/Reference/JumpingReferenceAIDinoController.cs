@@ -9,28 +9,29 @@ namespace DefaultNamespace.AI
         {
             return obstacles
                        .Any(obstacle =>
-                           Math.Abs(obstacle.position.x - transform.position.x) <= obstacleDistanceToJump &&
+                           Math.Abs(obstacle.position.x - transform.position.x) <= obstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed &&
                            obstacle.position.x > transform.position.x)
                    || birds
                        .Any(bird =>
-                           Math.Abs(bird.position.x - transform.position.x) <= obstacleDistanceToJump &&
+                           Math.Abs(bird.position.x - transform.position.x) <= obstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed &&
                            bird.position.x > transform.position.x &&
-                           bird.position.y <= minBirdHeightToCrouch);
+                           bird.position.y <= minBirdHeightToCrouch)
+                   || smallObstacles
+                       .Any(obstacle =>
+                           Math.Abs(obstacle.position.x - transform.position.x) <= smallObstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed &&
+                           obstacle.position.x > transform.position.x);
         }
 
         protected override bool ShouldShortJump()
         {
-            return smallObstacles
-                .Any(obstacle =>
-                    Math.Abs(obstacle.position.x - transform.position.x) <= smallObstacleDistanceToJump &&
-                    obstacle.position.x > transform.position.x);
+            return false;
         }
 
         protected override bool ShouldCrouch()
         {
             return birds
                 .Any(bird =>
-                    Math.Abs(bird.position.x - transform.position.x) <= birdDistanceToCrouch &&
+                    Math.Abs(bird.position.x - transform.position.x) <= birdDistanceToCrouch * rb.velocity.x / dinoMovement.initialSpeed &&
                     bird.position.x > transform.position.x &&
                     bird.position.y > minBirdHeightToCrouch);
         }

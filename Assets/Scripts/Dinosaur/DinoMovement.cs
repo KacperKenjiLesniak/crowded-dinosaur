@@ -14,7 +14,7 @@ namespace DefaultNamespace
 
         [SerializeField] private float jumpPower = 10f;
         [SerializeField] private float shortJumpPower = 7f;
-        [SerializeField] private float initialSpeed = 10f;
+        [SerializeField] public float initialSpeed = 10f;
         [SerializeField] private float speedModifier = 1.5f;
         [SerializeField] private MutableInt score;
         [SerializeField] private GameEvent lostGameEvent;

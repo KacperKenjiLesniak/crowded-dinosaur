@@ -15,4 +15,5 @@ MonoBehaviour:
   aiConfigs: []
   referenceAiConfigs:
   - name: ReferenceAIDino
-  - name: ReferenceAIDino
+  - name: JumpyReferenceAIDino
+  - name: NotCrouchingReferenceAIDino

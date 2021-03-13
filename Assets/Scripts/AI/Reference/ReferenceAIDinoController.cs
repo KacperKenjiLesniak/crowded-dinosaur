@@ -17,12 +17,12 @@ namespace DefaultNamespace.AI
         private int aiIndex;
         protected List<Transform> birds;
         private DinoInputSender dinoInputSender;
-        private DinoMovement dinoMovement;
+        protected DinoMovement dinoMovement;
         protected float minBirdHeightToCrouch = -2.7f;
         protected List<Transform> obstacles;
         protected List<Transform> smallObstacles;
-        private Rigidbody2D rb;
-
+        protected Rigidbody2D rb;
+        
         private void Awake()
         {
             if (!PhotonNetwork.IsMasterClient)
@@ -57,7 +57,6 @@ namespace DefaultNamespace.AI
                     dinoMovement.IssueJump(true);
                     dinoInputSender.SendInput(aiIndex,
                         Constants.INPUT_SHORT_JUMP_ID, true);
-                    smallObstacleDistanceToJump = obstacleDistanceToJump * rb.velocity.x / 10;
                 }
 
                 if (ShouldCrouch() && !dinoMovement.isCrouching)
@@ -65,7 +64,6 @@ namespace DefaultNamespace.AI
                     dinoMovement.IssueCrouch();
                     dinoInputSender.SendInput(aiIndex,
                         Constants.INPUT_CROUCH_ID, true);
-                    birdDistanceToCrouch = obstacleDistanceToJump * rb.velocity.x / 10;
                 }
             }
         }
@@ -79,11 +77,11 @@ namespace DefaultNamespace.AI
         {
             return obstacles
                        .Any(obstacle =>
-                           Math.Abs(obstacle.position.x - transform.position.x) <= obstacleDistanceToJump &&
+                           Math.Abs(obstacle.position.x - transform.position.x) <= obstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed &&
                            obstacle.position.x > transform.position.x)
                    || birds
                        .Any(bird =>
-                           Math.Abs(bird.position.x - transform.position.x) <= obstacleDistanceToJump &&
+                           Math.Abs(bird.position.x - transform.position.x) <= obstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed &&
                            bird.position.x > transform.position.x &&
                            bird.position.y <= minBirdHeightToCrouch);
         }
@@ -92,7 +90,7 @@ namespace DefaultNamespace.AI
         {
             return smallObstacles
                 .Any(obstacle =>
-                    Math.Abs(obstacle.position.x - transform.position.x) <= smallObstacleDistanceToJump &&
+                    Math.Abs(obstacle.position.x - transform.position.x) <= smallObstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed &&
                     obstacle.position.x > transform.position.x);
         }
 
@@ -100,7 +98,7 @@ namespace DefaultNamespace.AI
         {
             return birds
                 .Any(bird =>
-                    Math.Abs(bird.position.x - transform.position.x) <= birdDistanceToCrouch &&
+                    Math.Abs(bird.position.x - transform.position.x) <= birdDistanceToCrouch * rb.velocity.x / dinoMovement.initialSpeed &&
                     bird.position.x > transform.position.x &&
                     bird.position.y > minBirdHeightToCrouch);
         }

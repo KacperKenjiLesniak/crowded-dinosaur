@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6702fe22d2465a94085a9d18ec479d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraForwardPosition: 10
+  cameraForwardPosition: 12.5
   moveSpeed: 6
 --- !u!1 &592061874
 GameObject:
@@ -4569,8 +4569,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1659004046748681094}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
-      propertyPath: stages.Array.data[4].score
+      propertyPath: stages.Array.data[1].score
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[2].score
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[3].score
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[4].score
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: stages.Array.data[1].timeVariance
@@ -4587,6 +4599,10 @@ PrefabInstance:
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: stages.Array.data[4].timeVariance
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[2].maxObstacleIndex
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: stages.Array.data[4].maxObstacleIndex

@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1688479605241440025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784758733552453392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6495bf61fed74f969dea1ca43d5b922c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleDistanceToJump: 4.7
+  smallObstacleDistanceToJump: 5
+  birdDistanceToCrouch: 5.5
 --- !u!114 &2828674786432086223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,21 +28,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInputGameEvent: {fileID: 11400000, guid: 1bd433c37697e234894416c7bbd0b0cb, type: 2}
---- !u!114 &1688479605241440025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 784758733552453392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6495bf61fed74f969dea1ca43d5b922c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacleDistanceToJump: 0
-  smallObstacleDistanceToJump: 0
-  birdDistanceToCrouch: 0
 --- !u!1001 &5480319537683600021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5109901659581191557, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
       propertyPath: m_Name
-      value: CrouchyReferenceAIDino
+      value: NotCrouchingReferenceAIDino
       objectReference: {fileID: 0}
     - target: {fileID: 5109901659581191557, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
       propertyPath: m_Layer
