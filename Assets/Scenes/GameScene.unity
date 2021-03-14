@@ -1089,6 +1089,7 @@ Transform:
   - {fileID: 1324828197}
   - {fileID: 8283626107954437256}
   - {fileID: 6342965426988001196}
+  - {fileID: 7375604079274985758}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4421,6 +4422,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e87f1a6b7de61847baecbf603722ef2, type: 3}
+--- !u!1001 &3269922520721517854
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 592061875}
+    m_Modifications:
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -71.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309181301766, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: m_Name
+      value: CactusAndBird
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420770309437803225, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: viewIdField
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188610316364502335, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+      propertyPath: viewIdField
+      value: 14
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
 --- !u!4 &6342965426988001196 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5732991320603921222, guid: af65201164999044cb5f62eaaf409e13, type: 3}
@@ -4487,6 +4553,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a4367f44c433fe4a91c5e464a46f8c5, type: 3}
+--- !u!4 &7375604079274985758 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5420770309181301760, guid: b294492a4310cf54c83b0fe600c9c207, type: 3}
+  m_PrefabInstance: {fileID: 3269922520721517854}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7720079017001616745 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 590740332925340371, guid: 9a4367f44c433fe4a91c5e464a46f8c5, type: 3}
@@ -4680,11 +4751,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: stages.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[0]
@@ -4731,6 +4802,10 @@ PrefabInstance:
       value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[6].score
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[0].transform
       value: 
       objectReference: {fileID: 280637140}
@@ -4749,9 +4824,13 @@ PrefabInstance:
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[4].transform
       value: 
-      objectReference: {fileID: 6342965426988001196}
+      objectReference: {fileID: 7375604079274985758}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[5].transform
+      value: 
+      objectReference: {fileID: 6342965426988001196}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: obstacles.Array.data[6].transform
       value: 
       objectReference: {fileID: 1659004046748681094}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
@@ -4775,6 +4854,10 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[6].timeVariance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[2].spawnOffset
       value: 20
       objectReference: {fileID: 0}
@@ -4784,10 +4867,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[4].spawnOffset
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[5].spawnOffset
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: obstacles.Array.data[6].spawnOffset
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
@@ -4805,6 +4892,10 @@ PrefabInstance:
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: stages.Array.data[5].maxObstacleIndex
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[6].maxObstacleIndex
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: stages.Array.data[0].meanTimeBetweenObstacles
@@ -4828,6 +4919,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: stages.Array.data[5].meanTimeBetweenObstacles
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
+      propertyPath: stages.Array.data[6].meanTimeBetweenObstacles
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566022, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
