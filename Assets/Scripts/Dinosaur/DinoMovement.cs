@@ -96,10 +96,13 @@ namespace DefaultNamespace
             {
                 var networkPosition = (Vector3) stream.ReceiveNext();
                 float lag = Mathf.Abs((float) (PhotonNetwork.Time - info.SentServerTime));
-                
-                if (Math.Abs(networkPosition.x + rb.velocity.x * lag - transform.position.x) >= 3f)
+
+                var interpolatedNetworkPosition = new Vector3(networkPosition.x + rb.velocity.x * lag,
+                    networkPosition.y, networkPosition.z);
+
+                if (Math.Abs(interpolatedNetworkPosition.x - transform.position.x) >= 10f)
                 {
-                    transform.position = networkPosition;
+                    transform.position = interpolatedNetworkPosition;
                 }
             }
         }
