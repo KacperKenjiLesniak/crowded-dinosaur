@@ -7,19 +7,26 @@ namespace DefaultNamespace.AI
 {
     public class AiManager : MonoBehaviourPunCallbacks
     {
+        
         [SerializeField] private AiList aiList;
         [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
 
         private List<Color> playerColors;
+        private static bool firstTimeInitiated = true;
 
         private void Start()
         {
+            if (firstTimeInitiated)
+            {
+                ClearAis();
+                firstTimeInitiated = false;
+            }
             playerColors = FindObjectOfType<PlayerManager>().playerColors;
         }
 
-        public void AddAi(float noise)
+        public void AddAi(AiConfig aiConfig)
         {
-            aiList.aiConfigs.Add(new AiConfig(noise));
+            aiList.aiConfigs.Add(aiConfig);
             Debug.Log("Ai list size: " + aiList.aiConfigs.Count);
         }
 
@@ -38,7 +45,7 @@ namespace DefaultNamespace.AI
                 {
                     var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition,
                         Quaternion.identity);
-                    dinoAI.GetComponent<AIDinoController>().Configure(i, aiList.aiConfigs[i].jumpNoise);
+                    dinoAI.GetComponent<AIDinoController>().Configure(i, aiList.aiConfigs[i]);
                     dinoAI.GetComponent<AIDinoController>().SetSeed(Random.Range(0, 1000000));
                     dinoAI.GetComponent<DinoMovement>().SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
                 }

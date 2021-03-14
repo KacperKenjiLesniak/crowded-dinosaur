@@ -20,6 +20,7 @@ namespace DefaultNamespace.AI
         private DinoInputSender dinoInputSender;
         private DinoMovement dinoMovement;
         private float maxJumpNoise;
+        private float noiseShift;
         private float minBirdHeightToCrouch = -2.7f;
         private List<Transform> obstacles;
         private List<Transform> smallObstacles;
@@ -75,21 +76,22 @@ namespace DefaultNamespace.AI
             }
         }
 
-        public void Configure(int index, float jumpNoise)
+        public void Configure(int index, AiConfig aiConfig)
         {
             aiIndex = index;
-            maxJumpNoise = jumpNoise;
+            maxJumpNoise = aiConfig.maxNoise;
+            noiseShift = aiConfig.noiseShift;
         }
 
         private bool ShouldLongJump()
         {
             return obstacles
                        .Any(obstacle =>
-                           Math.Abs(obstacle.position.x - transform.position.x) <= obstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed + currentNoise &&
+                           Math.Abs(obstacle.position.x - transform.position.x) <= NoisedDistance(obstacleDistanceToJump) &&
                            obstacle.position.x > transform.position.x)
                    || birds
                        .Any(bird =>
-                           Math.Abs(bird.position.x - transform.position.x) <= obstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed + currentNoise &&
+                           Math.Abs(bird.position.x - transform.position.x) <= NoisedDistance(obstacleDistanceToJump) &&
                            bird.position.x > transform.position.x &&
                            bird.position.y <= minBirdHeightToCrouch);
         }
@@ -98,7 +100,7 @@ namespace DefaultNamespace.AI
         {
             return smallObstacles
                 .Any(obstacle =>
-                    Math.Abs(obstacle.position.x - transform.position.x) <= smallObstacleDistanceToJump * rb.velocity.x / dinoMovement.initialSpeed + currentNoise &&
+                    Math.Abs(obstacle.position.x - transform.position.x) <= NoisedDistance(smallObstacleDistanceToJump) &&
                     obstacle.position.x > transform.position.x);
         }
 
@@ -106,7 +108,7 @@ namespace DefaultNamespace.AI
         {
             return birds
                 .Any(bird =>
-                    Math.Abs(bird.position.x - transform.position.x) <= birdDistanceToCrouch * rb.velocity.x / dinoMovement.initialSpeed + currentNoise &&
+                    Math.Abs(bird.position.x - transform.position.x) <= NoisedDistance(birdDistanceToCrouch) &&
                     bird.position.x > transform.position.x &&
                     bird.position.y > minBirdHeightToCrouch);
         }
@@ -120,6 +122,11 @@ namespace DefaultNamespace.AI
         public void SetSeed(int seed)
         {
             random = new Random(seed);
+        }
+
+        private float NoisedDistance(float distance)
+        {
+            return distance * rb.velocity.x / dinoMovement.initialSpeed + currentNoise + noiseShift;
         }
     }
 }

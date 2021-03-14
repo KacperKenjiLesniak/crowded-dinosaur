@@ -1,15 +1,13 @@
 ﻿using System;
+using UnityEngine;
 
 namespace DefaultNamespace.AI
 {
     [Serializable]
-    public class AiConfig
+    [CreateAssetMenu(fileName = "AiConfig", menuName = "ScriptableObjects/AiConfig", order = 0)]
+    public class AiConfig : ScriptableObject
     {
-        public AiConfig(float jumpNoise)
-        {
-            this.jumpNoise = jumpNoise;
-        }
-
-        public float jumpNoise { get; }
+        public float maxNoise;
+        public float noiseShift;
     }
 }

@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff6c51af645c42938d2b5a26ee3e6238, type: 3}
-  m_Name: CreateAiWithNoise
+  m_Script: {fileID: 11500000, guid: 3a4e6a185d5041638a7bb52600bb8626, type: 3}
+  m_Name: GoodAi
   m_EditorClassIdentifier: 
-  debug: 0
+  maxNoise: 1
+  noiseShift: 0
