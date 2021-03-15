@@ -9,5 +9,7 @@ namespace DefaultNamespace.AI
     {
         public float maxNoise;
         public float noiseShift;
+        public float chanceForMistake;
+        public bool isRandom;
     }
 }

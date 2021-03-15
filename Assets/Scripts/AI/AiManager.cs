@@ -7,7 +7,6 @@ namespace DefaultNamespace.AI
 {
     public class AiManager : MonoBehaviourPunCallbacks
     {
-        
         [SerializeField] private AiList aiList;
         [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
 
@@ -21,6 +20,7 @@ namespace DefaultNamespace.AI
                 ClearAis();
                 firstTimeInitiated = false;
             }
+
             playerColors = FindObjectOfType<PlayerManager>().playerColors;
         }
 
@@ -43,19 +43,33 @@ namespace DefaultNamespace.AI
                 Debug.Log("Creating AI");
                 for (var i = 0; i < aiList.aiConfigs.Count; i++)
                 {
-                    var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition,
-                        Quaternion.identity);
-                    dinoAI.GetComponent<AIDinoController>().Configure(i, aiList.aiConfigs[i]);
-                    dinoAI.GetComponent<AIDinoController>().SetSeed(Random.Range(0, 1000000));
-                    dinoAI.GetComponent<DinoMovement>().SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
+                    if (aiList.aiConfigs[i].isRandom)
+                    {
+                        var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "RandomAIDino"), startingPosition,
+                            Quaternion.identity);
+                        dinoAI.GetComponent<RandomAIDinoController>().Configure(i);
+                        dinoAI.GetComponent<RandomAIDinoController>().SetSeed(Random.Range(0, 1000000));
+                        dinoAI.GetComponent<DinoMovement>()
+                            .SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
+                    }
+                    else
+                    {
+                        var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "AIDino"), startingPosition,
+                            Quaternion.identity);
+                        dinoAI.GetComponent<AIDinoController>().Configure(i, aiList.aiConfigs[i]);
+                        dinoAI.GetComponent<AIDinoController>().SetSeed(Random.Range(0, 1000000));
+                        dinoAI.GetComponent<DinoMovement>()
+                            .SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
+                    }
                 }
-                
+
                 for (var i = 0; i < aiList.referenceAiConfigs.Count; i++)
                 {
-                    var dinoAI = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", aiList.referenceAiConfigs[i].name), startingPosition,
+                    var dinoAI = PhotonNetwork.Instantiate(
+                        Path.Combine("PhotonPrefabs", aiList.referenceAiConfigs[i].name), startingPosition,
                         Quaternion.identity);
                     dinoAI.GetComponent<ReferenceAIDinoController>().Configure(i);
-                    dinoAI.GetComponent<DinoMovement>().SetColor(new Color(0.5f, 0.5f ,0.5f, 0f));
+                    dinoAI.GetComponent<DinoMovement>().SetColor(new Color(0.5f, 0.5f, 0.5f, 0f));
                 }
             }
         }

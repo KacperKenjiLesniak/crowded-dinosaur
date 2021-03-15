@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace.Utils;
 using Photon.Pun;
 using UnityEngine;
 using Random = System.Random;
@@ -21,6 +22,9 @@ namespace DefaultNamespace.AI
         private DinoMovement dinoMovement;
         private float maxJumpNoise;
         private float noiseShift;
+        private float chanceForMistake;
+        private float currentMistake;
+        private bool isMistaken;
         private float minBirdHeightToCrouch = -2.7f;
         private List<Transform> obstacles;
         private List<Transform> smallObstacles;
@@ -51,27 +55,29 @@ namespace DefaultNamespace.AI
         {
             if (photonView.IsMine)
             {
+                if (isMistaken) return;
                 if (ShouldLongJump() && dinoMovement.grounded)
                 {
+                    RandomizeVariables();
+                    if (isMistaken) return;
                     dinoMovement.IssueJump(false);
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
-                    currentNoise = NextFloat(maxJumpNoise);
                 }
-
-                if (ShouldShortJump() && dinoMovement.grounded)
+                else if (ShouldShortJump() && dinoMovement.grounded)
                 {
+                    RandomizeVariables();
+                    if (isMistaken) return;
                     dinoMovement.IssueJump(true);
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
                         Constants.INPUT_SHORT_JUMP_ID);
-                    currentNoise = NextFloat(maxJumpNoise);
                 }
-
-                if (ShouldCrouch() && !dinoMovement.isCrouching)
+                else if (ShouldCrouch() && !dinoMovement.isCrouching)
                 {
+                    RandomizeVariables();
+                    if (isMistaken) return;
                     dinoMovement.IssueCrouch();
                     dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
                         Constants.INPUT_CROUCH_ID);
-                    currentNoise = NextFloat(maxJumpNoise);
                 }
             }
         }
@@ -81,6 +87,7 @@ namespace DefaultNamespace.AI
             aiIndex = index;
             maxJumpNoise = aiConfig.maxNoise;
             noiseShift = aiConfig.noiseShift;
+            chanceForMistake = aiConfig.chanceForMistake;
         }
 
         private bool ShouldLongJump()
@@ -112,7 +119,42 @@ namespace DefaultNamespace.AI
                     bird.position.x > transform.position.x &&
                     bird.position.y > minBirdHeightToCrouch);
         }
-
+        
+        private void IssueRandomInput()
+        {
+            switch (random.Next(0, 4))
+            {
+                case 0:
+                    dinoMovement.IssueJump(false);
+                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
+                    break;  
+                case 1:
+                    dinoMovement.IssueJump(true);
+                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
+                        Constants.INPUT_SHORT_JUMP_ID);
+                    break;
+                case 2:
+                    dinoMovement.IssueCrouch();
+                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
+                        Constants.INPUT_CROUCH_ID);
+                    break;
+                case 3: 
+                    break;
+            }
+        }
+        
+        private void RandomizeVariables()
+        {
+            currentNoise = NextFloat(maxJumpNoise);
+            currentMistake = Math.Abs(NextFloat(1));
+            if (currentMistake < chanceForMistake)
+            { 
+                isMistaken = true;
+                IssueRandomInput();
+                this.Invoke( () => isMistaken = false, Math.Abs(NextFloat(1)) + 1);
+            }
+        }
+        
         float NextFloat(float scale)
         {
             double f = random.NextDouble() * 2.0 - 1.0;

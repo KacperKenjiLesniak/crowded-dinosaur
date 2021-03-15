@@ -74,7 +74,7 @@ namespace DefaultNamespace
                 if (!scheduledInputIssue
                     && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() > reliabilities.Sum() / 2)
                 {
-                    Debug.Log("Invoking issuing input");
+                    Debug.Log("Invoking issuing input with queue of size: " + inputsQueue.Count);
                     scheduledInputIssue = true;
                     Invoke(nameof(IssueInput), inputTimeToLive / 2);
                 }
@@ -88,7 +88,7 @@ namespace DefaultNamespace
 
         private void IssueInput()
         {
-            Debug.Log("Issuing input");
+            Debug.Log("Issuing input with queue of size " + inputsQueue.Count);
             int[] currentPlayerInputs = DequeueCurrentPlayerInputs();
             int crowdedInput = crowdInputReliability.IssueCommands(currentPlayerInputs);
 

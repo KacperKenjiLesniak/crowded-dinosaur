@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxNoise: 3
   noiseShift: 0
+  chanceForMistake: 0.3
+  isRandom: 0

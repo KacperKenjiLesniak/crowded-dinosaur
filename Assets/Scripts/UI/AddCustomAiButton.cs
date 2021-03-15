@@ -10,6 +10,7 @@ namespace DefaultNamespace.UI
     {
         [SerializeField] private TMP_InputField maxNoise;
         [SerializeField] private TMP_InputField noiseShift;
+        [SerializeField] private TMP_InputField errorChance;
         [SerializeField] private AiConfigGameEvent createAiEvent;
         
         public void Click()
@@ -33,6 +34,16 @@ namespace DefaultNamespace.UI
             {
                 Debug.LogError(e);
                 aiConfig.noiseShift = 0f;
+            }
+
+            try
+            {
+                aiConfig.chanceForMistake = float.Parse(errorChance.text);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+                aiConfig.chanceForMistake = 0f;
             }
             createAiEvent.RaiseGameEvent(aiConfig);
         }
