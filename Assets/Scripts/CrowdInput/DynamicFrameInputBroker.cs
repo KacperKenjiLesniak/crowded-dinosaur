@@ -89,8 +89,12 @@ namespace DefaultNamespace
         private void IssueInput()
         {
             Debug.Log("Issuing input with queue of size " + inputsQueue.Count);
+
             int[] currentPlayerInputs = DequeueCurrentPlayerInputs();
+            Debug.Log("Inputs: " + currentPlayerInputs.ToList().Select(i => i.ToString()).Aggregate((a,b) => a + ',' + b));
+
             int crowdedInput = crowdInputReliability.IssueCommands(currentPlayerInputs);
+            Debug.Log("Issued input: " + crowdedInput);
 
             inputReceiver.ApplyInput(
                 crowdedInput // TODO handle duplicated player inputs

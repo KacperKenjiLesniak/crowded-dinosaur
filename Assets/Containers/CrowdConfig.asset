@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfCommands: 4
   reliabilityCoefficient: 0.1
-  agreementThreshold: 0.8
+  agreementThreshold: 0.7
   inputTimeToLive: 0.2
