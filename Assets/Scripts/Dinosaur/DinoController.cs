@@ -20,7 +20,7 @@ public class DinoController : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && Time.timeScale > 0f)
         {
             if ((Input.GetButtonDown("Jump") || Input.GetButtonDown("Up")) && jumpTimer < 0f)
             {

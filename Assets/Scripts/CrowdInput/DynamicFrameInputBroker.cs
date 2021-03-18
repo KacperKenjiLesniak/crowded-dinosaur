@@ -72,7 +72,7 @@ namespace DefaultNamespace
             {
                 var reliabilities = crowdInputReliability.playerReliabilities;
                 if (!scheduledInputIssue
-                    && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() > reliabilities.Sum() / 2)
+                    && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() > reliabilities.Sum() / 2.5)
                 {
                     Debug.Log("Invoking issuing input with queue of size: " + inputsQueue.Count);
                     scheduledInputIssue = true;
