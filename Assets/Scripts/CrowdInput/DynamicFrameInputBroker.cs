@@ -9,6 +9,8 @@ namespace DefaultNamespace
     [RequireComponent(typeof(EvaluatorData))]
     public class DynamicFrameInputBroker : AbstractInputBroker
     {
+        private const float ACTIVATION_THRESHOLD = 0.2f;
+        
         [SerializeField] private bool debug;
 
         private CrowdInputReliability crowdInputReliability;
@@ -72,7 +74,7 @@ namespace DefaultNamespace
             {
                 var reliabilities = crowdInputReliability.playerReliabilities;
                 if (!scheduledInputIssue
-                    && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() > reliabilities.Sum() / 2.5)
+                    && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() > reliabilities.Sum() * ACTIVATION_THRESHOLD)
                 {
                     Debug.Log("Invoking issuing input with queue of size: " + inputsQueue.Count);
                     scheduledInputIssue = true;
