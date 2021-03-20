@@ -17,7 +17,6 @@ namespace DefaultNamespace
         [SerializeField] public float initialSpeed = 10f;
         [SerializeField] private float speedModifier = 1.5f;
         [SerializeField] private MutableInt score;
-        [SerializeField] private GameEvent lostGameEvent;
 
         private Animator animator;
         private float speed = 10f;
@@ -119,7 +118,6 @@ namespace DefaultNamespace
             GetComponent<Animator>().enabled = false;
             rb.velocity = Vector2.zero;
             enabled = false;
-            lostGameEvent.RaiseGameEvent();
         }
 
         [PunRPC]

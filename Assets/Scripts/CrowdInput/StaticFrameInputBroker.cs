@@ -11,8 +11,6 @@ namespace DefaultNamespace
     {
         [SerializeField] private bool debug;
 
-        private CrowdInputReliability crowdInputReliability;
-        private EvaluatorData evaluatorData;
         private InputReceiver inputReceiver;
         private List<int> inputList;
         private float inputTimeToLive;
@@ -53,14 +51,10 @@ namespace DefaultNamespace
             }
         }
 
+
         #endregion
 
         #region Private
-
-        private void Awake()
-        {
-            evaluatorData = GetComponent<EvaluatorData>();
-        }
 
         private void Update()
         {

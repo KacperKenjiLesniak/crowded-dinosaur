@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4880909068150305235}
   - component: {fileID: 1580705353}
   - component: {fileID: 1176924673621824498}
+  - component: {fileID: 5389584138490642310}
+  - component: {fileID: -8495276163477890021}
   m_Layer: 0
   m_Name: DynamicFrameInputBroker
   m_TagString: Untagged
@@ -61,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed42553671d24f1f8dd2449d82aa50fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: {fileID: 11400000, guid: a93dd96313151d2488696d39e1333636, type: 2}
 --- !u!114 &5531294193541155983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,3 +146,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb50e855491d42169e6e9f739a90cb53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5389584138490642310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713530076509662976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b2f85583a54b21922069d1d0951342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8cf82eb9656495d419339d1593dc1118, type: 2}
+  onGameEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3558059342832653149}
+        m_TargetAssemblyTypeName: DefaultNamespace.DynamicFrameInputBroker, Assembly-CSharp
+        m_MethodName: ResetCrowdInputReliability
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &-8495276163477890021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713530076509662976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b2f85583a54b21922069d1d0951342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
+  onGameEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1580705352}
+        m_TargetAssemblyTypeName: DefaultNamespace.Evaluator.EvaluatorData, Assembly-CSharp
+        m_MethodName: AddScore
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

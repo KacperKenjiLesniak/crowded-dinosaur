@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using DefaultNamespace.AI;
+using GameEvents.Game;
 using Photon.Pun;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ namespace DefaultNamespace
     {
         [SerializeField] private AiList aiList;
         [SerializeField] private CrowdConfig crowdConfig;
-        
+        [SerializeField] private GameEvent lostGameEvent;
+
         private DinoMovement dinoMovement;
         private AbstractInputBroker inputBroker;
         private int numberOfPlayers;
@@ -35,6 +37,7 @@ namespace DefaultNamespace
                     {
                         movement.Die();
                     }
+                    lostGameEvent.RaiseGameEvent();
                 }
             }
         }

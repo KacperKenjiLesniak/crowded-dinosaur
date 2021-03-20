@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace.Evaluator;
 using DefaultNamespace.Events;
@@ -13,8 +14,6 @@ namespace DefaultNamespace
         
         [SerializeField] private bool debug;
 
-        private CrowdInputReliability crowdInputReliability;
-        private EvaluatorData evaluatorData;
         private InputReceiver inputReceiver;
         private Queue<PlayerInput> inputsQueue;
         private float inputTimeToLive;
@@ -57,12 +56,7 @@ namespace DefaultNamespace
         #endregion
 
         #region Private
-
-        private void Awake()
-        {
-            evaluatorData = GetComponent<EvaluatorData>();
-        }
-
+        
         private void Start()
         {
             inputsQueue = new Queue<PlayerInput>();

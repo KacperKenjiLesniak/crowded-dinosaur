@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MutableObjects.Int;
 using UnityEngine;
 
 namespace DefaultNamespace.Evaluator
@@ -13,6 +14,10 @@ namespace DefaultNamespace.Evaluator
 
         public List<List<int>> referenceAiData { get; private set; }
         
+        public List<int> scores { get; private set; }
+
+        public MutableInt score;
+        
         private void Start()
         {
             ResetReliabilities();
@@ -24,6 +29,7 @@ namespace DefaultNamespace.Evaluator
             playerInputData = new List<List<int>>();
             issuedInputData = new List<int>();
             referenceAiData = new List<List<int>>();
+            scores = new List<int>();
         }
 
         public void AppendReliabilities(List<float> playerReliabilities)
@@ -42,6 +48,11 @@ namespace DefaultNamespace.Evaluator
             playerInputData.Add(playerInput.ToList());
             referenceAiData.Add(referenceAiInput.ToList());
             issuedInputData.Add(issuedInput);
+        }
+
+        public void AddScore()
+        {
+            scores.Add(score.Value);
         }
     }
 }

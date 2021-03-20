@@ -28,6 +28,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-4396785079553589239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6328544944963849823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107ee4080867413ea687091e07966d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
 --- !u!114 &-4129870872682695188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aiList: {fileID: 11400000, guid: d5fd655aea7cc8b4ebafb73d753decea, type: 2}
   crowdConfig: {fileID: 11400000, guid: 7b35b42d6a8164045b38d836275a4c51, type: 2}
+  lostGameEvent: {fileID: 11400000, guid: 50f2559cd6179a245ae3e7700a4af1b4, type: 2}
 --- !u!1001 &1241170938606525402
 PrefabInstance:
   m_ObjectHideFlags: 0
