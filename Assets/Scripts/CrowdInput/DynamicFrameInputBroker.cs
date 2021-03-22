@@ -27,12 +27,19 @@ namespace DefaultNamespace
         {
             if (crowdInputReliability == null || this.numberOfPlayers != numberOfPlayers)
             {
-                crowdInputReliability = new CrowdInputReliability(
-                    numberOfPlayers,
-                    config.numberOfCommands,
-                    config.reliabilityCoefficient,
-                    config.agreementThreshold
-                );
+                if (config.mockedCrowdConfig)
+                {
+                    crowdInputReliability = new MockCrowdInputReliability(numberOfPlayers, config.numberOfCommands);
+                }
+                else
+                {
+                    crowdInputReliability = new CrowdInputReliability(
+                        numberOfPlayers,
+                        config.numberOfCommands,
+                        config.reliabilityCoefficient,
+                        config.agreementThreshold
+                    );    
+                }
 
                 evaluatorData.ResetReliabilities();
             }

@@ -9,5 +9,6 @@ namespace DefaultNamespace
         public float reliabilityCoefficient;
         public float agreementThreshold;
         public float inputTimeToLive;
+        public bool mockedCrowdConfig;
     }
 }
