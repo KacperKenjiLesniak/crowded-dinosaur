@@ -7,14 +7,14 @@ namespace DefaultNamespace.Evaluator
 {
     public class EvaluatorData : MonoBehaviour
     {
-        public List<List<float>> playerReliabilitiesData { get; private set; }
-        public List<List<int>> playerInputData { get; private set; }
+        public List<LogRow<List<float>>> playerReliabilitiesData { get; private set; }
+        public List<LogRow<List<int>>> playerInputData { get; private set; }
 
-        public List<int> issuedInputData { get; private set; }
+        public List<LogRow<int>> issuedInputData { get; private set; }
 
-        public List<List<int>> referenceAiData { get; private set; }
+        public List<LogRow<List<int>>> referenceAiData { get; private set; }
         
-        public List<int> scores { get; private set; }
+        public List<LogRow<int>> scores { get; private set; }
 
         public MutableInt score;
         
@@ -25,11 +25,11 @@ namespace DefaultNamespace.Evaluator
 
         public void ResetReliabilities()
         {
-            playerReliabilitiesData = new List<List<float>>();
-            playerInputData = new List<List<int>>();
-            issuedInputData = new List<int>();
-            referenceAiData = new List<List<int>>();
-            scores = new List<int>();
+            playerReliabilitiesData = new List<LogRow<List<float>>>();
+            playerInputData = new List<LogRow<List<int>>>();
+            issuedInputData = new List<LogRow<int>>();
+            referenceAiData = new List<LogRow<List<int>>>();
+            scores = new List<LogRow<int>>();
         }
 
         public void AppendReliabilities(List<float> playerReliabilities)
@@ -40,19 +40,19 @@ namespace DefaultNamespace.Evaluator
 
             Debug.Log("Current reliabilities: " + reliabilitiesString);
 
-            playerReliabilitiesData.Add(new List<float>(playerReliabilities));
+            playerReliabilitiesData.Add(new LogRow<List<float>>(new List<float>(playerReliabilities), Time.time));
         }
 
         public void AppendInput(IEnumerable<int> playerInput, IEnumerable<int> referenceAiInput, int issuedInput)
         {
-            playerInputData.Add(playerInput.ToList());
-            referenceAiData.Add(referenceAiInput.ToList());
-            issuedInputData.Add(issuedInput);
+            playerInputData.Add(new LogRow<List<int>>(playerInput.ToList(), Time.time));
+            referenceAiData.Add(new LogRow<List<int>>(referenceAiInput.ToList(), Time.time));
+            issuedInputData.Add(new LogRow<int>(issuedInput, Time.time));
         }
 
         public void AddScore()
         {
-            scores.Add(score.Value);
+            scores.Add(new LogRow<int>(score.Value, Time.time));
         }
     }
 }

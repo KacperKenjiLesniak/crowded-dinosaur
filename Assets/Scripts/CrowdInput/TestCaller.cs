@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Reliability;
+using UnityEngine;
 
 public class TestCaller : MonoBehaviour
 {
@@ -11,14 +12,14 @@ public class TestCaller : MonoBehaviour
         print(crowd.IssueCommands(new[] {0, 0, 1}));
         print(crowd.IssueCommands(new[] {1, 1, 0}));
 
-        foreach (float reliability in crowd.playerReliabilities)
+        foreach (float reliability in crowd.GetPlayerReliabilities())
         {
             print(reliability);
         }
 
         print("crowd2");
         print(crowd2.IssueCommands(new[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 2}));
-        foreach (float reliability in crowd2.playerReliabilities)
+        foreach (float reliability in crowd2.GetPlayerReliabilities())
         {
             print(reliability);
         }

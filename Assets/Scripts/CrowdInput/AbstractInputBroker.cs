@@ -1,13 +1,15 @@
 ﻿using DefaultNamespace.Evaluator;
 using DefaultNamespace.Events;
+using Reliability;
 using UnityEngine;
 
 namespace DefaultNamespace
 {
     public abstract class AbstractInputBroker : MonoBehaviour
     {
-        protected CrowdInputReliability crowdInputReliability;
+        protected ICrowdInputReliability crowdInputReliability;
         protected EvaluatorData evaluatorData;
+        protected int numberOfPlayers;
 
         public abstract void SetUp(CrowdConfig config, int numberOfPlayers, int numberOfReferenceAis, InputReceiver receiver);
 

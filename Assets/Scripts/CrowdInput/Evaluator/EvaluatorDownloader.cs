@@ -28,13 +28,13 @@ namespace DefaultNamespace.Evaluator
             using var file1 = File.CreateText(Application.dataPath + "/Evaluator.txt");
             foreach (var row in evaluatorData.playerReliabilitiesData)
             {
-                file1.WriteLine(row.Select(f => f + "").Aggregate((i, j) => i + "," + j) + ";");
+                file1.WriteLine(row.log.Select(f => f + "").Aggregate((i, j) => i + "," + j) + "," + row.timestamp + ";");
             }
 
             using var file2 = File.CreateText(Application.dataPath + "/EvaluatorInput.txt");
             foreach (var row in evaluatorData.playerInputData)
             {
-                file2.WriteLine(row.Select(f => f + "").Aggregate((i, j) => i + "," + j) + ";");
+                file2.WriteLine(row.log.Select(f => f + "").Aggregate((i, j) => i + "," + j) + "," + row.timestamp + ";");
             }
         }
 
@@ -42,29 +42,30 @@ namespace DefaultNamespace.Evaluator
         {
             string names = PhotonNetwork.PlayerList.Select(p => p.NickName)
                 .Union(aiList.aiConfigs.Select((_, index) => "AI" + index))
+                .Union(new []{"Timestamp"})
                 .Aggregate((i, j) => i + "," + j) + ";\n";
 
             string playerReliabilitiesFile = evaluatorData.playerReliabilitiesData
                 .Aggregate("", (current, row)
-                    => current + row.Select(f => f + "")
-                        .Aggregate((i, j) => i + "," + j) + ";\n");
+                    => current + row.log.Select(f => f + "")
+                        .Aggregate((i, j) => i + "," + j)+ ","  + row.timestamp + ";\n");
 
             string inputDataFile = evaluatorData.playerInputData
                 .Aggregate("", (current, row)
-                    => current + row.Select(f => f + "")
-                        .Aggregate((i, j) => i + "," + j) + ";\n");
+                    => current + row.log.Select(f => f + "")
+                        .Aggregate((i, j) => i + "," + j)+ ","  + row.timestamp + ";\n");
             
             string issuedInputDataFile = evaluatorData.issuedInputData
-                .Select(i => i.ToString())
+                .Select(i => i.log + "," + i.timestamp)
                 .Aggregate((i, j) => i + ";\n" + j);
 
             string referenceAisDataFile = evaluatorData.referenceAiData
                 .Aggregate("", (current, row)
-                    => current + row.Select(f => f + "")
-                        .Aggregate((i, j) => i + "," + j) + ";\n");
+                    => current + row.log.Select(f => f + "")
+                        .Aggregate((i, j) => i + "," + j) + "," + row.timestamp + ";\n");
 
             string scoresDataFile = evaluatorData.scores
-                .Select(i => i.ToString())
+                .Select(i => i.log + "," + i.timestamp)
                 .Aggregate((i, j) => i + ";\n" + j);
             
             Debug.Log(names + playerReliabilitiesFile + "\n<SEPARATOR>\n" + inputDataFile + "\n<SEPARATOR>\n" + issuedInputDataFile +"\n<SEPARATOR>\n" + referenceAisDataFile +"\n<SEPARATOR>\n" + scoresDataFile );

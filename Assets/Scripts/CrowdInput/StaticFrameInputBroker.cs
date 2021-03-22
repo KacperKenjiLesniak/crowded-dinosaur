@@ -2,6 +2,7 @@
 using System.Linq;
 using DefaultNamespace.Evaluator;
 using DefaultNamespace.Events;
+using Reliability;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -21,7 +22,7 @@ namespace DefaultNamespace
 
         public override void SetUp(CrowdConfig config, int numberOfPlayers, int numberOfReferenceAis, InputReceiver receiver)
         {
-            if (crowdInputReliability == null || crowdInputReliability.numberOfPlayers != numberOfPlayers)
+            if (crowdInputReliability == null || this.numberOfPlayers != numberOfPlayers)
             {
                 crowdInputReliability = new CrowdInputReliability(
                     numberOfPlayers,
@@ -33,7 +34,8 @@ namespace DefaultNamespace
                 evaluatorData.ResetReliabilities();
             }
 
-            inputList = Enumerable.Range(0, crowdInputReliability.numberOfPlayers).Select(i => 0).ToList();
+            this.numberOfPlayers = numberOfPlayers;
+            inputList = Enumerable.Range(0, numberOfPlayers).Select(i => 0).ToList();
             inputTimeToLive = config.inputTimeToLive;
             inputReceiver = receiver;
             referenceAiInputs = Enumerable.Range(0, numberOfReferenceAis).Select(i => 0).ToList();
@@ -77,11 +79,11 @@ namespace DefaultNamespace
 
             inputReceiver.ApplyInput(crowdedInput);
 
-            inputList = Enumerable.Range(0, crowdInputReliability.numberOfPlayers).Select(i => 0).ToList();
+            inputList = Enumerable.Range(0, numberOfPlayers).Select(i => 0).ToList();
 
             if (debug)
             {
-                evaluatorData.AppendReliabilities(crowdInputReliability.playerReliabilities);
+                evaluatorData.AppendReliabilities(crowdInputReliability.GetPlayerReliabilities());
                 evaluatorData.AppendInput(currentPlayerInputs, referenceAiInputs, crowdedInput);
                 referenceAiInputs = Enumerable.Range(0, referenceAiInputs.Count).Select(i => 0).ToList();
             }
