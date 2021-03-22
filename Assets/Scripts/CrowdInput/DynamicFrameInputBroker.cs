@@ -11,7 +11,7 @@ namespace DefaultNamespace
     [RequireComponent(typeof(EvaluatorData))]
     public class DynamicFrameInputBroker : AbstractInputBroker
     {
-        private const float ACTIVATION_THRESHOLD = 0.2f;
+        private const float ACTIVATION_THRESHOLD = 0.5f;
 
         private InputReceiver inputReceiver;
         private Queue<PlayerInput> inputsQueue;
