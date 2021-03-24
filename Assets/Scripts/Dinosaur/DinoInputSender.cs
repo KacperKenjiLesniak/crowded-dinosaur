@@ -22,7 +22,7 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
                 playerNumber,
                 PhotonNetwork.NickName,
                 inputId,
-                Time.time,
-                reference));
+                Time.time
+                ));
     }
 }

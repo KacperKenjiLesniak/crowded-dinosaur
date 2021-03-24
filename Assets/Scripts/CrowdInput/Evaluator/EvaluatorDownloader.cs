@@ -59,17 +59,12 @@ namespace DefaultNamespace.Evaluator
                 .Select(i => i.log + "," + i.timestamp)
                 .Aggregate((i, j) => i + ";\n" + j);
 
-            string referenceAisDataFile = evaluatorData.referenceAiData
-                .Aggregate("", (current, row)
-                    => current + row.log.Select(f => f + "")
-                        .Aggregate((i, j) => i + "," + j) + "," + row.timestamp + ";\n");
-
             string scoresDataFile = evaluatorData.scores
                 .Select(i => i.log + "," + i.timestamp)
                 .Aggregate((i, j) => i + ";\n" + j);
             
-            Debug.Log(names + playerReliabilitiesFile + "\n<SEPARATOR>\n" + inputDataFile + "\n<SEPARATOR>\n" + issuedInputDataFile +"\n<SEPARATOR>\n" + referenceAisDataFile +"\n<SEPARATOR>\n" + scoresDataFile );
-            byte[] fileBytes = Encoding.UTF8.GetBytes(names + playerReliabilitiesFile + "\n<SEPARATOR>\n" + inputDataFile + "\n<SEPARATOR>\n" + issuedInputDataFile  + "\n<SEPARATOR>\n" + referenceAisDataFile + "\n<SEPARATOR>\n" + scoresDataFile );
+            Debug.Log(names + playerReliabilitiesFile + "\n<SEPARATOR>\n" + inputDataFile + "\n<SEPARATOR>\n" + issuedInputDataFile +"\n<SEPARATOR>\n" + scoresDataFile );
+            byte[] fileBytes = Encoding.UTF8.GetBytes(names + playerReliabilitiesFile + "\n<SEPARATOR>\n" + inputDataFile + "\n<SEPARATOR>\n" + issuedInputDataFile  + "\n<SEPARATOR>\n" + scoresDataFile );
             DownloadFile(fileBytes, fileBytes.Length, "evaluator.txt");
         }
     }

@@ -17,13 +17,10 @@ namespace DefaultNamespace
         private Queue<PlayerInput> inputsQueue;
         private float inputTimeToLive;
         private bool scheduledInputIssue;
-        private bool scheduledReferenceInputIssue;
-        private List<int> referenceAiInputs;
 
         #region Public
 
-        public override void SetUp(CrowdConfig config, int numberOfPlayers, int numberOfReferenceAis,
-            InputReceiver receiver)
+        public override void SetUp(CrowdConfig config, int numberOfPlayers, InputReceiver receiver)
         {
             if (crowdInputReliability == null || this.numberOfPlayers != numberOfPlayers)
             {
@@ -38,7 +35,7 @@ namespace DefaultNamespace
                         config.numberOfCommands,
                         config.reliabilityCoefficient,
                         config.agreementThreshold
-                    );    
+                    );
                 }
 
                 evaluatorData.ResetReliabilities();
@@ -47,24 +44,11 @@ namespace DefaultNamespace
             this.numberOfPlayers = numberOfPlayers;
             inputTimeToLive = config.inputTimeToLive;
             inputReceiver = receiver;
-            referenceAiInputs = Enumerable.Range(0, numberOfReferenceAis).Select(i => 0).ToList();
         }
 
         public override void PostInput(PlayerInput input)
         {
-            if (!input.reference)
-            {
-                inputsQueue.Enqueue(input);
-            }
-            else
-            {
-                referenceAiInputs[input.playerId] = input.inputId;
-                if (!scheduledInputIssue && !scheduledReferenceInputIssue)
-                {
-                    Invoke(nameof(LogReferenceInput), inputTimeToLive / 2);
-                    scheduledReferenceInputIssue = true;
-                }
-            }
+            inputsQueue.Enqueue(input);
         }
 
         #endregion
@@ -114,9 +98,8 @@ namespace DefaultNamespace
             scheduledInputIssue = false;
 
             evaluatorData.AppendReliabilities(crowdInputReliability.GetPlayerReliabilities());
-            evaluatorData.AppendInput(currentPlayerInputs, referenceAiInputs, crowdedInput);
-            referenceAiInputs = Enumerable.Range(0, referenceAiInputs.Count).Select(i => 0).ToList();
-        } 
+            evaluatorData.AppendInput(currentPlayerInputs, crowdedInput);
+        }
 
         private int[] DequeueCurrentPlayerInputs()
         {
@@ -128,21 +111,6 @@ namespace DefaultNamespace
             }
 
             return inputsList.ToArray();
-        }
-
-        private void LogReferenceInput()
-        {
-            scheduledReferenceInputIssue = false;
-            if (scheduledInputIssue) return;
-            var inputsList = Enumerable.Range(0, numberOfPlayers).Select(i => 0).ToList();
-            foreach (var input in inputsQueue)
-            {
-                inputsList[input.playerId] = input.inputId;
-            }
-
-            evaluatorData.AppendReliabilities(crowdInputReliability.GetPlayerReliabilities());
-            evaluatorData.AppendInput(inputsList, referenceAiInputs, 0);
-            referenceAiInputs = Enumerable.Range(0, referenceAiInputs.Count).Select(i => 0).ToList();
         }
 
         #endregion
