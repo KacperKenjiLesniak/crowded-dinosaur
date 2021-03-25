@@ -16,11 +16,10 @@ namespace DefaultNamespace
         private List<int> inputList;
         private float inputTimeToLive;
         private float frameTimer;
-        private List<int> referenceAiInputs;
 
         #region Public
 
-        public override void SetUp(CrowdConfig config, int numberOfPlayers, int numberOfReferenceAis, InputReceiver receiver)
+        public override void SetUp(CrowdConfig config, int numberOfPlayers, InputReceiver receiver)
         {
             if (crowdInputReliability == null || this.numberOfPlayers != numberOfPlayers)
             {
@@ -44,19 +43,11 @@ namespace DefaultNamespace
             inputList = Enumerable.Range(0, numberOfPlayers).Select(i => 0).ToList();
             inputTimeToLive = config.inputTimeToLive;
             inputReceiver = receiver;
-            referenceAiInputs = Enumerable.Range(0, numberOfReferenceAis).Select(i => 0).ToList();
         }
 
         public override void PostInput(PlayerInput input)
         {
-            if (!input.reference)
-            {
-                inputList[input.playerId] = input.inputId;
-            }
-            else
-            {
-                referenceAiInputs[input.playerId] = input.inputId;
-            }
+            inputList[input.playerId] = input.inputId;
         }
 
 
@@ -90,8 +81,7 @@ namespace DefaultNamespace
             if (debug)
             {
                 evaluatorData.AppendReliabilities(crowdInputReliability.GetPlayerReliabilities());
-                evaluatorData.AppendInput(currentPlayerInputs, referenceAiInputs, crowdedInput);
-                referenceAiInputs = Enumerable.Range(0, referenceAiInputs.Count).Select(i => 0).ToList();
+                evaluatorData.AppendInput(currentPlayerInputs, crowdedInput);
             }
         }
 

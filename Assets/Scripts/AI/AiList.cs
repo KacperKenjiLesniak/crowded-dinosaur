@@ -7,6 +7,5 @@ namespace DefaultNamespace.AI
     public class AiList : ScriptableObject
     {
         public List<AiConfig> aiConfigs;
-        public List<ReferenceAiConfig> referenceAiConfigs;
     }
 }

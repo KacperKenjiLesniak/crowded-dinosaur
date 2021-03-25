@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using DefaultNamespace;
+using GameEvents.String;
 using Photon.Pun;
 using UnityEngine;
 
@@ -10,7 +11,8 @@ public class PlayerManager : MonoBehaviour
 
     [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
     [SerializeField] private Vector3 crowdedStartingPosition = new Vector3(-1f, -3f, 0f);
-
+    [SerializeField] private StringGameEvent playerColorEvent;
+    
     private PhotonView photonView;
 
     private void Awake()
@@ -45,10 +47,11 @@ public class PlayerManager : MonoBehaviour
     {
         var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerDino"), startingPosition,
             Quaternion.identity);
-        dino.GetComponent<DinoMovement>().SetColor(playerColors[photonView.CreatorActorNr - 1]);
+        var color = playerColors[photonView.CreatorActorNr - 1];
+        dino.GetComponent<DinoMovement>().SetColor(color);
+        playerColorEvent.RaiseGameEvent("#" + ColorUtility.ToHtmlStringRGBA(color));
     }
-
-
+    
     private void CreateCrowdedController()
     {
         if (PhotonNetwork.IsMasterClient)
