@@ -84,3 +84,4 @@ MonoBehaviour:
   - {r: 0.9056604, g: 0.23783883, b: 0, a: 0.39215687}
   startingPosition: {x: 0, y: -3, z: 0}
   crowdedStartingPosition: {x: -1, y: -3, z: 0}
+  playerColorEvent: {fileID: 11400000, guid: 904fad71da8371243aafa7b10433dc47, type: 2}
