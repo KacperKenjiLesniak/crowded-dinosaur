@@ -47,7 +47,7 @@ public class DinoController : MonoBehaviourPunCallbacks
                 issuedLongJump = true;
                 jumpTimer = -1f;
             }
-            else if (Input.GetButtonUp("Jump"))
+            else if (Input.GetButtonUp("Jump") || Input.GetButtonUp("Up"))
             {
                 issuedShortJump = true;
                 jumpTimer = -1f;

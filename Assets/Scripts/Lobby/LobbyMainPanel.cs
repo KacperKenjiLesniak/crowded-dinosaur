@@ -184,7 +184,7 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
     {
         string roomName = "Room " + Random.Range(1000, 10000);
 
-        var options = new RoomOptions {MaxPlayers = 8};
+        var options = new RoomOptions {MaxPlayers = 12};
 
         PhotonNetwork.CreateRoom(roomName, options);
     }
@@ -309,7 +309,7 @@ public class LobbyMainPanel : MonoBehaviourPunCallbacks
 
         byte maxPlayers;
         byte.TryParse(MaxPlayersInputField.text, out maxPlayers);
-        maxPlayers = (byte) Mathf.Clamp(maxPlayers, 2, 8);
+        maxPlayers = (byte) Mathf.Clamp(maxPlayers, 2, 12);
 
         var options = new RoomOptions {MaxPlayers = maxPlayers, PlayerTtl = 10000};
 

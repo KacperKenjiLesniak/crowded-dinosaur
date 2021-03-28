@@ -2415,7 +2415,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 8.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2983,7 +2983,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654968918}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6d6b87ec4d34f8d8be62e60abd8f46a, type: 3}
   m_Name: 
@@ -3958,12 +3958,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5964,6 +5964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1468371698}
   - component: {fileID: 1468371699}
+  - component: {fileID: 1468371700}
   m_Layer: 5
   m_Name: OptionsToggle
   m_TagString: Untagged
@@ -6052,6 +6053,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &1468371700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468371697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474ea803262ef4347b5779f0e4758965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1476063063
 GameObject:
   m_ObjectHideFlags: 0
@@ -6593,6 +6606,7 @@ GameObject:
   - component: {fileID: 1648944383}
   - component: {fileID: 1648944385}
   - component: {fileID: 1648944384}
+  - component: {fileID: 1648944386}
   m_Layer: 5
   m_Name: GetReady
   m_TagString: Untagged
@@ -6716,6 +6730,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1648944382}
   m_CullTransparentMesh: 1
+--- !u!114 &1648944386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648944382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b2f85583a54b21922069d1d0951342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 492b1d3915d390e41b90d180c3028db2, type: 2}
+  onGameEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1648944382}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1665590254
 GameObject:
   m_ObjectHideFlags: 0
@@ -8134,6 +8176,7 @@ GameObject:
   - component: {fileID: 1925584568}
   - component: {fileID: 1925584567}
   - component: {fileID: 1925584566}
+  - component: {fileID: 1925584570}
   m_Layer: 5
   m_Name: PlayerColor
   m_TagString: Untagged
@@ -8239,6 +8282,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1925584564}
   m_CullTransparentMesh: 1
+--- !u!114 &1925584570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925584564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b2f85583a54b21922069d1d0951342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 492b1d3915d390e41b90d180c3028db2, type: 2}
+  onGameEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1925584564}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1931468107
 GameObject:
   m_ObjectHideFlags: 0
@@ -10286,7 +10357,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[4].spawnOffset
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8852935248036566017, guid: 7943340cfeee6b844a2f57344b1d3230, type: 3}
       propertyPath: obstacles.Array.data[5].spawnOffset

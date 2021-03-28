@@ -25,5 +25,11 @@ namespace DefaultNamespace
         {
             crowdInputReliability = null;
         }
+        
+        protected bool ConfigsDiffer(int numberOfPlayers, CrowdConfig config)
+        {
+            return this.numberOfPlayers != numberOfPlayers ||
+                   config.mockedCrowdConfig != (crowdInputReliability.GetType() == typeof(MockCrowdInputReliability));
+        }
     }
 }

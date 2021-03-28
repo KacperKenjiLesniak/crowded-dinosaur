@@ -47,7 +47,7 @@ public class PlayerManager : MonoBehaviour
     {
         var dino = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerDino"), startingPosition,
             Quaternion.identity);
-        var color = playerColors[photonView.CreatorActorNr - 1];
+        var color = playerColors[(photonView.CreatorActorNr - 1) % playerColors.Count];
         dino.GetComponent<DinoMovement>().SetColor(color);
         playerColorEvent.RaiseGameEvent("#" + ColorUtility.ToHtmlStringRGBA(color));
     }

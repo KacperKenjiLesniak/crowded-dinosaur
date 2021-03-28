@@ -50,7 +50,7 @@ namespace DefaultNamespace.AI
                         dinoAI.GetComponent<RandomAIDinoController>().Configure(i);
                         dinoAI.GetComponent<RandomAIDinoController>().SetSeed(Random.Range(0, 1000000));
                         dinoAI.GetComponent<DinoMovement>()
-                            .SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
+                            .SetColor(playerColors[(PhotonNetwork.CurrentRoom.PlayerCount + i) % playerColors.Count]);
                     }
                     else
                     {
@@ -59,7 +59,7 @@ namespace DefaultNamespace.AI
                         dinoAI.GetComponent<AIDinoController>().Configure(i, aiList.aiConfigs[i]);
                         dinoAI.GetComponent<AIDinoController>().SetSeed(Random.Range(0, 1000000));
                         dinoAI.GetComponent<DinoMovement>()
-                            .SetColor(playerColors[PhotonNetwork.CurrentRoom.PlayerCount + i]);
+                            .SetColor(playerColors[(PhotonNetwork.CurrentRoom.PlayerCount + i) % playerColors.Count]);
                     }
                 }
             }

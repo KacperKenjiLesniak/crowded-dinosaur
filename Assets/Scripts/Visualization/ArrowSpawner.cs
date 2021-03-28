@@ -42,7 +42,7 @@ namespace DefaultNamespace.Visualization
         {
             var arrowObject =
                 Instantiate(arrows[arrowIndex], transform.position, arrows[arrowIndex].transform.rotation);
-            var playerColor = playerColors[playerId];
+            var playerColor = playerColors[playerId % playerColors.Count];
             playerColor.a = 1f;
             arrowObject.GetComponent<SpriteRenderer>().color = playerColor;
         }

@@ -21,7 +21,7 @@ namespace DefaultNamespace
 
         public override void SetUp(CrowdConfig config, int numberOfPlayers, InputReceiver receiver)
         {
-            if (crowdInputReliability == null || this.numberOfPlayers != numberOfPlayers)
+            if (crowdInputReliability == null || ConfigsDiffer(numberOfPlayers, config))
             {
                 if (config.mockedCrowdConfig)
                 {
