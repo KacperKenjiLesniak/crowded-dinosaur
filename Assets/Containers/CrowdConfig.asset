@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CrowdConfig
   m_EditorClassIdentifier: 
   numberOfCommands: 4
-  reliabilityCoefficient: 0.1
+  reliabilityCoefficient: 0.05
   agreementThreshold: 0.8
-  inputTimeToLive: 0.2
+  inputTimeToLive: 0.3
+  mockedCrowdConfig: 0

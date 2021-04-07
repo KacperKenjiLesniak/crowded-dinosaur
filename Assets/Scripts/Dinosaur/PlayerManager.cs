@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
 {
     public List<Color> playerColors;
 
-    [SerializeField] private Vector3 startingPosition = new Vector3(0f, -3f, 0f);
+    [SerializeField] private Vector3 startingPosition = new Vector3(1f, -3f, 0f);
     [SerializeField] private Vector3 crowdedStartingPosition = new Vector3(-1f, -3f, 0f);
     [SerializeField] private StringGameEvent playerColorEvent;
     
