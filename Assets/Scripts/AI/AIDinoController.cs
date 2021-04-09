@@ -61,25 +61,28 @@ namespace DefaultNamespace.AI
                     RandomizeVariables();
                     if (isMistaken) return;
                     dinoMovement.IssueJump(false);
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_JUMP_ID);
                 }
                 else if (ShouldShortJump() && dinoMovement.grounded)
                 {
                     RandomizeVariables();
                     if (isMistaken) return;
                     dinoMovement.IssueJump(true);
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
-                        Constants.INPUT_SHORT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_SHORT_JUMP_ID);
                 }
                 else if (ShouldCrouch() && !dinoMovement.isCrouching)
                 {
                     RandomizeVariables();
                     if (isMistaken) return;
                     dinoMovement.IssueCrouch();
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
-                        Constants.INPUT_CROUCH_ID);
+                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_CROUCH_ID);
                 }
             }
+        }
+
+        private int GetAiIndex()
+        {
+            return aiIndex + PhotonNetwork.CurrentRoom.PlayerCount - 1;
         }
 
         public void Configure(int index, AiConfig aiConfig)
@@ -94,7 +97,8 @@ namespace DefaultNamespace.AI
         {
             return obstacles
                        .Any(obstacle =>
-                           Math.Abs(obstacle.position.x - transform.position.x) <= NoisedDistance(obstacleDistanceToJump) &&
+                           Math.Abs(obstacle.position.x - transform.position.x) <=
+                           NoisedDistance(obstacleDistanceToJump) &&
                            obstacle.position.x > transform.position.x)
                    || birds
                        .Any(bird =>
@@ -107,7 +111,8 @@ namespace DefaultNamespace.AI
         {
             return smallObstacles
                 .Any(obstacle =>
-                    Math.Abs(obstacle.position.x - transform.position.x) <= NoisedDistance(smallObstacleDistanceToJump) &&
+                    Math.Abs(obstacle.position.x - transform.position.x) <=
+                    NoisedDistance(smallObstacleDistanceToJump) &&
                     obstacle.position.x > transform.position.x);
         }
 
@@ -119,42 +124,40 @@ namespace DefaultNamespace.AI
                     bird.position.x > transform.position.x &&
                     bird.position.y > minBirdHeightToCrouch);
         }
-        
+
         private void IssueRandomInput()
         {
             switch (random.Next(0, 4))
             {
                 case 0:
                     dinoMovement.IssueJump(false);
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
-                    break;  
+                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_JUMP_ID);
+                    break;
                 case 1:
                     dinoMovement.IssueJump(true);
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
-                        Constants.INPUT_SHORT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_SHORT_JUMP_ID);
                     break;
                 case 2:
                     dinoMovement.IssueCrouch();
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
-                        Constants.INPUT_CROUCH_ID);
+                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_CROUCH_ID);
                     break;
-                case 3: 
+                case 3:
                     break;
             }
         }
-        
+
         private void RandomizeVariables()
         {
             currentNoise = NextFloat(maxJumpNoise);
             currentMistake = Math.Abs(NextFloat(1));
             if (currentMistake < chanceForMistake)
-            { 
+            {
                 isMistaken = true;
                 IssueRandomInput();
-                this.Invoke( () => isMistaken = false, Math.Abs(NextFloat(1)) + 1);
+                this.Invoke(() => isMistaken = false, Math.Abs(NextFloat(1)) + 1);
             }
         }
-        
+
         float NextFloat(float scale)
         {
             double f = random.NextDouble() * 2.0 - 1.0;

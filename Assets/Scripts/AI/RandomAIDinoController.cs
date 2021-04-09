@@ -33,16 +33,16 @@ namespace DefaultNamespace.AI
             {
                 case 0:
                     dinoMovement.IssueJump(false);
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount, Constants.INPUT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_JUMP_ID);
                     break;  
                 case 1:
                     dinoMovement.IssueJump(true);
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
+                    dinoInputSender.SendInput(GetAiIndex(),
                         Constants.INPUT_SHORT_JUMP_ID);
                     break;
                 case 2:
                     dinoMovement.IssueCrouch();
-                    dinoInputSender.SendInput(aiIndex + PhotonNetwork.CurrentRoom.PlayerCount,
+                    dinoInputSender.SendInput(GetAiIndex(),
                         Constants.INPUT_CROUCH_ID);
                     break;
             }
@@ -63,6 +63,11 @@ namespace DefaultNamespace.AI
         public void SetSeed(int seed)
         {
             random = new Random(seed);
+        }
+        
+        private int GetAiIndex()
+        {
+            return aiIndex + PhotonNetwork.CurrentRoom.PlayerCount - 1;
         }
     }
 }

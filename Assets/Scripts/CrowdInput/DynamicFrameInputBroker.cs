@@ -67,7 +67,7 @@ namespace DefaultNamespace
             {
                 var reliabilities = crowdInputReliability.GetPlayerReliabilities();
                 if (!scheduledInputIssue
-                    && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() >
+                    && inputsQueue.Select(input => reliabilities[input.playerId]).Sum() >=
                     reliabilities.Sum() * ACTIVATION_THRESHOLD)
                 {
                     Debug.Log("Invoking issuing input with queue of size: " + inputsQueue.Count);

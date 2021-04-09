@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Vector3 startingPosition = new Vector3(1f, -3f, 0f);
     [SerializeField] private Vector3 crowdedStartingPosition = new Vector3(-1f, -3f, 0f);
     [SerializeField] private StringGameEvent playerColorEvent;
-    
+
     private PhotonView photonView;
 
     private void Awake()
@@ -24,9 +24,15 @@ public class PlayerManager : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            CreateController();
-            CreateCrowdedController();
-            CreateArrowSpawner();
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                CreateController();
+                CreateArrowSpawner();
+            }
+            else
+            {
+                CreateCrowdedController();
+            }
         }
     }
 
@@ -51,13 +57,10 @@ public class PlayerManager : MonoBehaviour
         dino.GetComponent<DinoMovement>().SetColor(color);
         playerColorEvent.RaiseGameEvent("#" + ColorUtility.ToHtmlStringRGBA(color));
     }
-    
+
     private void CreateCrowdedController()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CrowdedDino"), crowdedStartingPosition,
-                Quaternion.identity);
-        }
+        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "CrowdedDino"), crowdedStartingPosition,
+            Quaternion.identity);
     }
 }
