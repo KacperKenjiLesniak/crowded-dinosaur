@@ -16,7 +16,7 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
     [PunRPC]
     private void InputInfo(int actorNumberOffset, int inputId, bool reference, PhotonMessageInfo info)
     {
-        int playerNumber = info.Sender.ActorNumber - 1 + actorNumberOffset;
+        int playerNumber = info.Sender.ActorNumber - 2 + actorNumberOffset;
         playerInputGameEvent.RaiseGameEvent(
             new PlayerInput(
                 playerNumber,

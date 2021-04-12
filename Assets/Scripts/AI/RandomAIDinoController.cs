@@ -67,7 +67,7 @@ namespace DefaultNamespace.AI
         
         private int GetAiIndex()
         {
-            return aiIndex + PhotonNetwork.CurrentRoom.PlayerCount - 1;
+            return aiIndex + PhotonNetwork.CurrentRoom.PlayerCount;
         }
     }
 }

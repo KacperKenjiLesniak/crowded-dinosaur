@@ -61,28 +61,28 @@ namespace DefaultNamespace.AI
                     RandomizeVariables();
                     if (isMistaken) return;
                     dinoMovement.IssueJump(false);
-                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiOffset(), Constants.INPUT_JUMP_ID);
                 }
                 else if (ShouldShortJump() && dinoMovement.grounded)
                 {
                     RandomizeVariables();
                     if (isMistaken) return;
                     dinoMovement.IssueJump(true);
-                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_SHORT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiOffset(), Constants.INPUT_SHORT_JUMP_ID);
                 }
                 else if (ShouldCrouch() && !dinoMovement.isCrouching)
                 {
                     RandomizeVariables();
                     if (isMistaken) return;
                     dinoMovement.IssueCrouch();
-                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_CROUCH_ID);
+                    dinoInputSender.SendInput(GetAiOffset(), Constants.INPUT_CROUCH_ID);
                 }
             }
         }
 
-        private int GetAiIndex()
+        private int GetAiOffset()
         {
-            return aiIndex + PhotonNetwork.CurrentRoom.PlayerCount - 1;
+            return aiIndex + PhotonNetwork.CurrentRoom.PlayerCount;
         }
 
         public void Configure(int index, AiConfig aiConfig)
@@ -131,15 +131,15 @@ namespace DefaultNamespace.AI
             {
                 case 0:
                     dinoMovement.IssueJump(false);
-                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiOffset(), Constants.INPUT_JUMP_ID);
                     break;
                 case 1:
                     dinoMovement.IssueJump(true);
-                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_SHORT_JUMP_ID);
+                    dinoInputSender.SendInput(GetAiOffset(), Constants.INPUT_SHORT_JUMP_ID);
                     break;
                 case 2:
                     dinoMovement.IssueCrouch();
-                    dinoInputSender.SendInput(GetAiIndex(), Constants.INPUT_CROUCH_ID);
+                    dinoInputSender.SendInput(GetAiOffset(), Constants.INPUT_CROUCH_ID);
                     break;
                 case 3:
                     break;
@@ -150,6 +150,7 @@ namespace DefaultNamespace.AI
         {
             currentNoise = NextFloat(maxJumpNoise);
             currentMistake = Math.Abs(NextFloat(1));
+            Debug.Log("Current mistake: " + currentMistake + " / " + chanceForMistake);
             if (currentMistake < chanceForMistake)
             {
                 isMistaken = true;
