@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d494e00b4e4d539c528e403737f9cd, type: 3}
-  m_Name: CrowdConfig
+  m_Script: {fileID: 11500000, guid: e3b0adfed72642e4a860b3de85741e11, type: 3}
+  m_Name: PlayerOnMasterServer
   m_EditorClassIdentifier: 
-  numberOfCommands: 4
-  reliabilityCoefficient: 0.05
-  agreementThreshold: 0.6
-  inputTimeToLive: 0.3
-  mockedCrowdConfig: 0
+  resetType: 0
+  value: 1

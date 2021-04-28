@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DefaultNamespace.Events;
+using MutableObjects.Bool;
 using Photon.Pun;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace DefaultNamespace.Visualization
     {
         [SerializeField] private List<GameObject> arrows;
         [SerializeField] private GameObject playerManager;
+        [SerializeField] private MutableBool playerOnMasterServer;
 
         private List<Color> playerColors;
 
@@ -40,9 +42,10 @@ namespace DefaultNamespace.Visualization
         [PunRPC]
         public void SpawnArrowInClients(int playerId, int arrowIndex)
         {
+            Debug.Log("Spawning arrow: " + playerId);
             var arrowObject =
                 Instantiate(arrows[arrowIndex], transform.position, arrows[arrowIndex].transform.rotation);
-            var playerColor = playerColors[playerId % playerColors.Count];
+            var playerColor = playerColors[playerId + (playerOnMasterServer.Value ? 0 : 1) % playerColors.Count];
             playerColor.a = 1f;
             arrowObject.GetComponent<SpriteRenderer>().color = playerColor;
         }

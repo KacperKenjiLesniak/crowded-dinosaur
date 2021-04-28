@@ -1,5 +1,6 @@
 ﻿using DefaultNamespace;
 using DefaultNamespace.Events;
+using MutableObjects.Bool;
 using Photon.Pun;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ using UnityEngine;
 public class DinoInputSender : MonoBehaviourPunCallbacks
 {
     [SerializeField] private PlayerInputGameEvent playerInputGameEvent;
+    [SerializeField] private MutableBool playerOnMasterServer;
 
     public void SendInput(int actorNumberOffset, int inputId, bool reference = false)
     {
@@ -16,7 +18,7 @@ public class DinoInputSender : MonoBehaviourPunCallbacks
     [PunRPC]
     private void InputInfo(int actorNumberOffset, int inputId, bool reference, PhotonMessageInfo info)
     {
-        int playerNumber = info.Sender.ActorNumber - 2 + actorNumberOffset;
+        int playerNumber = info.Sender.ActorNumber - (playerOnMasterServer.Value ? 1 : 2) + actorNumberOffset;
         playerInputGameEvent.RaiseGameEvent(
             new PlayerInput(
                 playerNumber,

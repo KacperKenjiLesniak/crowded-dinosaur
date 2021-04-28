@@ -85,3 +85,4 @@ MonoBehaviour:
   startingPosition: {x: 0.2, y: -3, z: 0}
   crowdedStartingPosition: {x: -1, y: -3, z: 0}
   playerColorEvent: {fileID: 11400000, guid: 904fad71da8371243aafa7b10433dc47, type: 2}
+  playerOnMasterServer: {fileID: 11400000, guid: 4d504009715120d4fb2164248738adb3, type: 2}

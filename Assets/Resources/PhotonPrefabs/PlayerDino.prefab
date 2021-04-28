@@ -29,6 +29,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInputGameEvent: {fileID: 11400000, guid: 1bd433c37697e234894416c7bbd0b0cb, type: 2}
+  playerOnMasterServer: {fileID: 11400000, guid: 4d504009715120d4fb2164248738adb3, type: 2}
 --- !u!1001 &3024579576591987597
 PrefabInstance:
   m_ObjectHideFlags: 0
