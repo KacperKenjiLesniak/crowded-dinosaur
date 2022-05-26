@@ -90,6 +90,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1726484870117226312, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
+      propertyPath: m_Size.x
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726484870117226312, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
+      propertyPath: m_Offset.x
+      value: -1.96
+      objectReference: {fileID: 0}
     - target: {fileID: 5109901659581191555, guid: 6523633dc1c472741a628cbb118d8d7c, type: 3}
       propertyPath: m_RootOrder
       value: 0

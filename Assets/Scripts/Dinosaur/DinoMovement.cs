@@ -99,7 +99,7 @@ namespace DefaultNamespace
                 var interpolatedNetworkPosition = new Vector3(networkPosition.x + rb.velocity.x * lag,
                     networkPosition.y, networkPosition.z);
 
-                if (Math.Abs(interpolatedNetworkPosition.x - transform.position.x) >= 3f)
+                if (Math.Abs(interpolatedNetworkPosition.x - transform.position.x) >= 5f)
                 {
                     transform.position = interpolatedNetworkPosition;
                 }
